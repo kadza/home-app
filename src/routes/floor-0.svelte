@@ -1,3 +1,12 @@
+<script>
+	import Room from "./room.svelte";
+  import {isGuestLightOn} from "../home-store";
+
+  const toggleGuestLight = () =>  {
+    isGuestLightOn.update(n => !n);
+  }
+</script>
+
 <style>
 .floor-0 {
   display: grid;
@@ -108,7 +117,6 @@
   grid-row-end: 6;
   background-color:#190c5e
 }
-
 </style>
 
 <div class="floor-0">
@@ -120,7 +128,7 @@
   <div class="hol room"></div>
   <div class="lazienka room"></div>
   <div class="schody room"></div>
-  <div class="goscinny room"></div>
+  <Room rowStart={2} columnStart={14} rowSpan={5} columnSpan={4} roomClicked={toggleGuestLight} isLightOn={$isGuestLightOn}/>
   <div class="spizarnia room"></div>
   <div class="kotlownia room"></div>
 </div>
