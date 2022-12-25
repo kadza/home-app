@@ -32,7 +32,6 @@
     margin-top: 0.5rem;
     background-color: transparent;
     color: rgba(255,255,255,.85);
-    color: #fff;
     display: inline-block;
     font-weight: 400;
     text-align: center;
