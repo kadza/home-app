@@ -12,7 +12,6 @@
    :global(body){
         background-image: url("./bg.jpeg");
         font-family: Nunito,sans-serif;
-        margin: 0;
     }
   .home {
   display: flex;
