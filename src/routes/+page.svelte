@@ -10,7 +10,7 @@
 
 <style>
    :global(body){
-        background-image: url("./bg.jpeg");
+        background-image: url("bg.jpeg");
         font-family: Nunito,sans-serif;
     }
   .home {
