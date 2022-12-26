@@ -9,7 +9,7 @@ import {
 import { connect } from 'mqtt'
 import { writable } from 'svelte/store'
 
-export const isGuestLightOn = writable(false)
+export const isGuestLightOn = writable<boolean | null>(null)
 export const temperature = writable(0)
 
 let client = connect(PUBLIC_MQTT_URL, {
@@ -36,5 +36,7 @@ client.on('message', function (topic, message) {
 })
 
 isGuestLightOn.subscribe((value) => {
+  if (value === null) return
+
   client.publish(PUBLIC_GUEST_LIGHT_TO, value ? '1' : '0')
 })
