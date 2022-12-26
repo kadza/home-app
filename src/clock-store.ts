@@ -1,9 +1,9 @@
 import { readable } from 'svelte/store'
 
-export default function() {
-	const initial = new Date()
+export default function () {
+  const initial = new Date()
 
-  return readable(initial, set => {
+  return readable(initial, (set) => {
     const update = () => set(new Date())
 
     const interval = setInterval(update, 1000)
