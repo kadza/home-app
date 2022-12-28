@@ -9,17 +9,9 @@
 </script>
 
 <style>
-  :global(body) {
-    background-image: url('bg.jpeg');
-    font-family: Nunito, sans-serif;
-  }
-  .home {
-    display: flex;
-    padding: 1rem;
-  }
   .floor {
     display: grid;
-    grid-template-columns: repeat(18, 2fr);
+    grid-template-columns: repeat(17, 2fr);
     grid-template-rows: repeat(19, 2fr);
     height: calc(100vh - 100px);
     aspect-ratio: 1/1;
@@ -28,9 +20,9 @@
   }
 </style>
 
-<div>
+<div class="space-y-4 space-x-4">
   <Header />
-  <div class="home">
+  <div class="flex flex-row space-x-4">
     <div class="floor">
       <Room id="bay" name="Bay" rowStart={1} columnStart={11} rowSpan={1} columnSpan={6} />
       <Room id="living" name="Living" rowStart={2} columnStart={10} rowSpan={8} columnSpan={8} />

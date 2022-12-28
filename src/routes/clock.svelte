@@ -5,21 +5,9 @@
   const clock = clockStore()
 </script>
 
-<style>
-  .clock {
-    color: #fff;
-    font-weight: 400;
-    display: flex;
-    align-items: center;
-  }
-  .label {
-    margin-left: 0.25rem;
-  }
-</style>
-
-<div class="clock">
-  <Clock color={'white'} />
-  <span class="label">
+<div class="flex items-center space-x-1">
+  <Clock />
+  <span>
     {$clock.getHours().toString().padStart(2, '0')} : {$clock
       .getMinutes()
       .toString()
