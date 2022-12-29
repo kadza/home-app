@@ -10,7 +10,7 @@ import { connect } from 'mqtt'
 import { writable } from 'svelte/store'
 
 export const isGuestLightOn = writable<boolean | null>(null)
-export const temperature = writable(0)
+export const temperature = writable<number | undefined>(undefined)
 
 let client = connect(PUBLIC_MQTT_URL, {
   username: PUBLIC_MQTT_USER,

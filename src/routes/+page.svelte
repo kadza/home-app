@@ -1,7 +1,7 @@
-<script>
-  import Header from './header.svelte'
+<script lang={ts}>
   import Room from './room.svelte'
   import { isGuestLightOn } from '../home-store'
+  import { temperature } from '../home-store';
 
   const toggleGuestLight = () => {
     isGuestLightOn.update((n) => !n)
@@ -27,7 +27,7 @@
     <Room id="hall-0" name="Hall" rowStart={6} columnStart={5} rowSpan={1} columnSpan={3} />
     <Room id="boiler" name="Boiler" rowStart={7} columnStart={1} rowSpan={3} columnSpan={5} />
     <Room id="store" name="Store" rowStart={7} columnStart={6} rowSpan={3} columnSpan={4} />
-    <Room id="garage" name="Garage" rowStart={10} columnStart={1} rowSpan={9} columnSpan={9} />
+    <Room id="garage" name="Garage" rowStart={10} columnStart={1} rowSpan={9} columnSpan={9} temperature={$temperature} setTemperature={5} isHeatingOn={true} isPresent={true}/>
     <Room id="entrance" name="Entrance" rowStart={10} columnStart={10} rowSpan={4} columnSpan={3} />
     <Room id="kitchen" name="Kitchen" rowStart={10} columnStart={13} rowSpan={4} columnSpan={5} />
   </div>
