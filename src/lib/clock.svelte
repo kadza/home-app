@@ -1,5 +1,5 @@
 <script>
-  import clockStore from '../clock-store'
+  import clockStore from './clock-store'
   import Clock from 'svelte-material-icons/Clock.svelte'
 
   const clock = clockStore()

@@ -1,7 +1,7 @@
 <script lang={ts}>
-  import Room from './room.svelte'
-  import { isGuestLightOn } from '../home-store'
-  import { temperature } from '../home-store';
+  import Room from '../lib/room.svelte'
+  import { isGuestLightOn } from '../lib/home-store'
+  import { temperature } from '../lib/home-store';
 
   const toggleGuestLight = () => {
     isGuestLightOn.update((n) => !n)
