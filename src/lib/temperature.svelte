@@ -1,8 +1,8 @@
 <script lang="ts">
   import Thermometer from 'svelte-material-icons/Thermometer.svelte'
 
-  export let temperature: number | undefined
-  export let setTemperature: number | undefined = undefined
+  export let temperature: number | null = null
+  export let setTemperature: number | null | undefined = undefined
 </script>
 
 <div class="flex items-center">

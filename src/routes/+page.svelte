@@ -1,11 +1,6 @@
-<script lang={ts}>
-  import Room from '../lib/room.svelte'
-  import { isGuestLightOn } from '../lib/home-store'
-  import { temperature } from '../lib/home-store';
-
-  const toggleGuestLight = () => {
-    isGuestLightOn.update((n) => !n)
-  }
+<script lang {ts}>
+  import Room from '../lib/room-container.svelte'
+  import { PUBLIC_EXTERNAL_TEMP, PUBLIC_GUEST_LIGHT_FROM, PUBLIC_GUEST_LIGHT_TO } from '$env/static/public'
 </script>
 
 <div class="flex flex-col items-center xl:flex-row xl:space-x-4 xl:justify-center">
@@ -19,15 +14,23 @@
       columnStart={1}
       rowSpan={5}
       columnSpan={4}
-      roomClicked={toggleGuestLight}
-      isLightOn={$isGuestLightOn}
+      lightFromTopic={PUBLIC_GUEST_LIGHT_FROM}
+      lightToTopic={PUBLIC_GUEST_LIGHT_TO}
     />
     <Room id="bath-0" name="Bath" rowStart={2} columnStart={5} rowSpan={4} columnSpan={3} />
     <Room id="stairs-0" name="Stairs" rowStart={2} columnStart={8} rowSpan={5} columnSpan={2} />
     <Room id="hall-0" name="Hall" rowStart={6} columnStart={5} rowSpan={1} columnSpan={3} />
     <Room id="boiler" name="Boiler" rowStart={7} columnStart={1} rowSpan={3} columnSpan={5} />
     <Room id="store" name="Store" rowStart={7} columnStart={6} rowSpan={3} columnSpan={4} />
-    <Room id="garage" name="Garage" rowStart={10} columnStart={1} rowSpan={9} columnSpan={9} temperature={$temperature} setTemperature={5} isHeatingOn={true} isPresent={true}/>
+    <Room
+      id="garage"
+      name="Garage"
+      rowStart={10}
+      columnStart={1}
+      rowSpan={9}
+      columnSpan={9}
+      temperatureFromTopic={PUBLIC_EXTERNAL_TEMP}
+    />
     <Room id="entrance" name="Entrance" rowStart={10} columnStart={10} rowSpan={4} columnSpan={3} />
     <Room id="kitchen" name="Kitchen" rowStart={10} columnStart={13} rowSpan={4} columnSpan={5} />
   </div>
