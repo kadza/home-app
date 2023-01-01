@@ -9,7 +9,7 @@
 </script>
 
 <div class="flex flex-col items-center xl:flex-row xl:space-x-4 xl:justify-center">
-  <div class="grid grid-cols-[repeat(17,2rem)] grid-rows-[repeat(19,2rem)] gap-1">
+  <div class="grid grid-cols-[repeat(17,2.25rem)] grid-rows-[repeat(19,2.25rem)] gap-1">
     <Room id="bay" name="Bay" rowStart={1} columnStart={11} rowSpan={1} columnSpan={6} />
     <Room id="living" name="Living" rowStart={2} columnStart={10} rowSpan={8} columnSpan={8} />
     <Room
@@ -31,7 +31,7 @@
     <Room id="entrance" name="Entrance" rowStart={10} columnStart={10} rowSpan={4} columnSpan={3} />
     <Room id="kitchen" name="Kitchen" rowStart={10} columnStart={13} rowSpan={4} columnSpan={5} />
   </div>
-  <div class="grid grid-cols-[repeat(17,2rem)] grid-rows-[repeat(19,2rem)] gap-1">
+  <div class="grid grid-cols-[repeat(17,2.25rem)] grid-rows-[repeat(19,2.25rem)] gap-1">
     <Room id="bedroom" name="Bedroom" rowStart={2} columnStart={1} rowSpan={8} columnSpan={7} />
     <Room id="stairs-1" name="Stairs" rowStart={2} columnStart={8} rowSpan={6} columnSpan={4} />
     <Room id="blanka" name="Blanka" rowStart={2} columnStart={12} rowSpan={6} columnSpan={6} />

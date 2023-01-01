@@ -8,6 +8,7 @@
   import Temperature from './temperature.svelte'
   import HumanMale from 'svelte-material-icons/HumanMale.svelte'
   import ChartLine from 'svelte-material-icons/ChartLine.svelte'
+  import ActionButton from './action-button.svelte'
   export let isLightOn = false
   export let roomClicked = () => {}
   export let columnStart = 0
@@ -28,25 +29,14 @@
   style="grid-area: {rowStart} / {columnStart} / span {rowSpan} / span {columnSpan}"
 >
   <div class="flex flex-col justify-between h-full w-full p-1">
-      <div class="flex">
-        <span class="text-xs">{name}</span>
-      </div>
-      <div class="flex justify-center gap-1">
-        <button on:click={roomClicked}>
-          {#if isLightOn}
-            <LightBulb />
-          {:else}
-            <LightBulbOff color={'grey'} />
-          {/if}
-        </button>
-        <button on:click={roomClicked}>
-          {#if isLightOn}
-            <BlindsClosed />
-          {:else}
-            <BlindsOpen color={'grey'} />
-          {/if}
-        </button>
-      </div>
+    {#if rowSpan > 2 && columnSpan > 2}
+      <span class="text-xs p-1">{name}</span>
+    {/if}
+    <div class="flex justify-center gap-2 items-center h-full">
+      <ActionButton onClick={roomClicked} isActive={isLightOn} />
+      <ActionButton actionType={"blinds"} isActive={isLightOn}/>
+    </div>
+    {#if rowSpan > 2 && columnSpan > 2}
       <div class="flex justify-between">
         <div class="flex">
           <button>
@@ -64,10 +54,11 @@
             {/if}
           </button>
           <button>
-          <ChartLine />
+            <ChartLine />
           </button>
         </div>
         <Temperature {temperature} {setTemperature} />
       </div>
-    </div>
+    {/if}
+  </div>
 </div>
