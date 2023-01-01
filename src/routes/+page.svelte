@@ -1,12 +1,72 @@
 <script lang {ts}>
   import Room from '../lib/room-container.svelte'
-  import { PUBLIC_EXTERNAL_TEMP, PUBLIC_GUEST_LIGHT_FROM, PUBLIC_GUEST_LIGHT_TO } from '$env/static/public'
+  import {
+    PUBLIC_BATH_0_LIGHT_FROM,
+    PUBLIC_BATH_0_LIGHT_TO,
+    PUBLIC_BATH_0_TEMP,
+    PUBLIC_BOILER_LIGHT_FROM,
+    PUBLIC_BOILER_LIGHT_TO,
+    PUBLIC_BOILER_TEMP,
+    PUBLIC_DINING_LIGHT_FROM,
+    PUBLIC_ENTRANCE_LIGHT_FROM,
+    PUBLIC_ENTRANCE_LIGHT_TO,
+    PUBLIC_ENTRANCE_TEMP,
+    PUBLIC_GARAGE_LIGHT_0_FROM,
+    PUBLIC_GARAGE_LIGHT_0_TO,
+    PUBLIC_GARAGE_TEMP,
+    PUBLIC_GUEST_LIGHT_FROM,
+    PUBLIC_GUEST_LIGHT_TO,
+    PUBLIC_GUEST_TEMP,
+    PUBLIC_HALL_0_LIGHT_FROM,
+    PUBLIC_HALL_0_LIGHT_TO,
+    PUBLIC_KITCHEN_LIGHT_FROM,
+    PUBLIC_KITCHEN_LIGHT_TO,
+    PUBLIC_LIVING_GARDEN_LIGHT_FROM,
+    PUBLIC_LIVING_GARDEN_LIGHT_TO,
+    PUBLIC_LIVING_LIGHT_FROM,
+    PUBLIC_LIVING_LIGHT_TO,
+    PUBLIC_LIVING_TEMP,
+    PUBLIC_STAIRS_LIGHT_FROM,
+    PUBLIC_STAIRS_LIGHT_TO,
+    PUBLIC_STORE_LIGHT_FROM,
+    PUBLIC_STORE_LIGHT_TO,
+    PUBLIC_STORE_TEMP
+  } from '$env/static/public'
 </script>
 
 <div class="flex flex-col items-center xl:flex-row xl:space-x-4 xl:justify-center">
   <div class="grid grid-cols-[repeat(17,2.25rem)] grid-rows-[repeat(19,2.25rem)] gap-1">
-    <Room id="bay" name="Bay" rowStart={1} columnStart={11} rowSpan={1} columnSpan={6} />
-    <Room id="living" name="Living" rowStart={2} columnStart={10} rowSpan={8} columnSpan={8} />
+    <Room
+      id="living-garden"
+      name="Garden"
+      rowStart={1}
+      columnStart={11}
+      rowSpan={1}
+      columnSpan={6}
+      lightFromTopic={PUBLIC_LIVING_GARDEN_LIGHT_FROM}
+      lightToTopic={PUBLIC_LIVING_GARDEN_LIGHT_TO}
+    />
+    <Room
+      id="living"
+      name="Living"
+      rowStart={2}
+      columnStart={10}
+      rowSpan={5}
+      columnSpan={8}
+      lightFromTopic={PUBLIC_LIVING_LIGHT_FROM}
+      lightToTopic={PUBLIC_LIVING_LIGHT_TO}
+      temperatureFromTopic={PUBLIC_LIVING_TEMP}
+    />
+    <Room
+      id="dining"
+      name="Dining"
+      rowStart={7}
+      columnStart={10}
+      rowSpan={3}
+      columnSpan={8}
+      lightFromTopic={PUBLIC_DINING_LIGHT_FROM}
+      lightToTopic={PUBLIC_DINING_LIGHT_FROM}
+    />
     <Room
       id="guest"
       name="Guest"
@@ -16,12 +76,61 @@
       columnSpan={4}
       lightFromTopic={PUBLIC_GUEST_LIGHT_FROM}
       lightToTopic={PUBLIC_GUEST_LIGHT_TO}
+      temperatureFromTopic={PUBLIC_GUEST_TEMP}
     />
-    <Room id="bath-0" name="Bath" rowStart={2} columnStart={5} rowSpan={4} columnSpan={3} />
-    <Room id="stairs-0" name="Stairs" rowStart={2} columnStart={8} rowSpan={5} columnSpan={2} />
-    <Room id="hall-0" name="Hall" rowStart={6} columnStart={5} rowSpan={1} columnSpan={3} />
-    <Room id="boiler" name="Boiler" rowStart={7} columnStart={1} rowSpan={3} columnSpan={5} />
-    <Room id="store" name="Store" rowStart={7} columnStart={6} rowSpan={3} columnSpan={4} />
+    <Room
+      id="bath-0"
+      name="Bath"
+      rowStart={2}
+      columnStart={5}
+      rowSpan={4}
+      columnSpan={3}
+      lightFromTopic={PUBLIC_BATH_0_LIGHT_FROM}
+      lightToTopic={PUBLIC_BATH_0_LIGHT_TO}
+      temperatureFromTopic={PUBLIC_BATH_0_TEMP}
+    />
+    <Room
+      id="stairs-0"
+      name="Stairs"
+      rowStart={2}
+      columnStart={8}
+      rowSpan={5}
+      columnSpan={2}
+      lightFromTopic={PUBLIC_STAIRS_LIGHT_FROM}
+      lightToTopic={PUBLIC_STAIRS_LIGHT_TO}
+    />
+    <Room
+      id="hall-0"
+      name="Hall"
+      rowStart={6}
+      columnStart={5}
+      rowSpan={1}
+      columnSpan={3}
+      lightFromTopic={PUBLIC_HALL_0_LIGHT_FROM}
+      lightToTopic={PUBLIC_HALL_0_LIGHT_TO}
+    />
+    <Room
+      id="boiler"
+      name="Boiler"
+      rowStart={7}
+      columnStart={1}
+      rowSpan={3}
+      columnSpan={5}
+      lightFromTopic={PUBLIC_BOILER_LIGHT_FROM}
+      lightToTopic={PUBLIC_BOILER_LIGHT_TO}
+      temperatureFromTopic={PUBLIC_BOILER_TEMP}
+    />
+    <Room
+      id="store"
+      name="Store"
+      rowStart={7}
+      columnStart={6}
+      rowSpan={3}
+      columnSpan={4}
+      lightFromTopic={PUBLIC_STORE_LIGHT_FROM}
+      lightToTopic={PUBLIC_STORE_LIGHT_TO}
+      temperatureFromTopic={PUBLIC_STORE_TEMP}
+    />
     <Room
       id="garage"
       name="Garage"
@@ -29,10 +138,31 @@
       columnStart={1}
       rowSpan={9}
       columnSpan={9}
-      temperatureFromTopic={PUBLIC_EXTERNAL_TEMP}
+      lightFromTopic={PUBLIC_GARAGE_LIGHT_0_FROM}
+      lightToTopic={PUBLIC_GARAGE_LIGHT_0_TO}
+      temperatureFromTopic={PUBLIC_GARAGE_TEMP}
     />
-    <Room id="entrance" name="Entrance" rowStart={10} columnStart={10} rowSpan={4} columnSpan={3} />
-    <Room id="kitchen" name="Kitchen" rowStart={10} columnStart={13} rowSpan={4} columnSpan={5} />
+    <Room
+      id="entrance"
+      name="Entrance"
+      rowStart={10}
+      columnStart={10}
+      rowSpan={4}
+      columnSpan={3}
+      lightFromTopic={PUBLIC_ENTRANCE_LIGHT_FROM}
+      lightToTopic={PUBLIC_ENTRANCE_LIGHT_TO}
+      temperatureFromTopic={PUBLIC_ENTRANCE_TEMP}
+    />
+    <Room
+      id="kitchen"
+      name="Kitchen"
+      rowStart={10}
+      columnStart={13}
+      rowSpan={4}
+      columnSpan={5}
+      lightFromTopic={PUBLIC_KITCHEN_LIGHT_FROM}
+      lightToTopic={PUBLIC_KITCHEN_LIGHT_TO}
+    />
   </div>
   <div class="grid grid-cols-[repeat(17,2.25rem)] grid-rows-[repeat(19,2.25rem)] gap-1">
     <Room id="bedroom" name="Bedroom" rowStart={2} columnStart={1} rowSpan={8} columnSpan={7} />

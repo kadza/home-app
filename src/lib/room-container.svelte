@@ -22,6 +22,7 @@
 
   client.on('connect', function () {
     if (lightFromTopic) client.subscribe(lightFromTopic)
+    if (temperatureFromTopic) client.subscribe(temperatureFromTopic)
 
     client.on('message', function (topic, message) {
       console.log(`${topic} ${message.toString()}`)
