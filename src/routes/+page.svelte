@@ -1,6 +1,7 @@
 <script lang {ts}>
   import Room from '../lib/room-container.svelte'
   import {
+    PUBLIC_BATH_0_HEAT_VALVE,
     PUBLIC_BATH_0_LIGHT_FROM,
     PUBLIC_BATH_0_LIGHT_TO,
     PUBLIC_BATH_0_TEMP,
@@ -8,12 +9,15 @@
     PUBLIC_BOILER_LIGHT_TO,
     PUBLIC_BOILER_TEMP,
     PUBLIC_DINING_LIGHT_FROM,
+    PUBLIC_ENTRANCE_HEAT_VALVE,
     PUBLIC_ENTRANCE_LIGHT_FROM,
     PUBLIC_ENTRANCE_LIGHT_TO,
     PUBLIC_ENTRANCE_TEMP,
+    PUBLIC_GARAGE_HEAT_VALVE,
     PUBLIC_GARAGE_LIGHT_0_FROM,
     PUBLIC_GARAGE_LIGHT_0_TO,
     PUBLIC_GARAGE_TEMP,
+    PUBLIC_GUEST_HEAT_VALVE,
     PUBLIC_GUEST_LIGHT_FROM,
     PUBLIC_GUEST_LIGHT_TO,
     PUBLIC_GUEST_TEMP,
@@ -23,6 +27,7 @@
     PUBLIC_KITCHEN_LIGHT_TO,
     PUBLIC_LIVING_GARDEN_LIGHT_FROM,
     PUBLIC_LIVING_GARDEN_LIGHT_TO,
+    PUBLIC_LIVING_HEAT_VALVE,
     PUBLIC_LIVING_LIGHT_FROM,
     PUBLIC_LIVING_LIGHT_TO,
     PUBLIC_LIVING_TEMP,
@@ -56,6 +61,7 @@
       lightFromTopic={PUBLIC_LIVING_LIGHT_FROM}
       lightToTopic={PUBLIC_LIVING_LIGHT_TO}
       temperatureFromTopic={PUBLIC_LIVING_TEMP}
+      heatingValveFromTopic={PUBLIC_LIVING_HEAT_VALVE}
     />
     <Room
       id="dining"
@@ -77,6 +83,7 @@
       lightFromTopic={PUBLIC_GUEST_LIGHT_FROM}
       lightToTopic={PUBLIC_GUEST_LIGHT_TO}
       temperatureFromTopic={PUBLIC_GUEST_TEMP}
+      heatingValveFromTopic={PUBLIC_GUEST_HEAT_VALVE}
     />
     <Room
       id="bath-0"
@@ -88,6 +95,7 @@
       lightFromTopic={PUBLIC_BATH_0_LIGHT_FROM}
       lightToTopic={PUBLIC_BATH_0_LIGHT_TO}
       temperatureFromTopic={PUBLIC_BATH_0_TEMP}
+      heatingValveFromTopic={PUBLIC_BATH_0_HEAT_VALVE}
     />
     <Room
       id="stairs-0"
@@ -141,6 +149,7 @@
       lightFromTopic={PUBLIC_GARAGE_LIGHT_0_FROM}
       lightToTopic={PUBLIC_GARAGE_LIGHT_0_TO}
       temperatureFromTopic={PUBLIC_GARAGE_TEMP}
+      heatingValveFromTopic={PUBLIC_GARAGE_HEAT_VALVE}
     />
     <Room
       id="entrance"
@@ -152,6 +161,7 @@
       lightFromTopic={PUBLIC_ENTRANCE_LIGHT_FROM}
       lightToTopic={PUBLIC_ENTRANCE_LIGHT_TO}
       temperatureFromTopic={PUBLIC_ENTRANCE_TEMP}
+      heatingValveFromTopic={PUBLIC_ENTRANCE_HEAT_VALVE}
     />
     <Room
       id="kitchen"

@@ -13,16 +13,18 @@
   export let lightToTopic: string | undefined = undefined
   export let temperatureFromTopic: string | undefined = undefined
   export let setTemperatureFromTopic: string | undefined = undefined
+  export let heatingValveFromTopic: string | undefined = undefined
 
   const isLightAvailable = Boolean(lightFromTopic && lightToTopic)
   const isLightOn = writable<boolean | null>(null)
-
   const temperature = writable<number | null>(null)
   const setTemperature = writable<number | null>(null)
+  const isHeatingOn = writable<boolean | null>(null)
 
   client.on('connect', function () {
     if (lightFromTopic) client.subscribe(lightFromTopic)
     if (temperatureFromTopic) client.subscribe(temperatureFromTopic)
+    if (heatingValveFromTopic) client.subscribe(heatingValveFromTopic)
 
     client.on('message', function (topic, message) {
       console.log(`${topic} ${message.toString()}`)
@@ -34,6 +36,9 @@
 
       if (setTemperatureFromTopic && topic === setTemperatureFromTopic)
         setTemperature.set(parseFloat(message.toString()))
+
+      if (heatingValveFromTopic && topic === heatingValveFromTopic)
+        isHeatingOn.set(message.toString() === '1')
     })
   })
 
@@ -59,4 +64,5 @@
   isLightOn={isLightAvailable ? Boolean($isLightOn) : undefined}
   temperature={temperatureFromTopic ? $temperature : undefined}
   setTemperature={setTemperatureFromTopic ? $setTemperature : undefined}
+  isHeatingOn={heatingValveFromTopic ? Boolean($isHeatingOn) : undefined}
 />
