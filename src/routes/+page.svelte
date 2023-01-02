@@ -5,6 +5,16 @@
     PUBLIC_BATH_0_LIGHT_FROM,
     PUBLIC_BATH_0_LIGHT_TO,
     PUBLIC_BATH_0_TEMP,
+    PUBLIC_BATH_1_HEAT_VALVE,
+    PUBLIC_BATH_1_LIGHT_FROM,
+    PUBLIC_BATH_1_LIGHT_TO,
+    PUBLIC_BATH_1_TEMP,
+    PUBLIC_BEDROOM_LIGHT_FROM,
+    PUBLIC_BEDROOM_LIGHT_TO,
+    PUBLIC_BEDROOM_TEMP,
+    PUBLIC_BLANKA_LIGHT_FROM,
+    PUBLIC_BLANKA_LIGHT_TO,
+    PUBLIC_BLANKA_TEMP,
     PUBLIC_BOILER_LIGHT_FROM,
     PUBLIC_BOILER_LIGHT_TO,
     PUBLIC_BOILER_TEMP,
@@ -23,8 +33,17 @@
     PUBLIC_GUEST_TEMP,
     PUBLIC_HALL_0_LIGHT_FROM,
     PUBLIC_HALL_0_LIGHT_TO,
+    PUBLIC_HALL_1_LIGHT_FROM,
+    PUBLIC_HALL_1_LIGHT_TO,
+    PUBLIC_HALL_1_TEMP,
     PUBLIC_KITCHEN_LIGHT_FROM,
     PUBLIC_KITCHEN_LIGHT_TO,
+    PUBLIC_LAUNDRY_LIGHT_FROM,
+    PUBLIC_LAUNDRY_LIGHT_TO,
+    PUBLIC_LAUNDRY_TEMP,
+    PUBLIC_LEON_LIGHT_FROM,
+    PUBLIC_LEON_LIGHT_TO,
+    PUBLIC_LEON_TEMP,
     PUBLIC_LIVING_GARDEN_LIGHT_FROM,
     PUBLIC_LIVING_GARDEN_LIGHT_TO,
     PUBLIC_LIVING_HEAT_VALVE,
@@ -35,7 +54,10 @@
     PUBLIC_STAIRS_LIGHT_TO,
     PUBLIC_STORE_LIGHT_FROM,
     PUBLIC_STORE_LIGHT_TO,
-    PUBLIC_STORE_TEMP
+    PUBLIC_STORE_TEMP,
+    PUBLIC_WARDROBE_LIGHT_FROM,
+    PUBLIC_WARDROBE_LIGHT_TO,
+    PUBLIC_WARDROBE_TEMP
   } from '$env/static/public'
 </script>
 
@@ -175,13 +197,93 @@
     />
   </div>
   <div class="grid grid-cols-[repeat(17,2.25rem)] grid-rows-[repeat(19,2.25rem)] gap-1">
-    <Room id="bedroom" name="Bedroom" rowStart={2} columnStart={1} rowSpan={8} columnSpan={7} />
-    <Room id="stairs-1" name="Stairs" rowStart={2} columnStart={8} rowSpan={6} columnSpan={4} />
-    <Room id="blanka" name="Blanka" rowStart={2} columnStart={12} rowSpan={6} columnSpan={6} />
-    <Room id="hall-1" name="Hall" rowStart={8} columnStart={8} rowSpan={2} columnSpan={5} />
-    <Room id="leon" name="Leon" rowStart={8} columnStart={13} rowSpan={6} columnSpan={5} />
-    <Room id="wardrobe" name="Wardrobe" rowStart={10} columnStart={1} rowSpan={4} columnSpan={4} />
-    <Room id="laundry" name="Laundry" rowStart={10} columnStart={5} rowSpan={4} columnSpan={4} />
-    <Room id="bath-1" name="Bath" rowStart={10} columnStart={9} rowSpan={4} columnSpan={4} />
+    <Room
+      id="bedroom"
+      name="Bedroom"
+      rowStart={2}
+      columnStart={1}
+      rowSpan={8}
+      columnSpan={7}
+      lightFromTopic={PUBLIC_BEDROOM_LIGHT_FROM}
+      lightToTopic={PUBLIC_BEDROOM_LIGHT_TO}
+      temperatureFromTopic={PUBLIC_BEDROOM_TEMP}
+    />
+    <Room
+      id="stairs-1"
+      name="Stairs"
+      rowStart={2}
+      columnStart={8}
+      rowSpan={6}
+      columnSpan={4}
+      lightFromTopic={PUBLIC_STAIRS_LIGHT_FROM}
+      lightToTopic={PUBLIC_STAIRS_LIGHT_TO}
+    />
+    <Room
+      id="blanka"
+      name="Blanka"
+      rowStart={2}
+      columnStart={12}
+      rowSpan={6}
+      columnSpan={6}
+      lightFromTopic={PUBLIC_BLANKA_LIGHT_FROM}
+      lightToTopic={PUBLIC_BLANKA_LIGHT_TO}
+      temperatureFromTopic={PUBLIC_BLANKA_TEMP}
+    />
+    <Room
+      id="hall-1"
+      name="Hall"
+      rowStart={8}
+      columnStart={8}
+      rowSpan={2}
+      columnSpan={5}
+      lightFromTopic={PUBLIC_HALL_1_LIGHT_FROM}
+      lightToTopic={PUBLIC_HALL_1_LIGHT_TO}
+      temperatureFromTopic={PUBLIC_HALL_1_TEMP}
+    />
+    <Room
+      id="leon"
+      name="Leon"
+      rowStart={8}
+      columnStart={13}
+      rowSpan={6}
+      columnSpan={5}
+      lightFromTopic={PUBLIC_LEON_LIGHT_FROM}
+      lightToTopic={PUBLIC_LEON_LIGHT_TO}
+      temperatureFromTopic={PUBLIC_LEON_TEMP}
+    />
+    <Room
+      id="wardrobe"
+      name="Wardrobe"
+      rowStart={10}
+      columnStart={1}
+      rowSpan={4}
+      columnSpan={4}
+      lightFromTopic={PUBLIC_WARDROBE_LIGHT_FROM}
+      lightToTopic={PUBLIC_WARDROBE_LIGHT_TO}
+      temperatureFromTopic={PUBLIC_WARDROBE_TEMP}
+    />
+    <Room
+      id="laundry"
+      name="Laundry"
+      rowStart={10}
+      columnStart={5}
+      rowSpan={4}
+      columnSpan={4}
+      lightFromTopic={PUBLIC_LAUNDRY_LIGHT_FROM}
+      lightToTopic={PUBLIC_LAUNDRY_LIGHT_TO}
+      temperatureFromTopic={PUBLIC_LAUNDRY_TEMP}
+    />
+    <Room
+      id="bath-1"
+      name="Bath"
+      rowStart={10}
+      columnStart={9}
+      rowSpan={4}
+      columnSpan={4}
+      lightFromTopic={PUBLIC_BATH_1_LIGHT_FROM}
+      lightToTopic={PUBLIC_BATH_1_LIGHT_TO}
+      temperatureFromTopic={PUBLIC_BATH_1_TEMP}
+      heatingValveFromTopic={PUBLIC_BATH_1_HEAT_VALVE}
+    />
   </div>
 </div>
