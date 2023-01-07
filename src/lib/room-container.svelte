@@ -9,8 +9,8 @@
   export let columnStart: number
   export let rowSpan: number
   export let columnSpan: number
-  export let lightFromTopic: string | undefined = undefined
-  export let lightToTopic: string | undefined = undefined
+  export let lightFromTopic: string | string[] | undefined = undefined
+  export let lightToTopic: string | string[] | undefined = undefined
   export let temperatureFromTopic: string | undefined = undefined
   export let setTemperatureFromTopic: string | undefined = undefined
   export let heatingValveFromTopic: string | undefined = undefined
@@ -22,14 +22,20 @@
   const isHeatingOn = writable<boolean | null>(null)
 
   client.on('connect', function () {
-    if (lightFromTopic) client.subscribe(lightFromTopic)
+    if (lightFromTopic && typeof lightFromTopic === 'string') client.subscribe(lightFromTopic)
+    if (lightFromTopic && Array.isArray(lightFromTopic))
+      lightFromTopic.forEach((topic) => client.subscribe(topic))
+
     if (temperatureFromTopic) client.subscribe(temperatureFromTopic)
     if (heatingValveFromTopic) client.subscribe(heatingValveFromTopic)
 
     client.on('message', function (topic, message) {
       console.log(`${topic} ${message.toString()}`)
 
-      if (lightFromTopic && topic === lightFromTopic) isLightOn.set(message.toString() === '1')
+      if (lightFromTopic && topic === lightFromTopic && typeof lightFromTopic === 'string')
+        isLightOn.set(message.toString() === '1')
+      if (lightFromTopic && Array.isArray(lightFromTopic) && lightFromTopic.includes(topic))
+        isLightOn.set(message.toString() === '1')
 
       if (temperatureFromTopic && topic === temperatureFromTopic)
         temperature.set(parseFloat(message.toString()))
@@ -49,7 +55,8 @@
   isLightOn.subscribe((value) => {
     if (!lightToTopic || value === null) return
 
-    client.publish(lightToTopic, value ? '1' : '0')
+    if(typeof lightToTopic === 'string') client.publish(lightToTopic, value ? '1' : '0')
+    if(Array.isArray(lightToTopic)) lightToTopic.forEach((topic) => client.publish(topic, value ? '1' : '0'))
   })
 </script>
 

@@ -4,20 +4,30 @@
     PUBLIC_BATH_0_HEAT_VALVE,
     PUBLIC_BATH_0_LIGHT_FROM,
     PUBLIC_BATH_0_LIGHT_TO,
+    PUBLIC_BATH_0_MIRROR_LIGHT_FROM,
+    PUBLIC_BATH_0_MIRROR_LIGHT_TO,
     PUBLIC_BATH_0_TEMP,
     PUBLIC_BATH_1_HEAT_VALVE,
     PUBLIC_BATH_1_LIGHT_FROM,
     PUBLIC_BATH_1_LIGHT_TO,
+    PUBLIC_BATH_1_MIRROR_LIGHT_FROM,
+    PUBLIC_BATH_1_MIRROR_LIGHT_TO,
     PUBLIC_BATH_1_TEMP,
     PUBLIC_BEDROOM_LIGHT_FROM,
     PUBLIC_BEDROOM_LIGHT_TO,
     PUBLIC_BEDROOM_TEMP,
+    PUBLIC_BEDROOM_WINDOW_LIGHT_FROM,
+    PUBLIC_BEDROOM_WINDOW_LIGHT_TO,
     PUBLIC_BLANKA_LIGHT_FROM,
     PUBLIC_BLANKA_LIGHT_TO,
     PUBLIC_BLANKA_TEMP,
+    PUBLIC_BLANKA_WALL_LIGHT_FROM,
+    PUBLIC_BLANKA_WALL_LIGHT_TO,
     PUBLIC_BOILER_LIGHT_FROM,
     PUBLIC_BOILER_LIGHT_TO,
     PUBLIC_BOILER_TEMP,
+    PUBLIC_BOILER_WALL_LIGHT_FROM,
+    PUBLIC_BOILER_WALL_LIGHT_TO,
     PUBLIC_DINING_LIGHT_FROM,
     PUBLIC_ENTRANCE_HEAT_VALVE,
     PUBLIC_ENTRANCE_LIGHT_FROM,
@@ -26,6 +36,8 @@
     PUBLIC_GARAGE_HEAT_VALVE,
     PUBLIC_GARAGE_LIGHT_0_FROM,
     PUBLIC_GARAGE_LIGHT_0_TO,
+    PUBLIC_GARAGE_LIGHT_1_FROM,
+    PUBLIC_GARAGE_LIGHT_1_TO,
     PUBLIC_GARAGE_TEMP,
     PUBLIC_GUEST_HEAT_VALVE,
     PUBLIC_GUEST_LIGHT_FROM,
@@ -44,6 +56,8 @@
     PUBLIC_LEON_LIGHT_FROM,
     PUBLIC_LEON_LIGHT_TO,
     PUBLIC_LEON_TEMP,
+    PUBLIC_LEON_WALL_LIGHT_FROM,
+    PUBLIC_LEON_WALL_LIGHT_TO,
     PUBLIC_LIVING_GARDEN_LIGHT_FROM,
     PUBLIC_LIVING_GARDEN_LIGHT_TO,
     PUBLIC_LIVING_HEAT_VALVE,
@@ -114,8 +128,8 @@
       columnStart={5}
       rowSpan={4}
       columnSpan={3}
-      lightFromTopic={PUBLIC_BATH_0_LIGHT_FROM}
-      lightToTopic={PUBLIC_BATH_0_LIGHT_TO}
+      lightFromTopic={[PUBLIC_BATH_0_LIGHT_FROM, PUBLIC_BATH_0_MIRROR_LIGHT_FROM]}
+      lightToTopic={[PUBLIC_BATH_0_LIGHT_TO, PUBLIC_BATH_0_MIRROR_LIGHT_TO]}
       temperatureFromTopic={PUBLIC_BATH_0_TEMP}
       heatingValveFromTopic={PUBLIC_BATH_0_HEAT_VALVE}
     />
@@ -146,8 +160,8 @@
       columnStart={1}
       rowSpan={3}
       columnSpan={5}
-      lightFromTopic={PUBLIC_BOILER_LIGHT_FROM}
-      lightToTopic={PUBLIC_BOILER_LIGHT_TO}
+      lightFromTopic={[PUBLIC_BOILER_LIGHT_FROM, PUBLIC_BOILER_WALL_LIGHT_FROM]}
+      lightToTopic={[PUBLIC_BOILER_LIGHT_TO, PUBLIC_BOILER_WALL_LIGHT_TO]}
       temperatureFromTopic={PUBLIC_BOILER_TEMP}
     />
     <Room
@@ -168,8 +182,8 @@
       columnStart={1}
       rowSpan={9}
       columnSpan={9}
-      lightFromTopic={PUBLIC_GARAGE_LIGHT_0_FROM}
-      lightToTopic={PUBLIC_GARAGE_LIGHT_0_TO}
+      lightFromTopic={[PUBLIC_GARAGE_LIGHT_0_FROM, PUBLIC_GARAGE_LIGHT_1_FROM]}
+      lightToTopic={[PUBLIC_GARAGE_LIGHT_0_TO, PUBLIC_GARAGE_LIGHT_1_TO]}
       temperatureFromTopic={PUBLIC_GARAGE_TEMP}
       heatingValveFromTopic={PUBLIC_GARAGE_HEAT_VALVE}
     />
@@ -204,8 +218,8 @@
       columnStart={1}
       rowSpan={8}
       columnSpan={7}
-      lightFromTopic={PUBLIC_BEDROOM_LIGHT_FROM}
-      lightToTopic={PUBLIC_BEDROOM_LIGHT_TO}
+      lightFromTopic={[PUBLIC_BEDROOM_LIGHT_FROM, PUBLIC_BEDROOM_WINDOW_LIGHT_FROM]}
+      lightToTopic={[PUBLIC_BEDROOM_LIGHT_TO, PUBLIC_BEDROOM_WINDOW_LIGHT_TO]}
       temperatureFromTopic={PUBLIC_BEDROOM_TEMP}
     />
     <Room
@@ -225,8 +239,8 @@
       columnStart={12}
       rowSpan={6}
       columnSpan={6}
-      lightFromTopic={PUBLIC_BLANKA_LIGHT_FROM}
-      lightToTopic={PUBLIC_BLANKA_LIGHT_TO}
+      lightFromTopic={[PUBLIC_BLANKA_LIGHT_FROM, PUBLIC_BLANKA_WALL_LIGHT_FROM]}
+      lightToTopic={[PUBLIC_BLANKA_LIGHT_TO, PUBLIC_BLANKA_WALL_LIGHT_TO]}
       temperatureFromTopic={PUBLIC_BLANKA_TEMP}
     />
     <Room
@@ -247,8 +261,8 @@
       columnStart={13}
       rowSpan={6}
       columnSpan={5}
-      lightFromTopic={PUBLIC_LEON_LIGHT_FROM}
-      lightToTopic={PUBLIC_LEON_LIGHT_TO}
+      lightFromTopic={[PUBLIC_LEON_LIGHT_FROM, PUBLIC_LEON_WALL_LIGHT_FROM]}
+      lightToTopic={[PUBLIC_LEON_LIGHT_TO, PUBLIC_LEON_WALL_LIGHT_TO]}
       temperatureFromTopic={PUBLIC_LEON_TEMP}
     />
     <Room
@@ -280,8 +294,8 @@
       columnStart={9}
       rowSpan={4}
       columnSpan={4}
-      lightFromTopic={PUBLIC_BATH_1_LIGHT_FROM}
-      lightToTopic={PUBLIC_BATH_1_LIGHT_TO}
+      lightFromTopic={[PUBLIC_BATH_1_LIGHT_FROM, PUBLIC_BATH_1_MIRROR_LIGHT_FROM]}
+      lightToTopic={[PUBLIC_BATH_1_LIGHT_TO, PUBLIC_BATH_1_MIRROR_LIGHT_TO]}
       temperatureFromTopic={PUBLIC_BATH_1_TEMP}
       heatingValveFromTopic={PUBLIC_BATH_1_HEAT_VALVE}
     />
