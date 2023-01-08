@@ -1,7 +1,8 @@
 <script lang="ts">
   import Room from './room.svelte'
-  import { client } from './home-client'
+  import { client } from './home-client.svelte'
   import { writable } from 'svelte/store'
+  import { onMount } from 'svelte'
 
   export let name: string
   export let id: string
@@ -21,43 +22,45 @@
   const setTemperature = writable<number | null>(null)
   const isHeatingOn = writable<boolean | null>(null)
 
-  client.on('connect', function () {
-    if (lightFromTopic && typeof lightFromTopic === 'string') client.subscribe(lightFromTopic)
-    if (lightFromTopic && Array.isArray(lightFromTopic))
-      lightFromTopic.forEach((topic) => client.subscribe(topic))
+  onMount(() => {
+    client.on('connect', function () {
+      if (lightFromTopic && typeof lightFromTopic === 'string') client.subscribe(lightFromTopic)
+      if (lightFromTopic && Array.isArray(lightFromTopic))
+        lightFromTopic.forEach((topic) => client.subscribe(topic))
 
-    if (temperatureFromTopic) client.subscribe(temperatureFromTopic)
-    if (heatingValveFromTopic) client.subscribe(heatingValveFromTopic)
+      if (temperatureFromTopic) client.subscribe(temperatureFromTopic)
+      if (heatingValveFromTopic) client.subscribe(heatingValveFromTopic)
 
-    client.on('message', function (topic, message) {
-      console.log(`${topic} ${message.toString()}`)
+      client.on('message', function (topic, message) {
+        console.log(`${topic} ${message.toString()}`)
 
-      if (lightFromTopic && topic === lightFromTopic && typeof lightFromTopic === 'string')
-        isLightOn.set(message.toString() === '1')
-      if (lightFromTopic && Array.isArray(lightFromTopic) && lightFromTopic.includes(topic))
-        isLightOn.set(message.toString() === '1')
+        if (lightFromTopic && topic === lightFromTopic && typeof lightFromTopic === 'string')
+          isLightOn.set(message.toString() === '1')
+        if (lightFromTopic && Array.isArray(lightFromTopic) && lightFromTopic.includes(topic))
+          isLightOn.set(message.toString() === '1')
 
-      if (temperatureFromTopic && topic === temperatureFromTopic)
-        temperature.set(parseFloat(message.toString()))
+        if (temperatureFromTopic && topic === temperatureFromTopic)
+          temperature.set(parseFloat(message.toString()))
 
-      if (setTemperatureFromTopic && topic === setTemperatureFromTopic)
-        setTemperature.set(parseFloat(message.toString()))
+        if (setTemperatureFromTopic && topic === setTemperatureFromTopic)
+          setTemperature.set(parseFloat(message.toString()))
 
-      if (heatingValveFromTopic && topic === heatingValveFromTopic)
-        isHeatingOn.set(message.toString() === '1')
+        if (heatingValveFromTopic && topic === heatingValveFromTopic)
+          isHeatingOn.set(message.toString() === '1')
+      })
+    })
+
+    isLightOn.subscribe((value) => {
+      if (!lightToTopic || value === null) return
+
+      if (typeof lightToTopic === 'string') client.publish(lightToTopic, value ? '1' : '0')
+      if (Array.isArray(lightToTopic))
+        lightToTopic.forEach((topic) => client.publish(topic, value ? '1' : '0'))
     })
   })
-
   const toggleGuestLight = () => {
     isLightOn.update((n) => !n)
   }
-
-  isLightOn.subscribe((value) => {
-    if (!lightToTopic || value === null) return
-
-    if(typeof lightToTopic === 'string') client.publish(lightToTopic, value ? '1' : '0')
-    if(Array.isArray(lightToTopic)) lightToTopic.forEach((topic) => client.publish(topic, value ? '1' : '0'))
-  })
 </script>
 
 <Room
