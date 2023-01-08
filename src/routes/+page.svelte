@@ -77,7 +77,7 @@
 
 <div class="flex flex-col items-center xl:flex-row xl:space-x-4 xl:justify-center">
   <div class="grid grid-cols-[repeat(17,2.25rem)] grid-rows-[repeat(19,2.25rem)] gap-1">
-    <Room
+    <!-- <Room
       id="living-garden"
       name="Garden"
       rowStart={1}
@@ -108,7 +108,7 @@
       columnSpan={8}
       lightFromTopic={PUBLIC_DINING_LIGHT_FROM}
       lightToTopic={PUBLIC_DINING_LIGHT_FROM}
-    />
+    /> -->
     <Room
       id="guest"
       name="Guest"
@@ -121,7 +121,7 @@
       temperatureFromTopic={PUBLIC_GUEST_TEMP}
       heatingValveFromTopic={PUBLIC_GUEST_HEAT_VALVE}
     />
-    <Room
+    <!-- <Room
       id="bath-0"
       name="Bath"
       rowStart={2}
@@ -298,6 +298,6 @@
       lightToTopic={[PUBLIC_BATH_1_LIGHT_TO, PUBLIC_BATH_1_MIRROR_LIGHT_TO]}
       temperatureFromTopic={PUBLIC_BATH_1_TEMP}
       heatingValveFromTopic={PUBLIC_BATH_1_HEAT_VALVE}
-    />
+    /> -->
   </div>
 </div>
