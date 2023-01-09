@@ -10,3 +10,5 @@ docker-compose.yml
 public
 .svelte-kit
 build
+.env
+.env.example

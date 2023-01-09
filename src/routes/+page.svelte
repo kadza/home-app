@@ -1,78 +1,6 @@
 <script lang {ts}>
   import Room from '../lib/room-container.svelte'
-  import {
-    PUBLIC_BATH_0_HEAT_VALVE,
-    PUBLIC_BATH_0_LIGHT_FROM,
-    PUBLIC_BATH_0_LIGHT_TO,
-    PUBLIC_BATH_0_MIRROR_LIGHT_FROM,
-    PUBLIC_BATH_0_MIRROR_LIGHT_TO,
-    PUBLIC_BATH_0_TEMP,
-    PUBLIC_BATH_1_HEAT_VALVE,
-    PUBLIC_BATH_1_LIGHT_FROM,
-    PUBLIC_BATH_1_LIGHT_TO,
-    PUBLIC_BATH_1_MIRROR_LIGHT_FROM,
-    PUBLIC_BATH_1_MIRROR_LIGHT_TO,
-    PUBLIC_BATH_1_TEMP,
-    PUBLIC_BEDROOM_LIGHT_FROM,
-    PUBLIC_BEDROOM_LIGHT_TO,
-    PUBLIC_BEDROOM_TEMP,
-    PUBLIC_BEDROOM_WINDOW_LIGHT_FROM,
-    PUBLIC_BEDROOM_WINDOW_LIGHT_TO,
-    PUBLIC_BLANKA_LIGHT_FROM,
-    PUBLIC_BLANKA_LIGHT_TO,
-    PUBLIC_BLANKA_TEMP,
-    PUBLIC_BLANKA_WALL_LIGHT_FROM,
-    PUBLIC_BLANKA_WALL_LIGHT_TO,
-    PUBLIC_BOILER_LIGHT_FROM,
-    PUBLIC_BOILER_LIGHT_TO,
-    PUBLIC_BOILER_TEMP,
-    PUBLIC_BOILER_WALL_LIGHT_FROM,
-    PUBLIC_BOILER_WALL_LIGHT_TO,
-    PUBLIC_DINING_LIGHT_FROM,
-    PUBLIC_ENTRANCE_HEAT_VALVE,
-    PUBLIC_ENTRANCE_LIGHT_FROM,
-    PUBLIC_ENTRANCE_LIGHT_TO,
-    PUBLIC_ENTRANCE_TEMP,
-    PUBLIC_GARAGE_HEAT_VALVE,
-    PUBLIC_GARAGE_LIGHT_0_FROM,
-    PUBLIC_GARAGE_LIGHT_0_TO,
-    PUBLIC_GARAGE_LIGHT_1_FROM,
-    PUBLIC_GARAGE_LIGHT_1_TO,
-    PUBLIC_GARAGE_TEMP,
-    PUBLIC_GUEST_HEAT_VALVE,
-    PUBLIC_GUEST_LIGHT_FROM,
-    PUBLIC_GUEST_LIGHT_TO,
-    PUBLIC_GUEST_TEMP,
-    PUBLIC_HALL_0_LIGHT_FROM,
-    PUBLIC_HALL_0_LIGHT_TO,
-    PUBLIC_HALL_1_LIGHT_FROM,
-    PUBLIC_HALL_1_LIGHT_TO,
-    PUBLIC_HALL_1_TEMP,
-    PUBLIC_KITCHEN_LIGHT_FROM,
-    PUBLIC_KITCHEN_LIGHT_TO,
-    PUBLIC_LAUNDRY_LIGHT_FROM,
-    PUBLIC_LAUNDRY_LIGHT_TO,
-    PUBLIC_LAUNDRY_TEMP,
-    PUBLIC_LEON_LIGHT_FROM,
-    PUBLIC_LEON_LIGHT_TO,
-    PUBLIC_LEON_TEMP,
-    PUBLIC_LEON_WALL_LIGHT_FROM,
-    PUBLIC_LEON_WALL_LIGHT_TO,
-    PUBLIC_LIVING_GARDEN_LIGHT_FROM,
-    PUBLIC_LIVING_GARDEN_LIGHT_TO,
-    PUBLIC_LIVING_HEAT_VALVE,
-    PUBLIC_LIVING_LIGHT_FROM,
-    PUBLIC_LIVING_LIGHT_TO,
-    PUBLIC_LIVING_TEMP,
-    PUBLIC_STAIRS_LIGHT_FROM,
-    PUBLIC_STAIRS_LIGHT_TO,
-    PUBLIC_STORE_LIGHT_FROM,
-    PUBLIC_STORE_LIGHT_TO,
-    PUBLIC_STORE_TEMP,
-    PUBLIC_WARDROBE_LIGHT_FROM,
-    PUBLIC_WARDROBE_LIGHT_TO,
-    PUBLIC_WARDROBE_TEMP
-  } from '$env/static/public'
+  import { env } from '$env/dynamic/public'
 </script>
 
 <div class="flex flex-col items-center xl:flex-row xl:space-x-4 xl:justify-center">
@@ -84,8 +12,8 @@
       columnStart={11}
       rowSpan={1}
       columnSpan={6}
-      lightFromTopic={PUBLIC_LIVING_GARDEN_LIGHT_FROM}
-      lightToTopic={PUBLIC_LIVING_GARDEN_LIGHT_TO}
+      lightFromTopic={env.PUBLIC_LIVING_GARDEN_LIGHT_FROM}
+      lightToTopic={env.PUBLIC_LIVING_GARDEN_LIGHT_TO}
     />
     <Room
       id="living"
@@ -94,10 +22,10 @@
       columnStart={10}
       rowSpan={5}
       columnSpan={8}
-      lightFromTopic={PUBLIC_LIVING_LIGHT_FROM}
-      lightToTopic={PUBLIC_LIVING_LIGHT_TO}
-      temperatureFromTopic={PUBLIC_LIVING_TEMP}
-      heatingValveFromTopic={PUBLIC_LIVING_HEAT_VALVE}
+      lightFromTopic={env.PUBLIC_LIVING_LIGHT_FROM}
+      lightToTopic={env.PUBLIC_LIVING_LIGHT_TO}
+      temperatureFromTopic={env.PUBLIC_LIVING_TEMP}
+      heatingValveFromTopic={env.PUBLIC_LIVING_HEAT_VALVE}
     />
     <Room
       id="dining"
@@ -106,8 +34,8 @@
       columnStart={10}
       rowSpan={3}
       columnSpan={8}
-      lightFromTopic={PUBLIC_DINING_LIGHT_FROM}
-      lightToTopic={PUBLIC_DINING_LIGHT_FROM}
+      lightFromTopic={env.PUBLIC_DINING_LIGHT_FROM}
+      lightToTopic={env.PUBLIC_DINING_LIGHT_FROM}
     /> -->
     <Room
       id="guest"
@@ -116,10 +44,10 @@
       columnStart={1}
       rowSpan={5}
       columnSpan={4}
-      lightFromTopic={PUBLIC_GUEST_LIGHT_FROM}
-      lightToTopic={PUBLIC_GUEST_LIGHT_TO}
-      temperatureFromTopic={PUBLIC_GUEST_TEMP}
-      heatingValveFromTopic={PUBLIC_GUEST_HEAT_VALVE}
+      lightFromTopic={env.PUBLIC_GUEST_LIGHT_FROM}
+      lightToTopic={env.PUBLIC_GUEST_LIGHT_TO}
+      temperatureFromTopic={env.PUBLIC_GUEST_TEMP}
+      heatingValveFromTopic={env.PUBLIC_GUEST_HEAT_VALVE}
     />
     <!-- <Room
       id="bath-0"
@@ -128,10 +56,10 @@
       columnStart={5}
       rowSpan={4}
       columnSpan={3}
-      lightFromTopic={[PUBLIC_BATH_0_LIGHT_FROM, PUBLIC_BATH_0_MIRROR_LIGHT_FROM]}
-      lightToTopic={[PUBLIC_BATH_0_LIGHT_TO, PUBLIC_BATH_0_MIRROR_LIGHT_TO]}
-      temperatureFromTopic={PUBLIC_BATH_0_TEMP}
-      heatingValveFromTopic={PUBLIC_BATH_0_HEAT_VALVE}
+      lightFromTopic={[env.PUBLIC_BATH_0_LIGHT_FROM, env.PUBLIC_BATH_0_MIRROR_LIGHT_FROM]}
+      lightToTopic={[env.PUBLIC_BATH_0_LIGHT_TO, env.PUBLIC_BATH_0_MIRROR_LIGHT_TO]}
+      temperatureFromTopic={env.PUBLIC_BATH_0_TEMP}
+      heatingValveFromTopic={env.PUBLIC_BATH_0_HEAT_VALVE}
     />
     <Room
       id="stairs-0"
@@ -140,8 +68,8 @@
       columnStart={8}
       rowSpan={5}
       columnSpan={2}
-      lightFromTopic={PUBLIC_STAIRS_LIGHT_FROM}
-      lightToTopic={PUBLIC_STAIRS_LIGHT_TO}
+      lightFromTopic={env.PUBLIC_STAIRS_LIGHT_FROM}
+      lightToTopic={env.PUBLIC_STAIRS_LIGHT_TO}
     />
     <Room
       id="hall-0"
@@ -150,8 +78,8 @@
       columnStart={5}
       rowSpan={1}
       columnSpan={3}
-      lightFromTopic={PUBLIC_HALL_0_LIGHT_FROM}
-      lightToTopic={PUBLIC_HALL_0_LIGHT_TO}
+      lightFromTopic={env.PUBLIC_HALL_0_LIGHT_FROM}
+      lightToTopic={env.PUBLIC_HALL_0_LIGHT_TO}
     />
     <Room
       id="boiler"
@@ -160,9 +88,9 @@
       columnStart={1}
       rowSpan={3}
       columnSpan={5}
-      lightFromTopic={[PUBLIC_BOILER_LIGHT_FROM, PUBLIC_BOILER_WALL_LIGHT_FROM]}
-      lightToTopic={[PUBLIC_BOILER_LIGHT_TO, PUBLIC_BOILER_WALL_LIGHT_TO]}
-      temperatureFromTopic={PUBLIC_BOILER_TEMP}
+      lightFromTopic={[env.PUBLIC_BOILER_LIGHT_FROM, env.PUBLIC_BOILER_WALL_LIGHT_FROM]}
+      lightToTopic={[env.PUBLIC_BOILER_LIGHT_TO, env.PUBLIC_BOILER_WALL_LIGHT_TO]}
+      temperatureFromTopic={env.PUBLIC_BOILER_TEMP}
     />
     <Room
       id="store"
@@ -171,9 +99,9 @@
       columnStart={6}
       rowSpan={3}
       columnSpan={4}
-      lightFromTopic={PUBLIC_STORE_LIGHT_FROM}
-      lightToTopic={PUBLIC_STORE_LIGHT_TO}
-      temperatureFromTopic={PUBLIC_STORE_TEMP}
+      lightFromTopic={env.PUBLIC_STORE_LIGHT_FROM}
+      lightToTopic={env.PUBLIC_STORE_LIGHT_TO}
+      temperatureFromTopic={env.PUBLIC_STORE_TEMP}
     />
     <Room
       id="garage"
@@ -182,10 +110,10 @@
       columnStart={1}
       rowSpan={9}
       columnSpan={9}
-      lightFromTopic={[PUBLIC_GARAGE_LIGHT_0_FROM, PUBLIC_GARAGE_LIGHT_1_FROM]}
-      lightToTopic={[PUBLIC_GARAGE_LIGHT_0_TO, PUBLIC_GARAGE_LIGHT_1_TO]}
-      temperatureFromTopic={PUBLIC_GARAGE_TEMP}
-      heatingValveFromTopic={PUBLIC_GARAGE_HEAT_VALVE}
+      lightFromTopic={[env.PUBLIC_GARAGE_LIGHT_0_FROM, env.PUBLIC_GARAGE_LIGHT_1_FROM]}
+      lightToTopic={[env.PUBLIC_GARAGE_LIGHT_0_TO, env.PUBLIC_GARAGE_LIGHT_1_TO]}
+      temperatureFromTopic={env.PUBLIC_GARAGE_TEMP}
+      heatingValveFromTopic={env.PUBLIC_GARAGE_HEAT_VALVE}
     />
     <Room
       id="entrance"
@@ -194,10 +122,10 @@
       columnStart={10}
       rowSpan={4}
       columnSpan={3}
-      lightFromTopic={PUBLIC_ENTRANCE_LIGHT_FROM}
-      lightToTopic={PUBLIC_ENTRANCE_LIGHT_TO}
-      temperatureFromTopic={PUBLIC_ENTRANCE_TEMP}
-      heatingValveFromTopic={PUBLIC_ENTRANCE_HEAT_VALVE}
+      lightFromTopic={env.PUBLIC_ENTRANCE_LIGHT_FROM}
+      lightToTopic={env.PUBLIC_ENTRANCE_LIGHT_TO}
+      temperatureFromTopic={env.PUBLIC_ENTRANCE_TEMP}
+      heatingValveFromTopic={env.PUBLIC_ENTRANCE_HEAT_VALVE}
     />
     <Room
       id="kitchen"
@@ -206,8 +134,8 @@
       columnStart={13}
       rowSpan={4}
       columnSpan={5}
-      lightFromTopic={PUBLIC_KITCHEN_LIGHT_FROM}
-      lightToTopic={PUBLIC_KITCHEN_LIGHT_TO}
+      lightFromTopic={env.PUBLIC_KITCHEN_LIGHT_FROM}
+      lightToTopic={env.PUBLIC_KITCHEN_LIGHT_TO}
     />
   </div>
   <div class="grid grid-cols-[repeat(17,2.25rem)] grid-rows-[repeat(19,2.25rem)] gap-1">
@@ -218,9 +146,9 @@
       columnStart={1}
       rowSpan={8}
       columnSpan={7}
-      lightFromTopic={[PUBLIC_BEDROOM_LIGHT_FROM, PUBLIC_BEDROOM_WINDOW_LIGHT_FROM]}
-      lightToTopic={[PUBLIC_BEDROOM_LIGHT_TO, PUBLIC_BEDROOM_WINDOW_LIGHT_TO]}
-      temperatureFromTopic={PUBLIC_BEDROOM_TEMP}
+      lightFromTopic={[env.PUBLIC_BEDROOM_LIGHT_FROM, env.PUBLIC_BEDROOM_WINDOW_LIGHT_FROM]}
+      lightToTopic={[env.PUBLIC_BEDROOM_LIGHT_TO, env.PUBLIC_BEDROOM_WINDOW_LIGHT_TO]}
+      temperatureFromTopic={env.PUBLIC_BEDROOM_TEMP}
     />
     <Room
       id="stairs-1"
@@ -229,8 +157,8 @@
       columnStart={8}
       rowSpan={6}
       columnSpan={4}
-      lightFromTopic={PUBLIC_STAIRS_LIGHT_FROM}
-      lightToTopic={PUBLIC_STAIRS_LIGHT_TO}
+      lightFromTopic={env.PUBLIC_STAIRS_LIGHT_FROM}
+      lightToTopic={env.PUBLIC_STAIRS_LIGHT_TO}
     />
     <Room
       id="blanka"
@@ -239,9 +167,9 @@
       columnStart={12}
       rowSpan={6}
       columnSpan={6}
-      lightFromTopic={[PUBLIC_BLANKA_LIGHT_FROM, PUBLIC_BLANKA_WALL_LIGHT_FROM]}
-      lightToTopic={[PUBLIC_BLANKA_LIGHT_TO, PUBLIC_BLANKA_WALL_LIGHT_TO]}
-      temperatureFromTopic={PUBLIC_BLANKA_TEMP}
+      lightFromTopic={[env.PUBLIC_BLANKA_LIGHT_FROM, env.PUBLIC_BLANKA_WALL_LIGHT_FROM]}
+      lightToTopic={[env.PUBLIC_BLANKA_LIGHT_TO, env.PUBLIC_BLANKA_WALL_LIGHT_TO]}
+      temperatureFromTopic={env.PUBLIC_BLANKA_TEMP}
     />
     <Room
       id="hall-1"
@@ -250,9 +178,9 @@
       columnStart={8}
       rowSpan={2}
       columnSpan={5}
-      lightFromTopic={PUBLIC_HALL_1_LIGHT_FROM}
-      lightToTopic={PUBLIC_HALL_1_LIGHT_TO}
-      temperatureFromTopic={PUBLIC_HALL_1_TEMP}
+      lightFromTopic={env.PUBLIC_HALL_1_LIGHT_FROM}
+      lightToTopic={env.PUBLIC_HALL_1_LIGHT_TO}
+      temperatureFromTopic={env.PUBLIC_HALL_1_TEMP}
     />
     <Room
       id="leon"
@@ -261,9 +189,9 @@
       columnStart={13}
       rowSpan={6}
       columnSpan={5}
-      lightFromTopic={[PUBLIC_LEON_LIGHT_FROM, PUBLIC_LEON_WALL_LIGHT_FROM]}
-      lightToTopic={[PUBLIC_LEON_LIGHT_TO, PUBLIC_LEON_WALL_LIGHT_TO]}
-      temperatureFromTopic={PUBLIC_LEON_TEMP}
+      lightFromTopic={[env.PUBLIC_LEON_LIGHT_FROM, env.PUBLIC_LEON_WALL_LIGHT_FROM]}
+      lightToTopic={[env.PUBLIC_LEON_LIGHT_TO, env.PUBLIC_LEON_WALL_LIGHT_TO]}
+      temperatureFromTopic={env.PUBLIC_LEON_TEMP}
     />
     <Room
       id="wardrobe"
@@ -272,9 +200,9 @@
       columnStart={1}
       rowSpan={4}
       columnSpan={4}
-      lightFromTopic={PUBLIC_WARDROBE_LIGHT_FROM}
-      lightToTopic={PUBLIC_WARDROBE_LIGHT_TO}
-      temperatureFromTopic={PUBLIC_WARDROBE_TEMP}
+      lightFromTopic={env.PUBLIC_WARDROBE_LIGHT_FROM}
+      lightToTopic={env.PUBLIC_WARDROBE_LIGHT_TO}
+      temperatureFromTopic={env.PUBLIC_WARDROBE_TEMP}
     />
     <Room
       id="laundry"
@@ -283,9 +211,9 @@
       columnStart={5}
       rowSpan={4}
       columnSpan={4}
-      lightFromTopic={PUBLIC_LAUNDRY_LIGHT_FROM}
-      lightToTopic={PUBLIC_LAUNDRY_LIGHT_TO}
-      temperatureFromTopic={PUBLIC_LAUNDRY_TEMP}
+      lightFromTopic={env.PUBLIC_LAUNDRY_LIGHT_FROM}
+      lightToTopic={env.PUBLIC_LAUNDRY_LIGHT_TO}
+      temperatureFromTopic={env.PUBLIC_LAUNDRY_TEMP}
     />
     <Room
       id="bath-1"
@@ -294,10 +222,10 @@
       columnStart={9}
       rowSpan={4}
       columnSpan={4}
-      lightFromTopic={[PUBLIC_BATH_1_LIGHT_FROM, PUBLIC_BATH_1_MIRROR_LIGHT_FROM]}
-      lightToTopic={[PUBLIC_BATH_1_LIGHT_TO, PUBLIC_BATH_1_MIRROR_LIGHT_TO]}
-      temperatureFromTopic={PUBLIC_BATH_1_TEMP}
-      heatingValveFromTopic={PUBLIC_BATH_1_HEAT_VALVE}
+      lightFromTopic={[env.PUBLIC_BATH_1_LIGHT_FROM, env.PUBLIC_BATH_1_MIRROR_LIGHT_FROM]}
+      lightToTopic={[env.PUBLIC_BATH_1_LIGHT_TO, env.PUBLIC_BATH_1_MIRROR_LIGHT_TO]}
+      temperatureFromTopic={env.PUBLIC_BATH_1_TEMP}
+      heatingValveFromTopic={env.PUBLIC_BATH_1_HEAT_VALVE}
     /> -->
   </div>
 </div>

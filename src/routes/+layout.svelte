@@ -4,28 +4,26 @@
   import Temperature from '../lib/temperature.svelte'
   import { client } from '../lib/home-client.svelte'
   import { writable } from 'svelte/store'
-  import { PUBLIC_EXTERNAL_TEMP } from '$env/static/public'
+  import { env } from '$env/dynamic/public'
   import { onMount } from 'svelte'
 
   const temperature = writable<number | undefined>(undefined)
 
   onMount(() => {
     client.on('connect', function () {
-      client.subscribe(PUBLIC_EXTERNAL_TEMP)
+      client.subscribe(env.PUBLIC_EXTERNAL_TEMP)
     })
 
     client.on('message', function (topic, message) {
       console.log(`${topic} ${message.toString()}`)
 
       switch (topic) {
-        case PUBLIC_EXTERNAL_TEMP:
+        case env.PUBLIC_EXTERNAL_TEMP:
           temperature.set(parseFloat(message.toString()))
           break
       }
     })
   })
-  export const prerender = false
-  export const ssr = false
 </script>
 
 <style>
