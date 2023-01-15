@@ -49,7 +49,7 @@
       temperatureFromTopic={env.PUBLIC_GUEST_TEMP}
       heatingValveFromTopic={env.PUBLIC_GUEST_HEAT_VALVE}
     />
-    <!-- <Room
+    <Room
       id="bath-0"
       name="Bath"
       rowStart={2}
@@ -61,7 +61,7 @@
       temperatureFromTopic={env.PUBLIC_BATH_0_TEMP}
       heatingValveFromTopic={env.PUBLIC_BATH_0_HEAT_VALVE}
     />
-    <Room
+   <!-- <Room
       id="stairs-0"
       name="Stairs"
       rowStart={2}
