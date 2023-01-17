@@ -32,12 +32,12 @@
       <span class="text-xs p-1">{name}</span>
     {/if}
     <div class="flex justify-center gap-2 items-center h-full">
-    {#if isLightOn !== undefined}
-      <LightButton onClick={onLightClick} {isLightOn} />
-    {/if}
-    {#if isBlindsOpen !== undefined}
-      <BlindsButton onClick={onBlindsClick} isBlindsOpen={isBlindsOpen} />
-    {/if}
+      {#if isLightOn !== undefined}
+        <LightButton onClick={onLightClick} {isLightOn} />
+      {/if}
+      {#if isBlindsOpen !== undefined}
+        <BlindsButton onClick={onBlindsClick} {isBlindsOpen} />
+      {/if}
     </div>
     {#if rowSpan > 2 && columnSpan > 2}
       <div class="flex justify-between">

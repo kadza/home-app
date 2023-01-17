@@ -6,7 +6,7 @@
 
   type Origin = 'app' | 'remote'
 
-  const isLightOn = writable<{isOn: boolean, origin: Origin} | null>(null)
+  const isLightOn = writable<{ isOn: boolean; origin: Origin } | null>(null)
   const temperature = writable<number | null>(null)
   const setTemperature = writable<number | null>(null)
   const isHeatingOn = writable<boolean | null>(null)
@@ -26,7 +26,7 @@
   const isLightAvailable = Boolean(lightFromTopic && lightToTopic)
 
   onMount(() => {
-    console.log("onMount")
+    console.log('onMount')
     client.on('connect', function () {
       if (lightFromTopic && typeof lightFromTopic === 'string') client.subscribe(lightFromTopic)
       if (lightFromTopic && Array.isArray(lightFromTopic))
@@ -54,12 +54,12 @@
   })
 
   $: {
-      if (lightToTopic && client && $isLightOn !== null && $isLightOn.origin !== 'remote') {
-        if (typeof lightToTopic === 'string' )
-          client.publish(lightToTopic, $isLightOn.isOn ? '1' : '0')
-        if (Array.isArray(lightToTopic))
-          lightToTopic.forEach((topic) => client.publish(topic, $isLightOn?.isOn ? '1' : '0'))
-      }
+    if (lightToTopic && client && $isLightOn !== null && $isLightOn.origin !== 'remote') {
+      if (typeof lightToTopic === 'string')
+        client.publish(lightToTopic, $isLightOn.isOn ? '1' : '0')
+      if (Array.isArray(lightToTopic))
+        lightToTopic.forEach((topic) => client.publish(topic, $isLightOn?.isOn ? '1' : '0'))
+    }
   }
 
   const toggleGuestLight = () => {

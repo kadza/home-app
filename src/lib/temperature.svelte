@@ -7,7 +7,7 @@
 
 <div class="flex items-center">
   <Thermometer />
-  <span
-    >{temperature ? `${temperature} °C` : 'N/A °C'}{setTemperature ? ` / ${setTemperature} °C` : ''}
+  <span>
+    {temperature ? `${temperature} °C` : 'N/A °C'}{setTemperature ? ` / ${setTemperature} °C` : ''}
   </span>
 </div>
