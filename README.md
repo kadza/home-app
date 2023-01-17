@@ -23,6 +23,11 @@
 .svelte-kit/ambient.d.ts contains ts defs of env vars. NOTE!!! dynamic vars should be imported differently than static ones.
 See comments in the file for more info.
 
+### Github actions
+
+https://github.com/docker/build-push-action
+https://github.com/docker/login-action
+
 ### Misc
 
 Mosquitto MQTT broker configuration location /etc/mosquitto/mosquitto.conf
