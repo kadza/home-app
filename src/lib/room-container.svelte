@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
+  import { onDestroy, onMount } from 'svelte'
   import { writable } from 'svelte/store'
-  import { client } from './home-client.svelte'
+  import { client } from './home-client'
   import Room from './room.svelte'
 
   type Origin = 'app' | 'remote'
@@ -51,6 +51,16 @@
           isHeatingOn.set(message.toString() === '1')
       })
     })
+  })
+
+  onDestroy(() => {
+    if (client && lightFromTopic && typeof lightFromTopic === 'string')
+      client.unsubscribe(lightFromTopic)
+    if (client && lightFromTopic && Array.isArray(lightFromTopic))
+      lightFromTopic.forEach((topic) => client.unsubscribe(topic))
+
+    if (client && temperatureFromTopic) client.unsubscribe(temperatureFromTopic)
+    if (client && heatingValveFromTopic) client.unsubscribe(heatingValveFromTopic)
   })
 
   $: {

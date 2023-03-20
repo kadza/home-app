@@ -2,7 +2,7 @@
   import '../app.css'
   import Clock from '../lib/clock.svelte'
   import Temperature from '../lib/temperature.svelte'
-  import { client } from '../lib/home-client.svelte'
+  import { client } from '../lib/home-client'
   import { writable } from 'svelte/store'
   import { env } from '$env/dynamic/public'
   import { onMount } from 'svelte'
