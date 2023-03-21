@@ -3,6 +3,7 @@
   import { writable } from 'svelte/store'
   import { client } from './home-client'
   import Room from './room.svelte'
+  import { subscribe, unsubscribe } from './messages-store-factory'
 
   type Origin = 'app' | 'remote'
 
@@ -10,6 +11,7 @@
   const temperature = writable<number | null>(null)
   const setTemperature = writable<number | null>(null)
   const isHeatingOn = writable<boolean | null>(null)
+  const subscriptionIds: string[] = []
 
   export let name: string
   export let id: string
@@ -26,42 +28,60 @@
   const isLightAvailable = Boolean(lightFromTopic && lightToTopic)
 
   onMount(() => {
-    console.log('onMount')
-    client.on('connect', function () {
-      if (lightFromTopic && typeof lightFromTopic === 'string') client.subscribe(lightFromTopic)
-      if (lightFromTopic && Array.isArray(lightFromTopic))
-        lightFromTopic.forEach((topic) => client.subscribe(topic))
+    if (lightFromTopic && typeof lightFromTopic === 'string' && lightFromTopic !== '') {
+      const { id, store } = subscribe(lightFromTopic)
+      subscriptionIds.push(id)
 
-      if (temperatureFromTopic) client.subscribe(temperatureFromTopic)
-      if (heatingValveFromTopic) client.subscribe(heatingValveFromTopic)
-
-      client.on('message', function (topic, message) {
-        if (lightFromTopic && topic === lightFromTopic && typeof lightFromTopic === 'string')
-          isLightOn.set({ isOn: message.toString() === '1', origin: 'remote' })
-        if (lightFromTopic && Array.isArray(lightFromTopic) && lightFromTopic.includes(topic))
-          isLightOn.set({ isOn: message.toString() === '1', origin: 'remote' })
-
-        if (temperatureFromTopic && topic === temperatureFromTopic)
-          temperature.set(parseFloat(message.toString()))
-
-        if (setTemperatureFromTopic && topic === setTemperatureFromTopic)
-          setTemperature.set(parseFloat(message.toString()))
-
-        if (heatingValveFromTopic && topic === heatingValveFromTopic)
-          isHeatingOn.set(message.toString() === '1')
+      store.subscribe((message) => {
+        if (message) isLightOn.set({ isOn: message.toString() === '1', origin: 'remote' })
       })
-    })
-  })
+    }
+    if (lightFromTopic && Array.isArray(lightFromTopic))
+      lightFromTopic.forEach((topic) => {
+        if (topic === '') return
+        const { id, store } = subscribe(topic)
+        subscriptionIds.push(id)
 
-  onDestroy(() => {
-    if (client && lightFromTopic && typeof lightFromTopic === 'string')
-      client.unsubscribe(lightFromTopic)
-    if (client && lightFromTopic && Array.isArray(lightFromTopic))
-      lightFromTopic.forEach((topic) => client.unsubscribe(topic))
+        store.subscribe((message) => {
+          if (message) isLightOn.set({ isOn: message.toString() === '1', origin: 'remote' })
+        })
+      })
 
-    if (client && temperatureFromTopic) client.unsubscribe(temperatureFromTopic)
-    if (client && heatingValveFromTopic) client.unsubscribe(heatingValveFromTopic)
+    if (temperatureFromTopic && temperatureFromTopic !== '') {
+      const { id, store } = subscribe(temperatureFromTopic)
+      subscriptionIds.push(id)
+
+      store.subscribe((message) => {
+        if (message) temperature.set(parseFloat(message.toString()))
+      })
+    }
+
+    if (heatingValveFromTopic && heatingValveFromTopic !== '') {
+      const { id, store } = subscribe(heatingValveFromTopic)
+      subscriptionIds.push(id)
+
+      store.subscribe((message) => {
+        if (message) isHeatingOn.set(message.toString() === '1')
+      })
+    }
   })
+  // client.on('message', function (topic, message) {
+  //   if (lightFromTopic && topic === lightFromTopic && typeof lightFromTopic === 'string')
+  //     isLightOn.set({ isOn: message.toString() === '1', origin: 'remote' })
+  //   if (lightFromTopic && Array.isArray(lightFromTopic) && lightFromTopic.includes(topic))
+  //     isLightOn.set({ isOn: message.toString() === '1', origin: 'remote' })
+
+  // if (temperatureFromTopic && topic === temperatureFromTopic)
+  //     temperature.set(parseFloat(message.toString()))
+
+  //   if (setTemperatureFromTopic && topic === setTemperatureFromTopic)
+  //     setTemperature.set(parseFloat(message.toString()))
+
+  //   if (heatingValveFromTopic && topic === heatingValveFromTopic)
+  //     isHeatingOn.set(message.toString() === '1')
+  // })
+
+  onDestroy(() => subscriptionIds.forEach((id) => unsubscribe(id)))
 
   $: {
     if (lightToTopic && client && $isLightOn !== null && $isLightOn.origin !== 'remote') {

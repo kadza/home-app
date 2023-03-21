@@ -9,21 +9,21 @@
 
   const temperature = writable<number | undefined>(undefined)
 
-  onMount(() => {
-    client.on('connect', function () {
-      client.subscribe(env.PUBLIC_EXTERNAL_TEMP)
-    })
+  // onMount(() => {
+  //   client.on('connect', function () {
+  //     client.subscribe(env.PUBLIC_EXTERNAL_TEMP)
+  //   })
 
-    client.on('message', function (topic, message) {
-      console.log(`${topic} ${message.toString()}`)
+  //   client.on('message', function (topic, message) {
+  //     console.log(`${topic} ${message.toString()}`)
 
-      switch (topic) {
-        case env.PUBLIC_EXTERNAL_TEMP:
-          temperature.set(parseFloat(message.toString()))
-          break
-      }
-    })
-  })
+  //     switch (topic) {
+  //       case env.PUBLIC_EXTERNAL_TEMP:
+  //         temperature.set(parseFloat(message.toString()))
+  //         break
+  //     }
+  //   })
+  // })
 </script>
 
 <style>
