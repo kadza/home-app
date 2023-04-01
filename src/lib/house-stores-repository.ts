@@ -54,8 +54,8 @@ if (client) {
     const message = value ? '1' : '0'
 
     if (message !== get(rawGuestLightStore)) {
-      console.log('Publishing guest light message', value)
-      client.publish(env.PUBLIC_GUEST_LIGHT_TO, value ? '1' : '0')
+      console.log('Publishing guest light message', message)
+      client.publish(env.PUBLIC_GUEST_LIGHT_TO, message)
 
       return
     }
