@@ -1,11 +1,11 @@
 <script lang {ts}>
-  import Room from '../lib/room-container.svelte'
-  import { env } from '$env/dynamic/public'
+  import Room from '../lib/room.svelte'
+  import { guestLightStore } from '../lib/house-stores-repository'
 </script>
 
 <div class="flex flex-col items-center xl:flex-row xl:space-x-4 xl:justify-center">
   <div class="grid grid-cols-[repeat(17,2.25rem)] grid-rows-[repeat(19,2.25rem)] gap-1">
-    <Room
+    <!-- <Room
       id="living-garden"
       name="Garden"
       rowStart={1}
@@ -36,7 +36,7 @@
       columnSpan={8}
       lightFromTopic={env.PUBLIC_DINING_LIGHT_FROM}
       lightToTopic={env.PUBLIC_DINING_LIGHT_FROM}
-    />
+    /> -->
     <Room
       id="guest"
       name="Guest"
@@ -44,12 +44,12 @@
       columnStart={1}
       rowSpan={5}
       columnSpan={4}
-      lightFromTopic={env.PUBLIC_GUEST_LIGHT_FROM}
-      lightToTopic={env.PUBLIC_GUEST_LIGHT_TO}
-      temperatureFromTopic={env.PUBLIC_GUEST_TEMP}
-      heatingValveFromTopic={env.PUBLIC_GUEST_HEAT_VALVE}
+      isLightOn={$guestLightStore}
+      onLightClick={() => {
+        $guestLightStore = !$guestLightStore
+      }}
     />
-    <Room
+    <!-- <Room
       id="bath-0"
       name="Bath"
       rowStart={2}
@@ -226,6 +226,6 @@
       lightToTopic={[env.PUBLIC_BATH_1_LIGHT_TO, env.PUBLIC_BATH_1_MIRROR_LIGHT_TO]}
       temperatureFromTopic={env.PUBLIC_BATH_1_TEMP}
       heatingValveFromTopic={env.PUBLIC_BATH_1_HEAT_VALVE}
-    />
+    /> -->
   </div>
 </div>
