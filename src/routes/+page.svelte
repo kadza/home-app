@@ -1,6 +1,10 @@
 <script lang {ts}>
   import Room from '../lib/room.svelte'
-  import { guestLightStore } from '../lib/house-stores-repository'
+  import {
+    diningLightStore,
+    guestHeatingStore,
+    guestLightStore
+  } from '../lib/house-stores-repository'
 </script>
 
 <div class="flex flex-col items-center xl:flex-row xl:space-x-4 xl:justify-center">
@@ -27,6 +31,7 @@
       temperatureFromTopic={env.PUBLIC_LIVING_TEMP}
       heatingValveFromTopic={env.PUBLIC_LIVING_HEAT_VALVE}
     />
+    !-->
     <Room
       id="dining"
       name="Dining"
@@ -34,9 +39,11 @@
       columnStart={10}
       rowSpan={3}
       columnSpan={8}
-      lightFromTopic={env.PUBLIC_DINING_LIGHT_FROM}
-      lightToTopic={env.PUBLIC_DINING_LIGHT_FROM}
-    /> -->
+      isLightOn={$diningLightStore}
+      onLightClick={() => {
+        $diningLightStore = !$diningLightStore
+      }}
+    />
     <Room
       id="guest"
       name="Guest"
@@ -48,6 +55,7 @@
       onLightClick={() => {
         $guestLightStore = !$guestLightStore
       }}
+      isHeatingOn={$guestHeatingStore}
     />
     <!-- <Room
       id="bath-0"
