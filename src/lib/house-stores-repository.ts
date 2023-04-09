@@ -14,47 +14,55 @@ const rawDiningLightStore = writable<string>()
 
 const rawMessageHandlers = new Map<string, (topic: string, message: string) => void>()
 
-const readMessageStoresConfiguration = [
+const storesConfiguration = [
   {
     store: guestLightStore,
     rawStore: rawGuestLightStore,
-    topic: env.PUBLIC_GUEST_LIGHT_FROM
+    readTopic: env.PUBLIC_GUEST_LIGHT_FROM,
+    writeTopic: env.PUBLIC_GUEST_LIGHT_TO,
+    type: 'boolean'
   },
   {
     store: guestHeatingStore,
     rawStore: rawGuestHeatingStore,
-    topic: env.PUBLIC_GUEST_HEAT_VALVE
+    readTopic: env.PUBLIC_GUEST_HEAT_VALVE,
+    type: 'boolean'
   },
   {
     store: diningLightStore,
     rawStore: rawDiningLightStore,
-    topic: env.PUBLIC_DINING_LIGHT_FROM
+    readTopic: env.PUBLIC_DINING_LIGHT_FROM,
+    writeTopic: env.PUBLIC_DINING_LIGHT_TO,
+    type: 'boolean'
   }
 ]
 
-const publishMessageStoresConfiguration = [
-  {
-    store: guestLightStore,
-    rawStore: rawGuestLightStore,
-    publishTopic: env.PUBLIC_GUEST_LIGHT_TO
+const resolveTypeConverters = (type: string) => {
+  switch (type) {
+    case 'boolean':
+      return {
+        toRaw: (value: boolean) => (value ? '1' : '0'),
+        fromRaw: (value: string) => value === '1'
+      }
+    default:
+      throw new Error(`Unknown type ${type}`)
   }
-]
-
-// create logging store
+}
 
 const readMessageOnRawStoreChange = (
   messagesStore: Writable<boolean>,
   rawMessagesStore: Writable<string>,
-  topic: string
+  topic: string,
+  type: string
 ) => {
   rawMessagesStore.subscribe((value) => {
     if (value === undefined) return
 
-    const isOn = value === '1'
+    const convertedValue = resolveTypeConverters(type).fromRaw(value)
     const messagesStoreState = get(messagesStore)
 
-    if (messagesStoreState !== isOn) {
-      messagesStore.set(isOn)
+    if (messagesStoreState !== convertedValue) {
+      messagesStore.set(convertedValue)
     }
   })
 
@@ -71,14 +79,16 @@ const publishMessageOnStoreChange = (
   store: Writable<boolean>,
   rawMessagesStore: Writable<string>,
   publishTopic: string,
+  type: string,
   client: MqttClient
 ) => {
   store.subscribe((value) => {
     if (value === undefined) return
 
-    const message = value ? '1' : '0'
+    const message = resolveTypeConverters(type).toRaw(value)
 
     if (message !== get(rawMessagesStore)) {
+      console.log('Publishing message', publishTopic, message)
       client.publish(publishTopic, message)
     }
   })
@@ -94,15 +104,18 @@ const client = browser
 if (client) {
   console.log('Connecting to MQTT broker')
 
-  readMessageStoresConfiguration.forEach((config) => {
-    readMessageOnRawStoreChange(config.store, config.rawStore, config.topic)
+  storesConfiguration.forEach((config) => {
+    console.log('Subscribing to topic', config.readTopic)
+    readMessageOnRawStoreChange(config.store, config.rawStore, config.readTopic, config.type)
   })
 
   client.on('connect', () => {
     console.log('Connected to MQTT broker')
-    client.subscribe(env.PUBLIC_GUEST_LIGHT_FROM)
-
+    storesConfiguration.forEach((config) => {
+      client.subscribe(config.readTopic)
+    })
     client.on('message', (topic, message) => {
+      console.log('Received message', topic, message.toString())
       const handler = rawMessageHandlers.get(topic)
 
       if (handler) {
@@ -111,7 +124,14 @@ if (client) {
     })
   })
 
-  publishMessageStoresConfiguration.forEach((config) => {
-    publishMessageOnStoreChange(config.store, config.rawStore, config.publishTopic, client)
+  storesConfiguration.forEach((config) => {
+    if (config.writeTopic)
+      publishMessageOnStoreChange(
+        config.store,
+        config.rawStore,
+        config.writeTopic,
+        config.type,
+        client
+      )
   })
 }
