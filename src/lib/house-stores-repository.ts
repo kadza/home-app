@@ -45,23 +45,6 @@ const storesConfiguration = [
   }
 ]
 
-const resolveTypeConverters = (type: string) => {
-  switch (type) {
-    case 'boolean':
-      return {
-        toRaw: (value: boolean | number) => (value ? '1' : '0'),
-        fromRaw: (value: string) => value === '1'
-      }
-    case 'number':
-      return {
-        toRaw: (value: boolean | number) => value.toString(),
-        fromRaw: (value: string) => parseFloat(value)
-      }
-    default:
-      throw new Error(`Unknown type ${type}`)
-  }
-}
-
 const readMessageOnRawStoreChange = (
   messagesStore: Writable<boolean | number>,
   rawMessagesStore: Writable<string>,
@@ -71,7 +54,16 @@ const readMessageOnRawStoreChange = (
   rawMessagesStore.subscribe((value) => {
     if (value === undefined) return
 
-    const convertedValue = resolveTypeConverters(type).fromRaw(value)
+    let convertedValue: boolean | number
+
+    if (type === 'boolean') {
+      convertedValue = value === '1'
+    } else if (type === 'number') {
+      convertedValue = parseFloat(value)
+    } else {
+      throw new Error(`Unknown type ${type}`)
+    }
+
     const messagesStoreState = get(messagesStore)
 
     if (messagesStoreState !== convertedValue) {
@@ -98,7 +90,15 @@ const publishMessageOnStoreChange = (
   store.subscribe((value) => {
     if (value === undefined) return
 
-    const message = resolveTypeConverters(type).toRaw(value)
+    let message
+
+    if (type === 'boolean') {
+      message = value ? '1' : '0'
+    } else if (type === 'number') {
+      message = value.toString()
+    } else {
+      throw new Error(`Unknown type ${type}`)
+    }
 
     if (message !== get(rawMessagesStore)) {
       console.log('Publishing message', publishTopic, message)
