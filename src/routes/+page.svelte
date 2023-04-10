@@ -3,7 +3,8 @@
   import {
     diningLightStore,
     guestHeatingStore,
-    guestLightStore
+    guestLightStore,
+    guestTemperatureStore
   } from '../lib/house-stores-repository'
 </script>
 
@@ -56,6 +57,7 @@
         $guestLightStore = !$guestLightStore
       }}
       isHeatingOn={$guestHeatingStore}
+      temperature={$guestTemperatureStore}
     />
     <!-- <Room
       id="bath-0"

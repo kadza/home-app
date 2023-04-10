@@ -6,11 +6,13 @@ import { get } from 'svelte/store'
 
 export const guestLightStore = writable<boolean>()
 export const guestHeatingStore = writable<boolean>()
+export const guestTemperatureStore = writable<number>()
 export const diningLightStore = writable<boolean>()
 
 const rawGuestLightStore = writable<string>()
 const rawGuestHeatingStore = writable<string>()
 const rawDiningLightStore = writable<string>()
+const rawGuestTemperatureStore = writable<string>()
 
 const rawMessageHandlers = new Map<string, (topic: string, message: string) => void>()
 
@@ -34,6 +36,12 @@ const storesConfiguration = [
     readTopic: env.PUBLIC_DINING_LIGHT_FROM,
     writeTopic: env.PUBLIC_DINING_LIGHT_TO,
     type: 'boolean'
+  },
+  {
+    store: guestTemperatureStore,
+    rawStore: rawGuestTemperatureStore,
+    readTopic: env.PUBLIC_GUEST_TEMP,
+    type: 'number'
   }
 ]
 
@@ -41,8 +49,13 @@ const resolveTypeConverters = (type: string) => {
   switch (type) {
     case 'boolean':
       return {
-        toRaw: (value: boolean) => (value ? '1' : '0'),
+        toRaw: (value: boolean | number) => (value ? '1' : '0'),
         fromRaw: (value: string) => value === '1'
+      }
+    case 'number':
+      return {
+        toRaw: (value: boolean | number) => value.toString(),
+        fromRaw: (value: string) => parseFloat(value)
       }
     default:
       throw new Error(`Unknown type ${type}`)
@@ -50,7 +63,7 @@ const resolveTypeConverters = (type: string) => {
 }
 
 const readMessageOnRawStoreChange = (
-  messagesStore: Writable<boolean>,
+  messagesStore: Writable<boolean | number>,
   rawMessagesStore: Writable<string>,
   topic: string,
   type: string
@@ -76,7 +89,7 @@ const readMessageOnRawStoreChange = (
 }
 
 const publishMessageOnStoreChange = (
-  store: Writable<boolean>,
+  store: Writable<boolean | number>,
   rawMessagesStore: Writable<string>,
   publishTopic: string,
   type: string,
