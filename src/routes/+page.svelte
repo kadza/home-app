@@ -4,21 +4,32 @@
     diningLightStore,
     guestHeatingStore,
     guestLightStore,
-    guestTemperatureStore
+    guestTemperatureStore,
+    livingTemperatureStore,
+    livingGardenLightStore,
+    livingLightStore,
+    livingHeatingStore,
+    bath0LightStore,
+    bath0HeatingStore,
+    bath0TemperatureStore,
+    stairsLightStore,
+    hall0LightStore
   } from '../lib/house-stores-repository'
 </script>
 
 <div class="flex flex-col items-center xl:flex-row xl:space-x-4 xl:justify-center">
   <div class="grid grid-cols-[repeat(17,2.25rem)] grid-rows-[repeat(19,2.25rem)] gap-1">
-    <!-- <Room
+    <Room
       id="living-garden"
       name="Garden"
       rowStart={1}
       columnStart={11}
       rowSpan={1}
       columnSpan={6}
-      lightFromTopic={env.PUBLIC_LIVING_GARDEN_LIGHT_FROM}
-      lightToTopic={env.PUBLIC_LIVING_GARDEN_LIGHT_TO}
+      isLightOn={$livingGardenLightStore}
+      onLightClick={() => {
+        $livingGardenLightStore = !$livingGardenLightStore
+      }}
     />
     <Room
       id="living"
@@ -27,12 +38,13 @@
       columnStart={10}
       rowSpan={5}
       columnSpan={8}
-      lightFromTopic={env.PUBLIC_LIVING_LIGHT_FROM}
-      lightToTopic={env.PUBLIC_LIVING_LIGHT_TO}
-      temperatureFromTopic={env.PUBLIC_LIVING_TEMP}
-      heatingValveFromTopic={env.PUBLIC_LIVING_HEAT_VALVE}
+      isLightOn={$livingLightStore}
+      onLightClick={() => {
+        $livingLightStore = !$livingLightStore
+      }}
+      isHeatingOn={$livingHeatingStore}
+      temperature={$livingTemperatureStore}
     />
-    !-->
     <Room
       id="dining"
       name="Dining"
@@ -59,17 +71,19 @@
       isHeatingOn={$guestHeatingStore}
       temperature={$guestTemperatureStore}
     />
-    <!-- <Room
+    <Room
       id="bath-0"
       name="Bath"
       rowStart={2}
       columnStart={5}
       rowSpan={4}
       columnSpan={3}
-      lightFromTopic={[env.PUBLIC_BATH_0_LIGHT_FROM, env.PUBLIC_BATH_0_MIRROR_LIGHT_FROM]}
-      lightToTopic={[env.PUBLIC_BATH_0_LIGHT_TO, env.PUBLIC_BATH_0_MIRROR_LIGHT_TO]}
-      temperatureFromTopic={env.PUBLIC_BATH_0_TEMP}
-      heatingValveFromTopic={env.PUBLIC_BATH_0_HEAT_VALVE}
+      isLightOn={$bath0LightStore}
+      onLightClick={() => {
+        $bath0LightStore = !$bath0LightStore
+      }}
+      isHeatingOn={$bath0HeatingStore}
+      temperature={$bath0TemperatureStore}
     />
     <Room
       id="stairs-0"
@@ -78,8 +92,10 @@
       columnStart={8}
       rowSpan={5}
       columnSpan={2}
-      lightFromTopic={env.PUBLIC_STAIRS_LIGHT_FROM}
-      lightToTopic={env.PUBLIC_STAIRS_LIGHT_TO}
+      isLightOn={$stairsLightStore}
+      onLightClick={() => {
+        $stairsLightStore = !$stairsLightStore
+      }}
     />
     <Room
       id="hall-0"
@@ -88,10 +104,12 @@
       columnStart={5}
       rowSpan={1}
       columnSpan={3}
-      lightFromTopic={env.PUBLIC_HALL_0_LIGHT_FROM}
-      lightToTopic={env.PUBLIC_HALL_0_LIGHT_TO}
+      isLightOn={$hall0LightStore}
+      onLightClick={() => {
+        $hall0LightStore = !$hall0LightStore
+      }}
     />
-    <Room
+    <!--<Room
       id="boiler"
       name="Boiler"
       rowStart={7}
