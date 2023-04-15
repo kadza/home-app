@@ -15,6 +15,7 @@
     stairsLightStore,
     hall0LightStore
   } from '../lib/house-stores-repository'
+  import { toggleActionState } from '$lib/action-state'
 </script>
 
 <div class="flex flex-col items-center xl:flex-row xl:space-x-4 xl:justify-center">
@@ -26,9 +27,9 @@
       columnStart={11}
       rowSpan={1}
       columnSpan={6}
-      isLightOn={$livingGardenLightStore}
+      lightState={$livingGardenLightStore}
       onLightClick={() => {
-        $livingGardenLightStore = !$livingGardenLightStore
+        $livingGardenLightStore = toggleActionState($livingGardenLightStore)
       }}
     />
     <Room
@@ -38,9 +39,9 @@
       columnStart={10}
       rowSpan={5}
       columnSpan={8}
-      isLightOn={$livingLightStore}
+      lightState={$livingLightStore}
       onLightClick={() => {
-        $livingLightStore = !$livingLightStore
+        $livingLightStore = toggleActionState($livingLightStore)
       }}
       isHeatingOn={$livingHeatingStore}
       temperature={$livingTemperatureStore}
@@ -52,9 +53,9 @@
       columnStart={10}
       rowSpan={3}
       columnSpan={8}
-      isLightOn={$diningLightStore}
+      lightState={$diningLightStore}
       onLightClick={() => {
-        $diningLightStore = !$diningLightStore
+        $diningLightStore = toggleActionState($diningLightStore)
       }}
     />
     <Room
@@ -64,9 +65,9 @@
       columnStart={1}
       rowSpan={5}
       columnSpan={4}
-      isLightOn={$guestLightStore}
+      lightState={$guestLightStore}
       onLightClick={() => {
-        $guestLightStore = !$guestLightStore
+        $guestLightStore = toggleActionState($guestLightStore)
       }}
       isHeatingOn={$guestHeatingStore}
       temperature={$guestTemperatureStore}
@@ -78,9 +79,9 @@
       columnStart={5}
       rowSpan={4}
       columnSpan={3}
-      isLightOn={$bath0LightStore}
+      lightState={$bath0LightStore}
       onLightClick={() => {
-        $bath0LightStore = !$bath0LightStore
+        $bath0LightStore = toggleActionState($bath0LightStore)
       }}
       isHeatingOn={$bath0HeatingStore}
       temperature={$bath0TemperatureStore}
@@ -92,9 +93,9 @@
       columnStart={8}
       rowSpan={5}
       columnSpan={2}
-      isLightOn={$stairsLightStore}
+      lightState={$stairsLightStore}
       onLightClick={() => {
-        $stairsLightStore = !$stairsLightStore
+        $stairsLightStore = toggleActionState($stairsLightStore)
       }}
     />
     <Room
@@ -104,9 +105,9 @@
       columnStart={5}
       rowSpan={1}
       columnSpan={3}
-      isLightOn={$hall0LightStore}
+      lightState={$hall0LightStore}
       onLightClick={() => {
-        $hall0LightStore = !$hall0LightStore
+        $hall0LightStore = toggleActionState($hall0LightStore)
       }}
     />
     <!--<Room

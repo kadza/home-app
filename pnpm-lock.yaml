@@ -18,7 +18,7 @@ specifiers:
   prettier-plugin-svelte: ^2.9.0
   svelte: ^3.54.0
   svelte-check: ^2.9.2
-  svelte-material-icons: ^2.0.4
+  svelte-material-icons: ^3.0.4
   tailwindcss: ^3.2.4
   tslib: ^2.4.1
   typescript: ^4.9.3
@@ -27,7 +27,7 @@ specifiers:
 
 dependencies:
   mqtt: 4.3.7
-  svelte-material-icons: 2.0.4_svelte@3.55.0
+  svelte-material-icons: 3.0.4_svelte@3.55.0
 
 devDependencies:
   '@playwright/test': 1.29.2
@@ -2172,8 +2172,8 @@ packages:
       svelte: 3.55.0
     dev: true
 
-  /svelte-material-icons/2.0.4_svelte@3.55.0:
-    resolution: {integrity: sha512-P3TxvZ6ZesGKknxn61GF5PAArB+w5aiBNC6ez/yEJG2bFbzRsAZj4+Vt466uoZSeCPGkEzn20u9jBPUoEcfxiA==}
+  /svelte-material-icons/3.0.4_svelte@3.55.0:
+    resolution: {integrity: sha512-b126iWd/kMZgstYbGIocmGwN2txGFW+S+BY+d66yPRVSgcZgrnzRJWQbhn0OCy7dzzjkYfgI/i2PdWRukqu+RQ==}
     peerDependencies:
       svelte: ^3.0.0
     dependencies:

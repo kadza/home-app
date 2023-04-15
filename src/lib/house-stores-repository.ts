@@ -3,22 +3,23 @@ import { env } from '$env/dynamic/public'
 import { connect, MqttClient } from 'mqtt'
 import { writable, type Writable } from 'svelte/store'
 import { get } from 'svelte/store'
+import type { ActionState } from './action-state'
 
-export const guestLightStore = writable<boolean>()
+export const guestLightStore = writable<ActionState>('not-initialized')
 export const guestHeatingStore = writable<boolean>()
 export const guestTemperatureStore = writable<number>()
-export const diningLightStore = writable<boolean>()
-export const livingLightStore = writable<boolean>()
+export const diningLightStore = writable<ActionState>('not-initialized')
+export const livingLightStore = writable<ActionState>('not-initialized')
 export const livingHeatingStore = writable<boolean>()
 export const livingTemperatureStore = writable<number>()
-export const livingEntranceLightStore = writable<boolean>()
-export const livingGardenLightStore = writable<boolean>()
-export const bath0LightStore = writable<boolean>()
-export const bath0MirrorLightStore = writable<boolean>()
+export const livingEntranceLightStore = writable<ActionState>('not-initialized')
+export const livingGardenLightStore = writable<ActionState>('not-initialized')
+export const bath0LightStore = writable<ActionState>('not-initialized')
+export const bath0MirrorLightStore = writable<ActionState>('not-initialized')
 export const bath0HeatingStore = writable<boolean>()
 export const bath0TemperatureStore = writable<number>()
-export const stairsLightStore = writable<boolean>()
-export const hall0LightStore = writable<boolean>()
+export const stairsLightStore = writable<ActionState>('not-initialized')
+export const hall0LightStore = writable<ActionState>('not-initialized')
 
 const rawGuestLightStore = writable<string>()
 const rawGuestHeatingStore = writable<string>()
@@ -44,7 +45,7 @@ const storesConfiguration = [
     rawStore: rawGuestLightStore,
     readTopic: env.PUBLIC_GUEST_LIGHT_FROM,
     writeTopic: env.PUBLIC_GUEST_LIGHT_TO,
-    type: 'boolean'
+    type: 'action-button'
   },
   {
     store: guestHeatingStore,
@@ -57,7 +58,7 @@ const storesConfiguration = [
     rawStore: rawDiningLightStore,
     readTopic: env.PUBLIC_DINING_LIGHT_FROM,
     writeTopic: env.PUBLIC_DINING_LIGHT_TO,
-    type: 'boolean'
+    type: 'action-button'
   },
   {
     store: guestTemperatureStore,
@@ -70,7 +71,7 @@ const storesConfiguration = [
     rawStore: rawLivingLightStore,
     readTopic: env.PUBLIC_LIVING_LIGHT_FROM,
     writeTopic: env.PUBLIC_LIVING_LIGHT_TO,
-    type: 'boolean'
+    type: 'action-button'
   },
   {
     store: livingHeatingStore,
@@ -89,34 +90,34 @@ const storesConfiguration = [
     rawStore: rawLivingEntranceLightStore,
     readTopic: env.PUBLIC_LIVING_ENTRANCE_LIGHT_FROM,
     writeTopic: env.PUBLIC_LIVING_ENTRANCE_LIGHT_TO,
-    type: 'boolean'
+    type: 'action-button'
   },
   {
     store: livingGardenLightStore,
     rawStore: rawLivingGardenLightStore,
     readTopic: env.PUBLIC_LIVING_GARDEN_LIGHT_FROM,
     writeTopic: env.PUBLIC_LIVING_GARDEN_LIGHT_TO,
-    type: 'boolean'
+    type: 'action-button'
   },
   {
     store: bath0LightStore,
     rawStore: rawBath0LightStore,
     readTopic: env.PUBLIC_BATH_0_LIGHT_FROM,
     writeTopic: env.PUBLIC_BATH_0_LIGHT_TO,
-    type: 'boolean'
+    type: 'action-button'
   },
   {
     store: bath0MirrorLightStore,
     rawStore: rawBath0MirrorLightStore,
     readTopic: env.PUBLIC_BATH_0_MIRROR_LIGHT_FROM,
     writeTopic: env.PUBLIC_BATH_0_MIRROR_LIGHT_TO,
-    type: 'boolean'
+    type: 'action-button'
   },
   {
     store: bath0HeatingStore,
     rawStore: rawBath0HeatingStore,
     readTopic: env.PUBLIC_BATH_0_HEAT_VALVE,
-    type: 'boolean'
+    type: 'number'
   },
   {
     store: bath0TemperatureStore,
@@ -129,19 +130,19 @@ const storesConfiguration = [
     rawStore: rawHall0LightStore,
     readTopic: env.PUBLIC_HALL_0_LIGHT_FROM,
     writeTopic: env.PUBLIC_HALL_0_LIGHT_TO,
-    type: 'boolean'
+    type: 'action-button'
   },
   {
     store: stairsLightStore,
     rawStore: rawStairsLightStore,
     readTopic: env.PUBLIC_STAIRS_LIGHT_FROM,
     writeTopic: env.PUBLIC_STAIRS_LIGHT_TO,
-    type: 'boolean'
+    type: 'action-button'
   }
 ]
 
 const readMessageOnRawStoreChange = (
-  messagesStore: Writable<boolean | number>,
+  messagesStore: Writable<ActionState | boolean | number>,
   rawMessagesStore: Writable<string>,
   topic: string,
   type: string
@@ -149,9 +150,11 @@ const readMessageOnRawStoreChange = (
   rawMessagesStore.subscribe((value) => {
     if (value === undefined) return
 
-    let convertedValue: boolean | number
+    let convertedValue: ActionState | boolean | number
 
-    if (type === 'boolean') {
+    if (type == 'action-button') {
+      convertedValue = value === '1' ? 'active' : 'inactive'
+    } else if (type === 'boolean') {
       convertedValue = value === '1'
     } else if (type === 'number') {
       convertedValue = parseFloat(value)
@@ -176,7 +179,7 @@ const readMessageOnRawStoreChange = (
 }
 
 const publishMessageOnStoreChange = (
-  store: Writable<boolean | number>,
+  store: Writable<ActionState | boolean | number>,
   rawMessagesStore: Writable<string>,
   publishTopic: string,
   type: string,
@@ -187,7 +190,17 @@ const publishMessageOnStoreChange = (
 
     let message
 
-    if (type === 'boolean') {
+    if (type == 'action-button') {
+      if (value === 'active') {
+        message = '1'
+      } else if (value === 'inactive') {
+        message = '0'
+      } else if (value === 'not-initialized' || value === 'error' || value === 'disabled') {
+        return
+      } else {
+        throw new Error(`Unknown value ${value} for action-button`)
+      }
+    } else if (type === 'boolean') {
       message = value ? '1' : '0'
     } else if (type === 'number') {
       message = value.toString()

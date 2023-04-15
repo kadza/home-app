@@ -6,9 +6,10 @@
   import ChartLine from 'svelte-material-icons/ChartLine.svelte'
   import LightButton from './buttons/light-button.svelte'
   import BlindsButton from './buttons/blinds-button.svelte'
-  export let isLightOn: boolean | undefined = undefined
+  import type { ActionState } from './action-state'
+  export let lightState: ActionState | undefined = undefined
   export let onLightClick: (() => void) | undefined = undefined
-  export let isBlindsOpen: boolean | undefined = undefined
+  export let blindsSate: ActionState | undefined = undefined
   export let onBlindsClick: (() => void) | undefined = undefined
   export let columnStart = 0
   export let rowStart = 0
@@ -32,11 +33,11 @@
       <span class="text-xs p-1">{name}</span>
     {/if}
     <div class="flex justify-center gap-2 items-center h-full">
-      {#if isLightOn !== undefined}
-        <LightButton onClick={onLightClick} {isLightOn} />
+      {#if lightState !== undefined || onLightClick !== undefined}
+        <LightButton onClick={onLightClick} state={lightState} />
       {/if}
-      {#if isBlindsOpen !== undefined}
-        <BlindsButton onClick={onBlindsClick} {isBlindsOpen} />
+      {#if blindsSate !== undefined || onBlindsClick !== undefined}
+        <BlindsButton onClick={onBlindsClick} state={blindsSate} />
       {/if}
     </div>
     {#if rowSpan > 2 && columnSpan > 2}
