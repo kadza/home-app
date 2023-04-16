@@ -20,6 +20,7 @@ export const bath0HeatingStore = writable<boolean>()
 export const bath0TemperatureStore = writable<number>()
 export const stairsLightStore = writable<ActionState>('not-initialized')
 export const hall0LightStore = writable<ActionState>('not-initialized')
+export const externalTemperatureStore = writable<number>()
 
 const rawGuestLightStore = writable<string>()
 const rawGuestHeatingStore = writable<string>()
@@ -36,6 +37,7 @@ const rawBath0HeatingStore = writable<string>()
 const rawBath0TemperatureStore = writable<string>()
 const rawStairsLightStore = writable<string>()
 const rawHall0LightStore = writable<string>()
+const rawExternalTemperatureStore = writable<string>()
 
 const rawMessageHandlers = new Map<string, (topic: string, message: string) => void>()
 
@@ -138,6 +140,12 @@ const storesConfiguration = [
     readTopic: env.PUBLIC_STAIRS_LIGHT_FROM,
     writeTopic: env.PUBLIC_STAIRS_LIGHT_TO,
     type: 'action-button'
+  },
+  {
+    store: externalTemperatureStore,
+    rawStore: rawExternalTemperatureStore,
+    readTopic: env.PUBLIC_EXTERNAL_TEMP,
+    type: 'number'
   }
 ]
 
