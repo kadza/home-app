@@ -31,3 +31,9 @@ https://github.com/docker/login-action
 ### Misc
 
 Mosquitto MQTT broker configuration location /etc/mosquitto/mosquitto.conf
+
+## TODO
+
+- Different states for heating
+- Multiple lights in room
+- global code formatter
