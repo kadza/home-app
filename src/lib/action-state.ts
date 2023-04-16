@@ -9,3 +9,9 @@ export function toggleActionState(state: ActionState): ActionState {
     return state
   }
 }
+
+export type NumberDeviceState = 'disabled' | 'error' | 'not-initialized' | number
+
+export function hasNumberDeviceStateValue(state: any): state is number {
+  return typeof state === 'number'
+}

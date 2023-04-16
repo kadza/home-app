@@ -5,7 +5,7 @@
   import LightButton from './buttons/light-button.svelte'
   import BlindsButton from './buttons/blinds-button.svelte'
   import Heating from './heating.svelte'
-  import type { ActionState } from './action-state'
+  import type { ActionState, NumberDeviceState } from './action-state'
   export let lightState: ActionState | undefined = undefined
   export let onLightClick: (() => void) | undefined = undefined
   export let blindsSate: ActionState | undefined = undefined
@@ -17,8 +17,8 @@
   export let rowSpan = 0
   export let id = ''
   export let name = ''
-  export let temperature: number | null | undefined = undefined
-  export let setTemperature: number | null | undefined = undefined
+  export let temperature: NumberDeviceState | undefined = undefined
+  export let setTemperature: NumberDeviceState | undefined = undefined
   export let isPresent: boolean | undefined = undefined
 </script>
 

@@ -3,24 +3,24 @@ import { env } from '$env/dynamic/public'
 import { connect, MqttClient } from 'mqtt'
 import { writable, type Writable } from 'svelte/store'
 import { get } from 'svelte/store'
-import type { ActionState } from './action-state'
+import { hasNumberDeviceStateValue, type ActionState, type NumberDeviceState } from './action-state'
 
 export const guestLightStore = writable<ActionState>('not-initialized')
 export const guestHeatingStore = writable<ActionState>('not-initialized')
-export const guestTemperatureStore = writable<number>()
+export const guestTemperatureStore = writable<NumberDeviceState>('not-initialized')
 export const diningLightStore = writable<ActionState>('not-initialized')
 export const livingLightStore = writable<ActionState>('not-initialized')
 export const livingHeatingStore = writable<ActionState>('not-initialized')
-export const livingTemperatureStore = writable<number>()
+export const livingTemperatureStore = writable<NumberDeviceState>('not-initialized')
 export const livingEntranceLightStore = writable<ActionState>('not-initialized')
 export const livingGardenLightStore = writable<ActionState>('not-initialized')
 export const bath0LightStore = writable<ActionState>('not-initialized')
 export const bath0MirrorLightStore = writable<ActionState>('not-initialized')
-export const bath0HeatingStore = writable<ActionState>('error')
-export const bath0TemperatureStore = writable<number>()
+export const bath0HeatingStore = writable<ActionState>('not-initialized')
+export const bath0TemperatureStore = writable<NumberDeviceState>('error')
 export const stairsLightStore = writable<ActionState>('not-initialized')
 export const hall0LightStore = writable<ActionState>('not-initialized')
-export const externalTemperatureStore = writable<number>()
+export const externalTemperatureStore = writable<NumberDeviceState>('not-initialized')
 
 const rawGuestLightStore = writable<string>()
 const rawGuestHeatingStore = writable<string>()
@@ -202,7 +202,7 @@ const readMessageOnRawStoreChange = (
 
 const publishMessageOnStoreChange = (
   deviceId: string,
-  store: Writable<ActionState | boolean | number>,
+  store: Writable<ActionState | NumberDeviceState>,
   rawMessagesStore: Writable<string>,
   publishTopic: string,
   type: string,
@@ -224,7 +224,13 @@ const publishMessageOnStoreChange = (
         throw new Error(`Unknown value ${value} for action-state`)
       }
     } else if (type === 'number') {
-      message = value.toString()
+      if (hasNumberDeviceStateValue(value)) {
+        message = value.toString()
+      } else if (value === 'not-initialized' || value === 'error' || value === 'disabled') {
+        return
+      } else {
+        throw new Error(`Unknown value ${value} for number`)
+      }
     } else {
       throw new Error(`Unknown type ${type}`)
     }
