@@ -43,7 +43,7 @@
       onLightClick={() => {
         $livingLightStore = toggleActionState($livingLightStore)
       }}
-      isHeatingOn={$livingHeatingStore}
+      heatingState={$livingHeatingStore}
       temperature={$livingTemperatureStore}
     />
     <Room
@@ -69,7 +69,7 @@
       onLightClick={() => {
         $guestLightStore = toggleActionState($guestLightStore)
       }}
-      isHeatingOn={$guestHeatingStore}
+      heatingState={$guestHeatingStore}
       temperature={$guestTemperatureStore}
     />
     <Room
@@ -83,7 +83,7 @@
       onLightClick={() => {
         $bath0LightStore = toggleActionState($bath0LightStore)
       }}
-      isHeatingOn={$bath0HeatingStore}
+      heatingState={$bath0HeatingStore}
       temperature={$bath0TemperatureStore}
     />
     <Room

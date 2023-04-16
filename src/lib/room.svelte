@@ -1,16 +1,16 @@
 <script lang="ts">
-  import Radiator from 'svelte-material-icons/Radiator.svelte'
-  import RadiatorOff from 'svelte-material-icons/RadiatorOff.svelte'
   import Temperature from './temperature.svelte'
   import HumanMale from 'svelte-material-icons/HumanMale.svelte'
   import ChartLine from 'svelte-material-icons/ChartLine.svelte'
   import LightButton from './buttons/light-button.svelte'
   import BlindsButton from './buttons/blinds-button.svelte'
+  import Heating from './heating.svelte'
   import type { ActionState } from './action-state'
   export let lightState: ActionState | undefined = undefined
   export let onLightClick: (() => void) | undefined = undefined
   export let blindsSate: ActionState | undefined = undefined
   export let onBlindsClick: (() => void) | undefined = undefined
+  export let heatingState: ActionState | undefined = undefined
   export let columnStart = 0
   export let rowStart = 0
   export let columnSpan = 0
@@ -19,7 +19,6 @@
   export let name = ''
   export let temperature: number | null | undefined = undefined
   export let setTemperature: number | null | undefined = undefined
-  export let isHeatingOn: boolean | undefined = undefined
   export let isPresent: boolean | undefined = undefined
 </script>
 
@@ -43,13 +42,9 @@
     {#if rowSpan > 2 && columnSpan > 2}
       <div class="flex justify-between">
         <div class="flex">
-          <button>
-            {#if isHeatingOn === true}
-              <Radiator />
-            {:else if isHeatingOn === false}
-              <RadiatorOff color={'grey'} />
-            {/if}
-          </button>
+          {#if heatingState}
+            <Heating state={heatingState} />
+          {/if}
           <button>
             {#if isPresent === true}
               <HumanMale />
