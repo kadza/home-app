@@ -33,10 +33,10 @@
       <span class="text-xs p-1">{name}</span>
     {/if}
     <div class="flex justify-center gap-2 items-center h-full">
-      {#if lightState !== undefined || onLightClick !== undefined}
+      {#if lightState && onLightClick}
         <LightButton onClick={onLightClick} state={lightState} />
       {/if}
-      {#if blindsSate !== undefined || onBlindsClick !== undefined}
+      {#if blindsSate && onBlindsClick}
         <BlindsButton onClick={onBlindsClick} state={blindsSate} />
       {/if}
     </div>
