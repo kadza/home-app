@@ -43,6 +43,7 @@ const rawMessageHandlers = new Map<string, (topic: string, message: string) => v
 
 const storesConfiguration = [
   {
+    deviceId: 'guest-light',
     store: guestLightStore,
     rawStore: rawGuestLightStore,
     readTopic: env.PUBLIC_GUEST_LIGHT_FROM,
@@ -50,12 +51,14 @@ const storesConfiguration = [
     type: 'action-state'
   },
   {
+    deviceId: 'guest-heating',
     store: guestHeatingStore,
     rawStore: rawGuestHeatingStore,
     readTopic: env.PUBLIC_GUEST_HEAT_VALVE,
     type: 'action-state'
   },
   {
+    deviceId: 'dining-light',
     store: diningLightStore,
     rawStore: rawDiningLightStore,
     readTopic: env.PUBLIC_DINING_LIGHT_FROM,
@@ -63,12 +66,14 @@ const storesConfiguration = [
     type: 'action-state'
   },
   {
+    deviceId: 'guest-temperature',
     store: guestTemperatureStore,
     rawStore: rawGuestTemperatureStore,
     readTopic: env.PUBLIC_GUEST_TEMP,
     type: 'number'
   },
   {
+    deviceId: 'living-light',
     store: livingLightStore,
     rawStore: rawLivingLightStore,
     readTopic: env.PUBLIC_LIVING_LIGHT_FROM,
@@ -76,18 +81,21 @@ const storesConfiguration = [
     type: 'action-state'
   },
   {
+    deviceId: 'living-heating',
     store: livingHeatingStore,
     rawStore: rawLivingHeatingStore,
     readTopic: env.PUBLIC_LIVING_HEAT_VALVE,
     type: 'action-state'
   },
   {
+    deviceId: 'living-temperature',
     store: livingTemperatureStore,
     rawStore: rawLivingTemperatureStore,
     readTopic: env.PUBLIC_LIVING_TEMP,
     type: 'number'
   },
   {
+    deviceId: 'living-entrance-light',
     store: livingEntranceLightStore,
     rawStore: rawLivingEntranceLightStore,
     readTopic: env.PUBLIC_LIVING_ENTRANCE_LIGHT_FROM,
@@ -95,6 +103,7 @@ const storesConfiguration = [
     type: 'action-state'
   },
   {
+    deviceId: 'living-garden-light',
     store: livingGardenLightStore,
     rawStore: rawLivingGardenLightStore,
     readTopic: env.PUBLIC_LIVING_GARDEN_LIGHT_FROM,
@@ -102,6 +111,7 @@ const storesConfiguration = [
     type: 'action-state'
   },
   {
+    deviceId: 'stairs-light',
     store: bath0LightStore,
     rawStore: rawBath0LightStore,
     readTopic: env.PUBLIC_BATH_0_LIGHT_FROM,
@@ -109,6 +119,7 @@ const storesConfiguration = [
     type: 'action-state'
   },
   {
+    deviceId: 'bath-0-mirror-light',
     store: bath0MirrorLightStore,
     rawStore: rawBath0MirrorLightStore,
     readTopic: env.PUBLIC_BATH_0_MIRROR_LIGHT_FROM,
@@ -116,18 +127,21 @@ const storesConfiguration = [
     type: 'action-state'
   },
   {
+    deviceId: 'bath-0-heating',
     store: bath0HeatingStore,
     rawStore: rawBath0HeatingStore,
     readTopic: env.PUBLIC_BATH_0_HEAT_VALVE,
     type: 'number'
   },
   {
+    deviceId: 'bath-0-temperature',
     store: bath0TemperatureStore,
     rawStore: rawBath0TemperatureStore,
     readTopic: env.PUBLIC_BATH_0_TEMP,
     type: 'number'
   },
   {
+    deviceId: 'hall-0-light',
     store: hall0LightStore,
     rawStore: rawHall0LightStore,
     readTopic: env.PUBLIC_HALL_0_LIGHT_FROM,
@@ -135,6 +149,7 @@ const storesConfiguration = [
     type: 'action-state'
   },
   {
+    deviceId: 'stairs-light',
     store: stairsLightStore,
     rawStore: rawStairsLightStore,
     readTopic: env.PUBLIC_STAIRS_LIGHT_FROM,
@@ -142,6 +157,7 @@ const storesConfiguration = [
     type: 'action-state'
   },
   {
+    deviceId: 'external-temperature',
     store: externalTemperatureStore,
     rawStore: rawExternalTemperatureStore,
     readTopic: env.PUBLIC_EXTERNAL_TEMP,
@@ -185,6 +201,7 @@ const readMessageOnRawStoreChange = (
 }
 
 const publishMessageOnStoreChange = (
+  deviceId: string,
   store: Writable<ActionState | boolean | number>,
   rawMessagesStore: Writable<string>,
   publishTopic: string,
@@ -213,7 +230,7 @@ const publishMessageOnStoreChange = (
     }
 
     if (message !== get(rawMessagesStore)) {
-      console.log('Publishing message', publishTopic, message)
+      console.log(`Publishing message to ${deviceId}`, publishTopic, message)
       client.publish(publishTopic, message)
     }
   })
@@ -242,7 +259,10 @@ if (client) {
       }
     })
     client.on('message', (topic, message) => {
-      console.log('Received message', topic, message.toString())
+      const deviceId = storesConfiguration.find((config) => config.readTopic === topic)?.deviceId
+      console.log(
+        `Received message: ${message.toString()} from device: ${deviceId} on topic: ${topic}`
+      )
       const handler = rawMessageHandlers.get(topic)
 
       if (handler) {
@@ -254,6 +274,7 @@ if (client) {
   storesConfiguration.forEach((config) => {
     if (config.writeTopic)
       publishMessageOnStoreChange(
+        config.deviceId,
         config.store,
         config.rawStore,
         config.writeTopic,
