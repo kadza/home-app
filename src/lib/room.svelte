@@ -6,8 +6,7 @@
   import BlindsButton from './buttons/blinds-button.svelte'
   import Heating from './heating.svelte'
   import type { ActionState, NumberDeviceState } from './action-state'
-  export let lightState: ActionState | undefined = undefined
-  export let onLightClick: (() => void) | undefined = undefined
+  export let lights: { state: ActionState; onClick: () => void }[] = []
   export let blindsSate: ActionState | undefined = undefined
   export let onBlindsClick: (() => void) | undefined = undefined
   export let heatingState: ActionState | undefined = undefined
@@ -32,9 +31,9 @@
       <span class="text-xs p-1 w-full">{name}</span>
     {/if}
     <div class="flex gap-1 flex-wrap justify-center">
-      {#if lightState && onLightClick}
-        <LightButton onClick={onLightClick} state={lightState} />
-      {/if}
+      {#each lights as light}
+        <LightButton state={light.state} onClick={light.onClick} />
+      {/each}
       {#if blindsSate && onBlindsClick}
         <BlindsButton onClick={onBlindsClick} state={blindsSate} />
       {/if}

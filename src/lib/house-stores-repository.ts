@@ -117,7 +117,7 @@ const storesConfiguration = [
     type: 'action-state'
   },
   {
-    deviceId: 'stairs-light',
+    deviceId: 'bath-0-light',
     store: bath0LightStore,
     rawStore: rawBath0LightStore,
     readTopic: env.PUBLIC_BATH_0_LIGHT_FROM,
