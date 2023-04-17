@@ -27,11 +27,11 @@
   class="shadow bg-gray-800/40 rounded flex"
   style="grid-area: {rowStart} / {columnStart} / span {rowSpan} / span {columnSpan}"
 >
-  <div class="flex flex-col justify-between h-full w-full p-1">
-    {#if rowSpan > 2 && columnSpan > 2}
-      <span class="text-xs p-1">{name}</span>
+  <div class="flex flex-col justify-between items-center w-full p-1">
+    {#if rowSpan > 2 && columnSpan > 1}
+      <span class="text-xs p-1 w-full">{name}</span>
     {/if}
-    <div class="flex justify-center gap-2 items-center h-full">
+    <div class="flex gap-1 flex-wrap justify-center">
       {#if lightState && onLightClick}
         <LightButton onClick={onLightClick} state={lightState} />
       {/if}
@@ -39,8 +39,8 @@
         <BlindsButton onClick={onBlindsClick} state={blindsSate} />
       {/if}
     </div>
-    {#if rowSpan > 2 && columnSpan > 2}
-      <div class="flex justify-between">
+    {#if rowSpan > 2 && columnSpan > 1}
+      <div class="flex justify-between w-full">
         <div class="flex">
           {#if heatingState}
             <Heating state={heatingState} />

@@ -34,6 +34,6 @@ Mosquitto MQTT broker configuration location /etc/mosquitto/mosquitto.conf
 
 ## TODO
 
-- Different states for heating
 - Multiple lights in room
 - global code formatter
+- action-state -> device-state, boolean-device-state

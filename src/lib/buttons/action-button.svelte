@@ -6,7 +6,7 @@
 </script>
 
 <button
-  class="p-1.5 rounded-full"
+  class="p-2 rounded-full w-8 h-8"
   class:bg-cyan-700={state === 'active' || state === 'inactive'}
   class:bg-red-700={state === 'error'}
   class:bg-gray-700={state === 'disabled'}
