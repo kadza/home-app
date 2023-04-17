@@ -21,6 +21,9 @@ export const bath0TemperatureStore = writable<NumberDeviceState>('error')
 export const stairsLightStore = writable<ActionState>('not-initialized')
 export const hall0LightStore = writable<ActionState>('not-initialized')
 export const externalTemperatureStore = writable<NumberDeviceState>('not-initialized')
+export const entranceLightStore = writable<ActionState>('not-initialized')
+export const entranceHeatingStore = writable<ActionState>('not-initialized')
+export const entranceTemperatureStore = writable<NumberDeviceState>('not-initialized')
 
 const rawGuestLightStore = writable<string>()
 const rawGuestHeatingStore = writable<string>()
@@ -38,6 +41,9 @@ const rawBath0TemperatureStore = writable<string>()
 const rawStairsLightStore = writable<string>()
 const rawHall0LightStore = writable<string>()
 const rawExternalTemperatureStore = writable<string>()
+const rawEntranceLightStore = writable<string>()
+const rawEntranceHeatingStore = writable<string>()
+const rawEntranceTemperatureStore = writable<string>()
 
 const rawMessageHandlers = new Map<string, (topic: string, message: string) => void>()
 
@@ -161,6 +167,28 @@ const storesConfiguration = [
     store: externalTemperatureStore,
     rawStore: rawExternalTemperatureStore,
     readTopic: env.PUBLIC_EXTERNAL_TEMP,
+    type: 'number'
+  },
+  {
+    deviceId: 'entrance-light',
+    store: entranceLightStore,
+    rawStore: rawEntranceLightStore,
+    readTopic: env.PUBLIC_ENTRANCE_LIGHT_FROM,
+    writeTopic: env.PUBLIC_ENTRANCE_LIGHT_TO,
+    type: 'action-state'
+  },
+  {
+    deviceId: 'entrance-heating',
+    store: entranceHeatingStore,
+    rawStore: rawEntranceHeatingStore,
+    readTopic: env.PUBLIC_ENTRANCE_HEAT_VALVE,
+    type: 'action-state'
+  },
+  {
+    deviceId: 'entrance-temperature',
+    store: entranceTemperatureStore,
+    rawStore: rawEntranceTemperatureStore,
+    readTopic: env.PUBLIC_ENTRANCE_TEMP,
     type: 'number'
   }
 ]

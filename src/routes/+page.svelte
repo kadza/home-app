@@ -13,7 +13,10 @@
     bath0HeatingStore,
     bath0TemperatureStore,
     stairsLightStore,
-    hall0LightStore
+    hall0LightStore,
+    entranceLightStore,
+    entranceHeatingStore,
+    entranceTemperatureStore
   } from '../lib/house-stores-repository'
   import { toggleActionState } from '$lib/action-state'
 </script>
@@ -143,7 +146,7 @@
       lightToTopic={[env.PUBLIC_GARAGE_LIGHT_0_TO, env.PUBLIC_GARAGE_LIGHT_1_TO]}
       temperatureFromTopic={env.PUBLIC_GARAGE_TEMP}
       heatingValveFromTopic={env.PUBLIC_GARAGE_HEAT_VALVE}
-    />
+    />-->
     <Room
       id="entrance"
       name="Entrance"
@@ -151,12 +154,14 @@
       columnStart={10}
       rowSpan={4}
       columnSpan={3}
-      lightFromTopic={env.PUBLIC_ENTRANCE_LIGHT_FROM}
-      lightToTopic={env.PUBLIC_ENTRANCE_LIGHT_TO}
-      temperatureFromTopic={env.PUBLIC_ENTRANCE_TEMP}
-      heatingValveFromTopic={env.PUBLIC_ENTRANCE_HEAT_VALVE}
+      lightState={$entranceLightStore}
+      onLightClick={() => {
+        $entranceLightStore = toggleActionState($entranceLightStore)
+      }}
+      heatingState={$entranceHeatingStore}
+      temperature={$entranceTemperatureStore}
     />
-    <Room
+    <!--<Room
       id="kitchen"
       name="Kitchen"
       rowStart={10}
