@@ -19,7 +19,7 @@
     entranceHeatingStore,
     entranceTemperatureStore,
     livingEntranceLightStore
-  } from '../lib/house-stores-repository'
+  } from '../house-stores-repository'
   import { toggleBooleanDeviceState } from '$lib/device-state'
 </script>
 

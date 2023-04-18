@@ -2,7 +2,7 @@
   import '../app.css'
   import Clock from '../lib/clock.svelte'
   import Temperature from '../lib/temperature.svelte'
-  import { externalTemperatureStore } from '$lib/house-stores-repository'
+  import { externalTemperatureStore } from 'src/house-stores-repository'
 </script>
 
 <style>
