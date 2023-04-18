@@ -20,7 +20,7 @@
     entranceTemperatureStore,
     livingEntranceLightStore
   } from '../lib/house-stores-repository'
-  import { toggleActionState } from '$lib/action-state'
+  import { toggleBooleanDeviceState } from '$lib/device-state'
 </script>
 
 <div class="flex flex-col items-center xl:flex-row xl:space-x-4 xl:justify-center">
@@ -36,7 +36,7 @@
         {
           state: $livingGardenLightStore,
           onClick: () => {
-            $livingGardenLightStore = toggleActionState($livingGardenLightStore)
+            $livingGardenLightStore = toggleBooleanDeviceState($livingGardenLightStore)
           }
         }
       ]}
@@ -52,19 +52,19 @@
         {
           state: $livingLightStore,
           onClick: () => {
-            $livingLightStore = toggleActionState($livingLightStore)
+            $livingLightStore = toggleBooleanDeviceState($livingLightStore)
           }
         },
         {
           state: $livingGardenLightStore,
           onClick: () => {
-            $livingGardenLightStore = toggleActionState($livingGardenLightStore)
+            $livingGardenLightStore = toggleBooleanDeviceState($livingGardenLightStore)
           }
         },
         {
           state: $livingEntranceLightStore,
           onClick: () => {
-            $livingEntranceLightStore = toggleActionState($livingEntranceLightStore)
+            $livingEntranceLightStore = toggleBooleanDeviceState($livingEntranceLightStore)
           }
         }
       ]}
@@ -82,7 +82,7 @@
         {
           state: $diningLightStore,
           onClick: () => {
-            $diningLightStore = toggleActionState($diningLightStore)
+            $diningLightStore = toggleBooleanDeviceState($diningLightStore)
           }
         }
       ]}
@@ -98,7 +98,7 @@
         {
           state: $guestLightStore,
           onClick: () => {
-            $guestLightStore = toggleActionState($guestLightStore)
+            $guestLightStore = toggleBooleanDeviceState($guestLightStore)
           }
         }
       ]}
@@ -116,13 +116,13 @@
         {
           state: $bath0LightStore,
           onClick: () => {
-            $bath0LightStore = toggleActionState($bath0LightStore)
+            $bath0LightStore = toggleBooleanDeviceState($bath0LightStore)
           }
         },
         {
           state: $bath0MirrorLightStore,
           onClick: () => {
-            $bath0MirrorLightStore = toggleActionState($bath0MirrorLightStore)
+            $bath0MirrorLightStore = toggleBooleanDeviceState($bath0MirrorLightStore)
           }
         }
       ]}
@@ -140,7 +140,7 @@
         {
           state: $stairsLightStore,
           onClick: () => {
-            $stairsLightStore = toggleActionState($stairsLightStore)
+            $stairsLightStore = toggleBooleanDeviceState($stairsLightStore)
           }
         }
       ]}
@@ -156,7 +156,7 @@
         {
           state: $hall0LightStore,
           onClick: () => {
-            $hall0LightStore = toggleActionState($hall0LightStore)
+            $hall0LightStore = toggleBooleanDeviceState($hall0LightStore)
           }
         }
       ]}
@@ -206,7 +206,7 @@
         {
           state: $entranceLightStore,
           onClick: () => {
-            $entranceLightStore = toggleActionState($entranceLightStore)
+            $entranceLightStore = toggleBooleanDeviceState($entranceLightStore)
           }
         }
       ]}

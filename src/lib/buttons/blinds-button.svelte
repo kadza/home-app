@@ -2,10 +2,10 @@
   import ActionButton from './action-button.svelte'
   import BlindsOpen from 'svelte-material-icons/BlindsOpen.svelte'
   import BlindsClosed from 'svelte-material-icons/Blinds.svelte'
-  import type { ActionState } from '../action-state'
+  import type { BooleanDeviceState } from '../device-state'
 
   export let onClick = () => {}
-  export let state: ActionState
+  export let state: BooleanDeviceState
 </script>
 
 <ActionButton {onClick} {state}>

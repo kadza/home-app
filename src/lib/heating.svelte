@@ -1,14 +1,14 @@
 <script lang="ts">
   import Radiator from 'svelte-material-icons/Radiator.svelte'
   import RadiatorOff from 'svelte-material-icons/RadiatorOff.svelte'
-  import type { ActionState } from './action-state'
+  import type { BooleanDeviceState } from './device-state'
 
-  export let state: ActionState
+  export let state: BooleanDeviceState
 </script>
 
-{#if state === 'active'}
+{#if state === true}
   <Radiator class="text-gray-100" />
-{:else if state === 'inactive'}
+{:else if state === false}
   <RadiatorOff class="text-gray-400" />
 {:else if state === 'error'}
   <RadiatorOff class="text-red-400" />

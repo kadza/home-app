@@ -2,10 +2,10 @@
   import ActionButton from './action-button.svelte'
   import LightBulb from 'svelte-material-icons/Lightbulb.svelte'
   import LightBulbOff from 'svelte-material-icons/LightbulbOff.svelte'
-  import type { ActionState } from '../action-state'
+  import type { BooleanDeviceState } from '../device-state'
 
   export let onClick = () => {}
-  export let state: ActionState
+  export let state: BooleanDeviceState
 </script>
 
 <ActionButton {onClick} {state}>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import Thermometer from 'svelte-material-icons/Thermometer.svelte'
-  import { hasNumberDeviceStateValue, type NumberDeviceState } from './action-state'
+  import { hasNumberDeviceStateValue, type NumberDeviceState } from './device-state'
 
   export let temperature: NumberDeviceState
   export let setTemperature: NumberDeviceState | undefined = undefined

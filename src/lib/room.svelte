@@ -5,11 +5,11 @@
   import LightButton from './buttons/light-button.svelte'
   import BlindsButton from './buttons/blinds-button.svelte'
   import Heating from './heating.svelte'
-  import type { ActionState, NumberDeviceState } from './action-state'
-  export let lights: { state: ActionState; onClick: () => void }[] = []
-  export let blindsSate: ActionState | undefined = undefined
+  import type { BooleanDeviceState, NumberDeviceState } from './device-state'
+  export let lights: { state: BooleanDeviceState; onClick: () => void }[] = []
+  export let blindsSate: BooleanDeviceState | undefined = undefined
   export let onBlindsClick: (() => void) | undefined = undefined
-  export let heatingState: ActionState | undefined = undefined
+  export let heatingState: BooleanDeviceState | undefined = undefined
   export let columnStart = 0
   export let rowStart = 0
   export let columnSpan = 0

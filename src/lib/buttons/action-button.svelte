@@ -1,21 +1,21 @@
 <script lang="ts">
-  import type { ActionState } from '../action-state'
+  import type { BooleanDeviceState } from '../device-state'
 
   export let onClick = () => {}
-  export let state: ActionState
+  export let state: BooleanDeviceState
 </script>
 
 <button
   class="p-2 rounded-full w-8 h-8"
-  class:bg-cyan-700={state === 'active' || state === 'inactive'}
+  class:bg-cyan-700={state === true || state === false}
   class:bg-red-700={state === 'error'}
   class:bg-gray-700={state === 'disabled'}
   class:bg-gray-400={state === 'not-initialized'}
   on:click={onClick}
 >
-  {#if state === 'active'}
+  {#if state === true}
     <slot name="active" />
-  {:else if state === 'inactive'}
+  {:else if state === false}
     <slot name="inactive" />
   {:else if state === 'disabled'}
     <slot name="disabled" />

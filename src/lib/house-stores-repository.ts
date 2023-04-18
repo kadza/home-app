@@ -3,26 +3,30 @@ import { env } from '$env/dynamic/public'
 import { connect, MqttClient } from 'mqtt'
 import { writable, type Writable } from 'svelte/store'
 import { get } from 'svelte/store'
-import { hasNumberDeviceStateValue, type ActionState, type NumberDeviceState } from './action-state'
+import {
+  hasNumberDeviceStateValue,
+  type BooleanDeviceState,
+  type NumberDeviceState
+} from './device-state'
 
-export const guestLightStore = writable<ActionState>('not-initialized')
-export const guestHeatingStore = writable<ActionState>('not-initialized')
+export const guestLightStore = writable<BooleanDeviceState>('not-initialized')
+export const guestHeatingStore = writable<BooleanDeviceState>('not-initialized')
 export const guestTemperatureStore = writable<NumberDeviceState>('not-initialized')
-export const diningLightStore = writable<ActionState>('not-initialized')
-export const livingLightStore = writable<ActionState>('not-initialized')
-export const livingHeatingStore = writable<ActionState>('not-initialized')
+export const diningLightStore = writable<BooleanDeviceState>('not-initialized')
+export const livingLightStore = writable<BooleanDeviceState>('not-initialized')
+export const livingHeatingStore = writable<BooleanDeviceState>('not-initialized')
 export const livingTemperatureStore = writable<NumberDeviceState>('not-initialized')
-export const livingEntranceLightStore = writable<ActionState>('not-initialized')
-export const livingGardenLightStore = writable<ActionState>('not-initialized')
-export const bath0LightStore = writable<ActionState>('not-initialized')
-export const bath0MirrorLightStore = writable<ActionState>('not-initialized')
-export const bath0HeatingStore = writable<ActionState>('not-initialized')
+export const livingEntranceLightStore = writable<BooleanDeviceState>('not-initialized')
+export const livingGardenLightStore = writable<BooleanDeviceState>('not-initialized')
+export const bath0LightStore = writable<BooleanDeviceState>('not-initialized')
+export const bath0MirrorLightStore = writable<BooleanDeviceState>('not-initialized')
+export const bath0HeatingStore = writable<BooleanDeviceState>('not-initialized')
 export const bath0TemperatureStore = writable<NumberDeviceState>('error')
-export const stairsLightStore = writable<ActionState>('not-initialized')
-export const hall0LightStore = writable<ActionState>('not-initialized')
+export const stairsLightStore = writable<BooleanDeviceState>('not-initialized')
+export const hall0LightStore = writable<BooleanDeviceState>('not-initialized')
 export const externalTemperatureStore = writable<NumberDeviceState>('not-initialized')
-export const entranceLightStore = writable<ActionState>('not-initialized')
-export const entranceHeatingStore = writable<ActionState>('not-initialized')
+export const entranceLightStore = writable<BooleanDeviceState>('not-initialized')
+export const entranceHeatingStore = writable<BooleanDeviceState>('not-initialized')
 export const entranceTemperatureStore = writable<NumberDeviceState>('not-initialized')
 
 const rawGuestLightStore = writable<string>()
@@ -54,14 +58,14 @@ const storesConfiguration = [
     rawStore: rawGuestLightStore,
     readTopic: env.PUBLIC_GUEST_LIGHT_FROM,
     writeTopic: env.PUBLIC_GUEST_LIGHT_TO,
-    type: 'action-state'
+    type: 'boolean'
   },
   {
     deviceId: 'guest-heating',
     store: guestHeatingStore,
     rawStore: rawGuestHeatingStore,
     readTopic: env.PUBLIC_GUEST_HEAT_VALVE,
-    type: 'action-state'
+    type: 'boolean'
   },
   {
     deviceId: 'dining-light',
@@ -69,7 +73,7 @@ const storesConfiguration = [
     rawStore: rawDiningLightStore,
     readTopic: env.PUBLIC_DINING_LIGHT_FROM,
     writeTopic: env.PUBLIC_DINING_LIGHT_TO,
-    type: 'action-state'
+    type: 'boolean'
   },
   {
     deviceId: 'guest-temperature',
@@ -84,14 +88,14 @@ const storesConfiguration = [
     rawStore: rawLivingLightStore,
     readTopic: env.PUBLIC_LIVING_LIGHT_FROM,
     writeTopic: env.PUBLIC_LIVING_LIGHT_TO,
-    type: 'action-state'
+    type: 'boolean'
   },
   {
     deviceId: 'living-heating',
     store: livingHeatingStore,
     rawStore: rawLivingHeatingStore,
     readTopic: env.PUBLIC_LIVING_HEAT_VALVE,
-    type: 'action-state'
+    type: 'boolean'
   },
   {
     deviceId: 'living-temperature',
@@ -106,7 +110,7 @@ const storesConfiguration = [
     rawStore: rawLivingEntranceLightStore,
     readTopic: env.PUBLIC_LIVING_ENTRANCE_LIGHT_FROM,
     writeTopic: env.PUBLIC_LIVING_ENTRANCE_LIGHT_TO,
-    type: 'action-state'
+    type: 'boolean'
   },
   {
     deviceId: 'living-garden-light',
@@ -114,7 +118,7 @@ const storesConfiguration = [
     rawStore: rawLivingGardenLightStore,
     readTopic: env.PUBLIC_LIVING_GARDEN_LIGHT_FROM,
     writeTopic: env.PUBLIC_LIVING_GARDEN_LIGHT_TO,
-    type: 'action-state'
+    type: 'boolean'
   },
   {
     deviceId: 'bath-0-light',
@@ -122,7 +126,7 @@ const storesConfiguration = [
     rawStore: rawBath0LightStore,
     readTopic: env.PUBLIC_BATH_0_LIGHT_FROM,
     writeTopic: env.PUBLIC_BATH_0_LIGHT_TO,
-    type: 'action-state'
+    type: 'boolean'
   },
   {
     deviceId: 'bath-0-mirror-light',
@@ -130,7 +134,7 @@ const storesConfiguration = [
     rawStore: rawBath0MirrorLightStore,
     readTopic: env.PUBLIC_BATH_0_MIRROR_LIGHT_FROM,
     writeTopic: env.PUBLIC_BATH_0_MIRROR_LIGHT_TO,
-    type: 'action-state'
+    type: 'boolean'
   },
   {
     deviceId: 'bath-0-heating',
@@ -152,7 +156,7 @@ const storesConfiguration = [
     rawStore: rawHall0LightStore,
     readTopic: env.PUBLIC_HALL_0_LIGHT_FROM,
     writeTopic: env.PUBLIC_HALL_0_LIGHT_TO,
-    type: 'action-state'
+    type: 'boolean'
   },
   {
     deviceId: 'stairs-light',
@@ -160,7 +164,7 @@ const storesConfiguration = [
     rawStore: rawStairsLightStore,
     readTopic: env.PUBLIC_STAIRS_LIGHT_FROM,
     writeTopic: env.PUBLIC_STAIRS_LIGHT_TO,
-    type: 'action-state'
+    type: 'boolean'
   },
   {
     deviceId: 'external-temperature',
@@ -175,14 +179,14 @@ const storesConfiguration = [
     rawStore: rawEntranceLightStore,
     readTopic: env.PUBLIC_ENTRANCE_LIGHT_FROM,
     writeTopic: env.PUBLIC_ENTRANCE_LIGHT_TO,
-    type: 'action-state'
+    type: 'boolean'
   },
   {
     deviceId: 'entrance-heating',
     store: entranceHeatingStore,
     rawStore: rawEntranceHeatingStore,
     readTopic: env.PUBLIC_ENTRANCE_HEAT_VALVE,
-    type: 'action-state'
+    type: 'boolean'
   },
   {
     deviceId: 'entrance-temperature',
@@ -194,7 +198,7 @@ const storesConfiguration = [
 ]
 
 const readMessageOnRawStoreChange = (
-  messagesStore: Writable<ActionState | boolean | number>,
+  messagesStore: Writable<BooleanDeviceState | boolean | number>,
   rawMessagesStore: Writable<string>,
   topic: string,
   type: string
@@ -202,10 +206,10 @@ const readMessageOnRawStoreChange = (
   rawMessagesStore.subscribe((value) => {
     if (value === undefined) return
 
-    let convertedValue: ActionState | boolean | number
+    let convertedValue: BooleanDeviceState | boolean | number
 
-    if (type == 'action-state') {
-      convertedValue = value === '1' ? 'active' : 'inactive'
+    if (type == 'boolean') {
+      convertedValue = value === '1' ? true : false
     } else if (type === 'number') {
       convertedValue = parseFloat(value)
     } else {
@@ -230,7 +234,7 @@ const readMessageOnRawStoreChange = (
 
 const publishMessageOnStoreChange = (
   deviceId: string,
-  store: Writable<ActionState | NumberDeviceState>,
+  store: Writable<BooleanDeviceState | NumberDeviceState>,
   rawMessagesStore: Writable<string>,
   publishTopic: string,
   type: string,
@@ -241,15 +245,15 @@ const publishMessageOnStoreChange = (
 
     let message
 
-    if (type == 'action-state') {
-      if (value === 'active') {
+    if (type == 'boolean') {
+      if (value === true) {
         message = '1'
-      } else if (value === 'inactive') {
+      } else if (value === false) {
         message = '0'
       } else if (value === 'not-initialized' || value === 'error' || value === 'disabled') {
         return
       } else {
-        throw new Error(`Unknown value ${value} for action-state`)
+        throw new Error(`Unknown value ${value} for boolean`)
       }
     } else if (type === 'number') {
       if (hasNumberDeviceStateValue(value)) {
