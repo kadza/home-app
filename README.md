@@ -35,4 +35,5 @@ Mosquitto MQTT broker configuration location /etc/mosquitto/mosquitto.conf
 ## TODO
 
 - global code formatter
-- action-state -> device-state, boolean-device-state
+- add blinds control
+- add set temperature
