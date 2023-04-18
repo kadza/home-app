@@ -1,5 +1,5 @@
 <script lang {ts}>
-  import Room from '../lib/room.svelte'
+  import Room from '$lib/room.svelte'
   import {
     diningLightStore,
     guestHeatingStore,
@@ -21,6 +21,9 @@
     livingEntranceLightStore
   } from '../house-stores-repository'
   import { toggleBooleanDeviceState } from '$lib/device-state'
+  import { init } from '../home-client'
+
+  init()
 </script>
 
 <div class="flex flex-col items-center xl:flex-row xl:space-x-4 xl:justify-center">

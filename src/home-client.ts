@@ -11,6 +11,8 @@ import { storesConfiguration } from './house-stores-repository'
 
 const rawMessageHandlers = new Map<string, (topic: string, message: string) => void>()
 
+console.log('kuku')
+
 const client = browser
   ? connect(env.PUBLIC_MQTT_URL, {
       username: env.PUBLIC_MQTT_USER,
@@ -95,43 +97,45 @@ const publishMessageOnStoreChange = (
   })
 }
 
-if (client) {
-  console.log('Connecting to MQTT broker')
+export const init = () => {
+  if (client) {
+    console.log('Connecting to MQTT broker')
 
-  storesConfiguration.forEach((config) => {
-    readMessageOnRawStoreChange(config.store, config.rawStore, config.readTopic, config.type)
-  })
-
-  client.on('connect', () => {
-    console.log('Connected to MQTT broker')
     storesConfiguration.forEach((config) => {
-      if (config.readTopic && config.readTopic !== '') {
-        console.log('Subscribing to topic', config.readTopic)
-        client.subscribe(config.readTopic)
-      }
+      readMessageOnRawStoreChange(config.store, config.rawStore, config.readTopic, config.type)
     })
-    client.on('message', (topic, message) => {
-      const deviceId = storesConfiguration.find((config) => config.readTopic === topic)?.deviceId
-      console.log(
-        `Received message: ${message.toString()} from device: ${deviceId} on topic: ${topic}`
-      )
-      const handler = rawMessageHandlers.get(topic)
 
-      if (handler) {
-        handler(topic, message.toString())
-      }
+    client.on('connect', () => {
+      console.log('Connected to MQTT broker')
+      storesConfiguration.forEach((config) => {
+        if (config.readTopic && config.readTopic !== '') {
+          console.log('Subscribing to topic', config.readTopic)
+          client.subscribe(config.readTopic)
+        }
+      })
+      client.on('message', (topic, message) => {
+        const deviceId = storesConfiguration.find((config) => config.readTopic === topic)?.deviceId
+        console.log(
+          `Received message: ${message.toString()} from device: ${deviceId} on topic: ${topic}`
+        )
+        const handler = rawMessageHandlers.get(topic)
+
+        if (handler) {
+          handler(topic, message.toString())
+        }
+      })
     })
-  })
 
-  storesConfiguration.forEach((config) => {
-    if (config.writeTopic)
-      publishMessageOnStoreChange(
-        config.deviceId,
-        config.store,
-        config.rawStore,
-        config.writeTopic,
-        config.type,
-        client
-      )
-  })
+    storesConfiguration.forEach((config) => {
+      if (config.writeTopic)
+        publishMessageOnStoreChange(
+          config.deviceId,
+          config.store,
+          config.rawStore,
+          config.writeTopic,
+          config.type,
+          client
+        )
+    })
+  }
 }
