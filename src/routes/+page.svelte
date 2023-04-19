@@ -1,34 +1,39 @@
 <script lang {ts}>
   import Room from '$lib/room.svelte'
   import {
-    diningLightStore,
-    guestHeatingStore,
-    guestLightStore,
-    guestTemperatureStore,
-    livingTemperatureStore,
-    livingGardenLightStore,
-    livingLightStore,
-    livingHeatingStore,
-    bath0MirrorLightStore,
-    bath0LightStore,
     bath0HeatingStore,
+    bath0LightStore,
+    bath0MirrorLightStore,
+    bath0SetTemperatureStore,
     bath0TemperatureStore,
-    stairsLightStore,
-    hall0LightStore,
-    entranceLightStore,
-    entranceHeatingStore,
-    entranceTemperatureStore,
-    livingEntranceLightStore,
     boilerLightStore,
-    boilerWallLightStore,
     boilerTemperatureStore,
-    storeLightStore,
-    storeTemperatureStore,
+    boilerWallLightStore,
+    diningLightStore,
+    entranceHeatingStore,
+    entranceLightStore,
+    entranceSetTemperatureStore,
+    entranceTemperatureStore,
     garageHeatingStore,
     garageLight0Store,
     garageLight1Store,
+    garageSetTemperatureStore,
     garageTemperatureStore,
-    kitchenLightStore
+    guestHeatingStore,
+    guestLightStore,
+    guestSetTemperatureStore,
+    guestTemperatureStore,
+    hall0LightStore,
+    kitchenLightStore,
+    livingEntranceLightStore,
+    livingGardenLightStore,
+    livingHeatingStore,
+    livingLightStore,
+    livingSetTemperatureStore,
+    livingTemperatureStore,
+    stairsLightStore,
+    storeLightStore,
+    storeTemperatureStore
   } from '../house-stores-repository'
   import { toggleBooleanDeviceState } from '$lib/device-state'
   import { init } from '../home-client'
@@ -83,6 +88,7 @@
       ]}
       heating={$livingHeatingStore}
       temperature={$livingTemperatureStore}
+      setTemperature={$livingSetTemperatureStore}
     />
     <Room
       id="dining"
@@ -117,6 +123,7 @@
       ]}
       heating={$guestHeatingStore}
       temperature={$guestTemperatureStore}
+      setTemperature={$guestSetTemperatureStore}
     />
     <Room
       id="bath-0"
@@ -141,6 +148,7 @@
       ]}
       heating={$bath0HeatingStore}
       temperature={$bath0TemperatureStore}
+      setTemperature={$bath0SetTemperatureStore}
     />
     <Room
       id="stairs-0"
@@ -237,6 +245,7 @@
       ]}
       temperature={$garageTemperatureStore}
       heating={$garageHeatingStore}
+      setTemperature={$garageSetTemperatureStore}
     />
     <Room
       id="entrance"
@@ -255,6 +264,7 @@
       ]}
       heating={$entranceHeatingStore}
       temperature={$entranceTemperatureStore}
+      setTemperature={$entranceSetTemperatureStore}
     />
     <Room
       id="kitchen"

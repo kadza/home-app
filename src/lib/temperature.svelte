@@ -17,6 +17,6 @@
     <span class="text-xs">{temperature} °C</span>
   {/if}
   {#if setTemperature && hasNumberDeviceStateValue(setTemperature)}
-    <span class="text-xs text-gray-400">/ {setTemperature} °C</span>
+    <span class="text-xs text-gray-400">&nbsp;/ {setTemperature} °C</span>
   {/if}
 </div>
