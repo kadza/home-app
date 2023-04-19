@@ -38,3 +38,5 @@ Mosquitto MQTT broker configuration location /etc/mosquitto/mosquitto.conf
 - add blinds control
 - add set temperature
 - add tooltips with device names and topics
+- add electric sockets
+- blinds %

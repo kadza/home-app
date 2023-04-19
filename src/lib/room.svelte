@@ -19,6 +19,7 @@
   export let temperature: NumberDeviceState | undefined = undefined
   export let setTemperature: NumberDeviceState | undefined = undefined
   export let isPresent: boolean | undefined = undefined
+  export let chartUrl: string | undefined = undefined
 </script>
 
 <div
@@ -44,16 +45,16 @@
           {#if heating !== undefined}
             <Heating state={heating} />
           {/if}
-          <button>
-            {#if isPresent === true}
-              <HumanMale />
-            {:else if isPresent === false}
-              <HumanMale color={'grey'} />
-            {/if}
-          </button>
-          <button>
-            <ChartLine />
-          </button>
+          {#if isPresent === true}
+            <HumanMale />
+          {:else if isPresent === false}
+            <HumanMale color={'grey'} />
+          {/if}
+          {#if chartUrl}
+            <button>
+              <ChartLine />
+            </button>
+          {/if}
         </div>
         {#if temperature !== undefined}
           <Temperature {temperature} {setTemperature} />
