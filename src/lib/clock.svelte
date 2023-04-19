@@ -7,7 +7,7 @@
 
 <div class="flex items-center space-x-1">
   <Clock />
-  <span>
+  <span class="text-xs">
     {$clock.getHours().toString().padStart(2, '0')} : {$clock
       .getMinutes()
       .toString()

@@ -1,10 +1,43 @@
 <script lang {ts}>
-  import Room from '../lib/room-container.svelte'
-  import { env } from '$env/dynamic/public'
+  import Room from '$lib/room.svelte'
+  import {
+    diningLightStore,
+    guestHeatingStore,
+    guestLightStore,
+    guestTemperatureStore,
+    livingTemperatureStore,
+    livingGardenLightStore,
+    livingLightStore,
+    livingHeatingStore,
+    bath0MirrorLightStore,
+    bath0LightStore,
+    bath0HeatingStore,
+    bath0TemperatureStore,
+    stairsLightStore,
+    hall0LightStore,
+    entranceLightStore,
+    entranceHeatingStore,
+    entranceTemperatureStore,
+    livingEntranceLightStore,
+    boilerLightStore,
+    boilerWallLightStore,
+    boilerTemperatureStore,
+    storeLightStore,
+    storeTemperatureStore,
+    garageHeatingStore,
+    garageLight0Store,
+    garageLight1Store,
+    garageTemperatureStore,
+    kitchenLightStore
+  } from '../house-stores-repository'
+  import { toggleBooleanDeviceState } from '$lib/device-state'
+  import { init } from '../home-client'
+
+  init()
 </script>
 
 <div class="flex flex-col items-center xl:flex-row xl:space-x-4 xl:justify-center">
-  <div class="grid grid-cols-[repeat(17,2.25rem)] grid-rows-[repeat(19,2.25rem)] gap-1">
+  <div class="grid grid-cols-[repeat(17,2.5rem)] grid-rows-[repeat(19,2.5rem)] gap-1">
     <Room
       id="living-garden"
       name="Garden"
@@ -12,8 +45,14 @@
       columnStart={11}
       rowSpan={1}
       columnSpan={6}
-      lightFromTopic={env.PUBLIC_LIVING_GARDEN_LIGHT_FROM}
-      lightToTopic={env.PUBLIC_LIVING_GARDEN_LIGHT_TO}
+      lights={[
+        {
+          state: $livingGardenLightStore,
+          onClick: () => {
+            $livingGardenLightStore = toggleBooleanDeviceState($livingGardenLightStore)
+          }
+        }
+      ]}
     />
     <Room
       id="living"
@@ -22,10 +61,28 @@
       columnStart={10}
       rowSpan={5}
       columnSpan={8}
-      lightFromTopic={env.PUBLIC_LIVING_LIGHT_FROM}
-      lightToTopic={env.PUBLIC_LIVING_LIGHT_TO}
-      temperatureFromTopic={env.PUBLIC_LIVING_TEMP}
-      heatingValveFromTopic={env.PUBLIC_LIVING_HEAT_VALVE}
+      lights={[
+        {
+          state: $livingLightStore,
+          onClick: () => {
+            $livingLightStore = toggleBooleanDeviceState($livingLightStore)
+          }
+        },
+        {
+          state: $livingGardenLightStore,
+          onClick: () => {
+            $livingGardenLightStore = toggleBooleanDeviceState($livingGardenLightStore)
+          }
+        },
+        {
+          state: $livingEntranceLightStore,
+          onClick: () => {
+            $livingEntranceLightStore = toggleBooleanDeviceState($livingEntranceLightStore)
+          }
+        }
+      ]}
+      heating={$livingHeatingStore}
+      temperature={$livingTemperatureStore}
     />
     <Room
       id="dining"
@@ -34,8 +91,14 @@
       columnStart={10}
       rowSpan={3}
       columnSpan={8}
-      lightFromTopic={env.PUBLIC_DINING_LIGHT_FROM}
-      lightToTopic={env.PUBLIC_DINING_LIGHT_FROM}
+      lights={[
+        {
+          state: $diningLightStore,
+          onClick: () => {
+            $diningLightStore = toggleBooleanDeviceState($diningLightStore)
+          }
+        }
+      ]}
     />
     <Room
       id="guest"
@@ -44,10 +107,16 @@
       columnStart={1}
       rowSpan={5}
       columnSpan={4}
-      lightFromTopic={env.PUBLIC_GUEST_LIGHT_FROM}
-      lightToTopic={env.PUBLIC_GUEST_LIGHT_TO}
-      temperatureFromTopic={env.PUBLIC_GUEST_TEMP}
-      heatingValveFromTopic={env.PUBLIC_GUEST_HEAT_VALVE}
+      lights={[
+        {
+          state: $guestLightStore,
+          onClick: () => {
+            $guestLightStore = toggleBooleanDeviceState($guestLightStore)
+          }
+        }
+      ]}
+      heating={$guestHeatingStore}
+      temperature={$guestTemperatureStore}
     />
     <Room
       id="bath-0"
@@ -56,10 +125,22 @@
       columnStart={5}
       rowSpan={4}
       columnSpan={3}
-      lightFromTopic={[env.PUBLIC_BATH_0_LIGHT_FROM, env.PUBLIC_BATH_0_MIRROR_LIGHT_FROM]}
-      lightToTopic={[env.PUBLIC_BATH_0_LIGHT_TO, env.PUBLIC_BATH_0_MIRROR_LIGHT_TO]}
-      temperatureFromTopic={env.PUBLIC_BATH_0_TEMP}
-      heatingValveFromTopic={env.PUBLIC_BATH_0_HEAT_VALVE}
+      lights={[
+        {
+          state: $bath0LightStore,
+          onClick: () => {
+            $bath0LightStore = toggleBooleanDeviceState($bath0LightStore)
+          }
+        },
+        {
+          state: $bath0MirrorLightStore,
+          onClick: () => {
+            $bath0MirrorLightStore = toggleBooleanDeviceState($bath0MirrorLightStore)
+          }
+        }
+      ]}
+      heating={$bath0HeatingStore}
+      temperature={$bath0TemperatureStore}
     />
     <Room
       id="stairs-0"
@@ -68,8 +149,14 @@
       columnStart={8}
       rowSpan={5}
       columnSpan={2}
-      lightFromTopic={env.PUBLIC_STAIRS_LIGHT_FROM}
-      lightToTopic={env.PUBLIC_STAIRS_LIGHT_TO}
+      lights={[
+        {
+          state: $stairsLightStore,
+          onClick: () => {
+            $stairsLightStore = toggleBooleanDeviceState($stairsLightStore)
+          }
+        }
+      ]}
     />
     <Room
       id="hall-0"
@@ -78,8 +165,14 @@
       columnStart={5}
       rowSpan={1}
       columnSpan={3}
-      lightFromTopic={env.PUBLIC_HALL_0_LIGHT_FROM}
-      lightToTopic={env.PUBLIC_HALL_0_LIGHT_TO}
+      lights={[
+        {
+          state: $hall0LightStore,
+          onClick: () => {
+            $hall0LightStore = toggleBooleanDeviceState($hall0LightStore)
+          }
+        }
+      ]}
     />
     <Room
       id="boiler"
@@ -88,9 +181,21 @@
       columnStart={1}
       rowSpan={3}
       columnSpan={5}
-      lightFromTopic={[env.PUBLIC_BOILER_LIGHT_FROM, env.PUBLIC_BOILER_WALL_LIGHT_FROM]}
-      lightToTopic={[env.PUBLIC_BOILER_LIGHT_TO, env.PUBLIC_BOILER_WALL_LIGHT_TO]}
-      temperatureFromTopic={env.PUBLIC_BOILER_TEMP}
+      lights={[
+        {
+          state: $boilerLightStore,
+          onClick: () => {
+            $boilerLightStore = toggleBooleanDeviceState($boilerLightStore)
+          }
+        },
+        {
+          state: $boilerWallLightStore,
+          onClick: () => {
+            $boilerWallLightStore = toggleBooleanDeviceState($boilerWallLightStore)
+          }
+        }
+      ]}
+      temperature={$boilerTemperatureStore}
     />
     <Room
       id="store"
@@ -99,9 +204,15 @@
       columnStart={6}
       rowSpan={3}
       columnSpan={4}
-      lightFromTopic={env.PUBLIC_STORE_LIGHT_FROM}
-      lightToTopic={env.PUBLIC_STORE_LIGHT_TO}
-      temperatureFromTopic={env.PUBLIC_STORE_TEMP}
+      lights={[
+        {
+          state: $storeLightStore,
+          onClick: () => {
+            $storeLightStore = toggleBooleanDeviceState($storeLightStore)
+          }
+        }
+      ]}
+      temperature={$storeTemperatureStore}
     />
     <Room
       id="garage"
@@ -110,10 +221,22 @@
       columnStart={1}
       rowSpan={9}
       columnSpan={9}
-      lightFromTopic={[env.PUBLIC_GARAGE_LIGHT_0_FROM, env.PUBLIC_GARAGE_LIGHT_1_FROM]}
-      lightToTopic={[env.PUBLIC_GARAGE_LIGHT_0_TO, env.PUBLIC_GARAGE_LIGHT_1_TO]}
-      temperatureFromTopic={env.PUBLIC_GARAGE_TEMP}
-      heatingValveFromTopic={env.PUBLIC_GARAGE_HEAT_VALVE}
+      lights={[
+        {
+          state: $garageLight0Store,
+          onClick: () => {
+            $garageLight0Store = toggleBooleanDeviceState($garageLight0Store)
+          }
+        },
+        {
+          state: $garageLight1Store,
+          onClick: () => {
+            $garageLight1Store = toggleBooleanDeviceState($garageLight1Store)
+          }
+        }
+      ]}
+      temperature={$garageTemperatureStore}
+      heating={$garageHeatingStore}
     />
     <Room
       id="entrance"
@@ -122,10 +245,16 @@
       columnStart={10}
       rowSpan={4}
       columnSpan={3}
-      lightFromTopic={env.PUBLIC_ENTRANCE_LIGHT_FROM}
-      lightToTopic={env.PUBLIC_ENTRANCE_LIGHT_TO}
-      temperatureFromTopic={env.PUBLIC_ENTRANCE_TEMP}
-      heatingValveFromTopic={env.PUBLIC_ENTRANCE_HEAT_VALVE}
+      lights={[
+        {
+          state: $entranceLightStore,
+          onClick: () => {
+            $entranceLightStore = toggleBooleanDeviceState($entranceLightStore)
+          }
+        }
+      ]}
+      heating={$entranceHeatingStore}
+      temperature={$entranceTemperatureStore}
     />
     <Room
       id="kitchen"
@@ -134,11 +263,17 @@
       columnStart={13}
       rowSpan={4}
       columnSpan={5}
-      lightFromTopic={env.PUBLIC_KITCHEN_LIGHT_FROM}
-      lightToTopic={env.PUBLIC_KITCHEN_LIGHT_TO}
+      lights={[
+        {
+          state: $kitchenLightStore,
+          onClick: () => {
+            $kitchenLightStore = toggleBooleanDeviceState($kitchenLightStore)
+          }
+        }
+      ]}
     />
   </div>
-  <div class="grid grid-cols-[repeat(17,2.25rem)] grid-rows-[repeat(19,2.25rem)] gap-1">
+  <!--div class="grid grid-cols-[repeat(17,2.25rem)] grid-rows-[repeat(19,2.25rem)] gap-1">
     <Room
       id="bedroom"
       name="Bedroom"
@@ -227,5 +362,5 @@
       temperatureFromTopic={env.PUBLIC_BATH_1_TEMP}
       heatingValveFromTopic={env.PUBLIC_BATH_1_HEAT_VALVE}
     />
-  </div>
+  </div-->
 </div>

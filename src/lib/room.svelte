@@ -1,25 +1,25 @@
 <script lang="ts">
-  import Radiator from 'svelte-material-icons/Radiator.svelte'
-  import RadiatorOff from 'svelte-material-icons/RadiatorOff.svelte'
   import Temperature from './temperature.svelte'
   import HumanMale from 'svelte-material-icons/HumanMale.svelte'
   import ChartLine from 'svelte-material-icons/ChartLine.svelte'
   import LightButton from './buttons/light-button.svelte'
   import BlindsButton from './buttons/blinds-button.svelte'
-  export let isLightOn: boolean | undefined = undefined
-  export let onLightClick: (() => void) | undefined = undefined
-  export let isBlindsOpen: boolean | undefined = undefined
+  import Heating from './heating.svelte'
+  import type { BooleanDeviceState, NumberDeviceState } from './device-state'
+  export let lights: { state: BooleanDeviceState; onClick: () => void }[] = []
+  export let blindsSate: BooleanDeviceState | undefined = undefined
   export let onBlindsClick: (() => void) | undefined = undefined
+  export let heating: BooleanDeviceState | undefined = undefined
   export let columnStart = 0
   export let rowStart = 0
   export let columnSpan = 0
   export let rowSpan = 0
   export let id = ''
   export let name = ''
-  export let temperature: number | null | undefined = undefined
-  export let setTemperature: number | null | undefined = undefined
-  export let isHeatingOn: boolean | undefined = undefined
+  export let temperature: NumberDeviceState | undefined = undefined
+  export let setTemperature: NumberDeviceState | undefined = undefined
   export let isPresent: boolean | undefined = undefined
+  export let chartUrl: string | undefined = undefined
 </script>
 
 <div
@@ -27,38 +27,34 @@
   class="shadow bg-gray-800/40 rounded flex"
   style="grid-area: {rowStart} / {columnStart} / span {rowSpan} / span {columnSpan}"
 >
-  <div class="flex flex-col justify-between h-full w-full p-1">
-    {#if rowSpan > 2 && columnSpan > 2}
-      <span class="text-xs p-1">{name}</span>
+  <div class="flex flex-col justify-between items-center w-full p-1">
+    {#if rowSpan > 2 && columnSpan > 1}
+      <span class="text-xs p-1 w-full">{name}</span>
     {/if}
-    <div class="flex justify-center gap-2 items-center h-full">
-      {#if isLightOn !== undefined}
-        <LightButton onClick={onLightClick} {isLightOn} />
-      {/if}
-      {#if isBlindsOpen !== undefined}
-        <BlindsButton onClick={onBlindsClick} {isBlindsOpen} />
+    <div class="flex gap-1 flex-wrap justify-center">
+      {#each lights as light}
+        <LightButton state={light.state} onClick={light.onClick} />
+      {/each}
+      {#if blindsSate && onBlindsClick}
+        <BlindsButton onClick={onBlindsClick} state={blindsSate} />
       {/if}
     </div>
-    {#if rowSpan > 2 && columnSpan > 2}
-      <div class="flex justify-between">
+    {#if rowSpan > 2 && columnSpan > 1}
+      <div class="flex justify-between w-full">
         <div class="flex">
-          <button>
-            {#if isHeatingOn === true}
-              <Radiator />
-            {:else if isHeatingOn === false}
-              <RadiatorOff color={'grey'} />
-            {/if}
-          </button>
-          <button>
-            {#if isPresent === true}
-              <HumanMale />
-            {:else if isPresent === false}
-              <HumanMale color={'grey'} />
-            {/if}
-          </button>
-          <button>
-            <ChartLine />
-          </button>
+          {#if heating !== undefined}
+            <Heating state={heating} />
+          {/if}
+          {#if isPresent === true}
+            <HumanMale />
+          {:else if isPresent === false}
+            <HumanMale color={'grey'} />
+          {/if}
+          {#if chartUrl}
+            <button>
+              <ChartLine />
+            </button>
+          {/if}
         </div>
         {#if temperature !== undefined}
           <Temperature {temperature} {setTemperature} />
