@@ -9,7 +9,7 @@
   export let lights: { state: BooleanDeviceState; onClick: () => void }[] = []
   export let blindsSate: BooleanDeviceState | undefined = undefined
   export let onBlindsClick: (() => void) | undefined = undefined
-  export let heatingState: BooleanDeviceState | undefined = undefined
+  export let heating: BooleanDeviceState | undefined = undefined
   export let columnStart = 0
   export let rowStart = 0
   export let columnSpan = 0
@@ -41,8 +41,8 @@
     {#if rowSpan > 2 && columnSpan > 1}
       <div class="flex justify-between w-full">
         <div class="flex">
-          {#if heatingState}
-            <Heating state={heatingState} />
+          {#if heating !== undefined}
+            <Heating state={heating} />
           {/if}
           <button>
             {#if isPresent === true}

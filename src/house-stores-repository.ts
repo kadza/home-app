@@ -21,6 +21,17 @@ export const externalTemperatureStore = writable<NumberDeviceState>('not-initial
 export const entranceLightStore = writable<BooleanDeviceState>('not-initialized')
 export const entranceHeatingStore = writable<BooleanDeviceState>('not-initialized')
 export const entranceTemperatureStore = writable<NumberDeviceState>('not-initialized')
+export const boilerLightStore = writable<BooleanDeviceState>('not-initialized')
+export const boilerWallLightStore = writable<BooleanDeviceState>('not-initialized')
+export const boilerTemperatureStore = writable<NumberDeviceState>('not-initialized')
+export const storeLightStore = writable<BooleanDeviceState>('not-initialized')
+export const storeTemperatureStore = writable<NumberDeviceState>('not-initialized')
+export const garageLight0Store = writable<BooleanDeviceState>('not-initialized')
+export const garageLight1Store = writable<BooleanDeviceState>('not-initialized')
+export const garageTemperatureStore = writable<NumberDeviceState>('not-initialized')
+export const garageDoorStore = writable<BooleanDeviceState>('not-initialized')
+export const garageHeatingStore = writable<BooleanDeviceState>('not-initialized')
+export const kitchenLightStore = writable<BooleanDeviceState>('not-initialized')
 
 const rawGuestLightStore = writable<string>()
 const rawGuestHeatingStore = writable<string>()
@@ -41,6 +52,17 @@ const rawExternalTemperatureStore = writable<string>()
 const rawEntranceLightStore = writable<string>()
 const rawEntranceHeatingStore = writable<string>()
 const rawEntranceTemperatureStore = writable<string>()
+const rawBoilerLightStore = writable<string>()
+const rawBoilerWallLightStore = writable<string>()
+const rawBoilerTemperatureStore = writable<string>()
+const rawStoreLightStore = writable<string>()
+const rawStoreTemperatureStore = writable<string>()
+const rawGarageLight0Store = writable<string>()
+const rawGarageLight1Store = writable<string>()
+const rawGarageTemperatureStore = writable<string>()
+const rawGarageDoorStore = writable<string>()
+const rawGarageHeatingStore = writable<string>()
+const rawKitchenLightStore = writable<string>()
 
 export const storesConfiguration = [
   {
@@ -185,5 +207,88 @@ export const storesConfiguration = [
     rawStore: rawEntranceTemperatureStore,
     readTopic: env.PUBLIC_ENTRANCE_TEMP,
     type: 'number'
+  },
+  {
+    deviceId: 'boiler-light',
+    store: boilerLightStore,
+    rawStore: rawBoilerLightStore,
+    readTopic: env.PUBLIC_BOILER_LIGHT_FROM,
+    writeTopic: env.PUBLIC_BOILER_LIGHT_TO,
+    type: 'boolean'
+  },
+  {
+    deviceId: 'boiler-wall-light',
+    store: boilerWallLightStore,
+    rawStore: rawBoilerWallLightStore,
+    readTopic: env.PUBLIC_BOILER_WALL_LIGHT_FROM,
+    writeTopic: env.PUBLIC_BOILER_WALL_LIGHT_TO,
+    type: 'boolean'
+  },
+  {
+    deviceId: 'boiler-temperature',
+    store: boilerTemperatureStore,
+    rawStore: rawBoilerTemperatureStore,
+    readTopic: env.PUBLIC_BOILER_TEMP,
+    type: 'number'
+  },
+  {
+    deviceId: 'store-light',
+    store: storeLightStore,
+    rawStore: rawStoreLightStore,
+    readTopic: env.PUBLIC_STORE_LIGHT_FROM,
+    writeTopic: env.PUBLIC_STORE_LIGHT_TO,
+    type: 'boolean'
+  },
+  {
+    deviceId: 'store-temperature',
+    store: storeTemperatureStore,
+    rawStore: rawStoreTemperatureStore,
+    readTopic: env.PUBLIC_STORE_TEMP,
+    type: 'number'
+  },
+  {
+    deviceId: 'garage-light-0',
+    store: garageLight0Store,
+    rawStore: rawGarageLight0Store,
+    readTopic: env.PUBLIC_GARAGE_LIGHT_0_FROM,
+    writeTopic: env.PUBLIC_GARAGE_LIGHT_0_TO,
+    type: 'boolean'
+  },
+  {
+    deviceId: 'garage-light-1',
+    store: garageLight1Store,
+    rawStore: rawGarageLight1Store,
+    readTopic: env.PUBLIC_GARAGE_LIGHT_1_FROM,
+    writeTopic: env.PUBLIC_GARAGE_LIGHT_1_TO,
+    type: 'boolean'
+  },
+  {
+    deviceId: 'garage-temperature',
+    store: garageTemperatureStore,
+    rawStore: rawGarageTemperatureStore,
+    readTopic: env.PUBLIC_GARAGE_TEMP,
+    type: 'number'
+  },
+  {
+    deviceId: 'garage-heating',
+    store: garageHeatingStore,
+    rawStore: rawGarageHeatingStore,
+    readTopic: env.PUBLIC_GARAGE_HEAT_VALVE,
+    type: 'boolean'
+  },
+  {
+    deviceId: 'garage-door',
+    store: garageDoorStore,
+    rawStore: rawGarageDoorStore,
+    readTopic: env.PUBLIC_GARAGE_DOOR_FROM,
+    type: 'boolean'
+  },
+  {
+    deviceId: 'kitchen-light',
+    store: kitchenLightStore,
+    rawStore: rawKitchenLightStore,
+    readTopic: env.PUBLIC_KITCHEN_LIGHT_FROM,
+    writeTopic: env.PUBLIC_KITCHEN_LIGHT_TO,
+    type: 'boolean'
   }
 ]

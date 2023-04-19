@@ -11,8 +11,6 @@ import { storesConfiguration } from './house-stores-repository'
 
 const rawMessageHandlers = new Map<string, (topic: string, message: string) => void>()
 
-console.log('kuku')
-
 const client = browser
   ? connect(env.PUBLIC_MQTT_URL, {
       username: env.PUBLIC_MQTT_USER,
@@ -102,7 +100,9 @@ export const init = () => {
     console.log('Connecting to MQTT broker')
 
     storesConfiguration.forEach((config) => {
-      readMessageOnRawStoreChange(config.store, config.rawStore, config.readTopic, config.type)
+      if (config.readTopic && config.readTopic !== '') {
+        readMessageOnRawStoreChange(config.store, config.rawStore, config.readTopic, config.type)
+      }
     })
 
     client.on('connect', () => {
