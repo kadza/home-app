@@ -1,3 +1,16 @@
+export type DeviceMetadata = {
+  deviceId: string
+  readTopic: string | undefined
+  writeTopic: string | undefined
+}
+
+export function camelCaseToWords(str: string) {
+  return str
+    .replace(/([A-Z0-9])/g, ' $1')
+    .trim()
+    .toLocaleLowerCase()
+}
+
 export type BooleanDeviceState = boolean | 'disabled' | 'error' | 'not-initialized'
 
 export function toggleBooleanDeviceState(state: BooleanDeviceState): BooleanDeviceState {

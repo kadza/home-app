@@ -1,8 +1,10 @@
 <script lang="ts">
+  import { getNumberDeviceStore } from '../house-stores-repository'
   import '../app.css'
   import Clock from '../lib/clock.svelte'
   import Temperature from '../lib/temperature.svelte'
-  import { externalTemperatureStore } from '../house-stores-repository'
+
+  const externalTemperature = getNumberDeviceStore('externalTemperature')
 </script>
 
 <style>
@@ -17,7 +19,7 @@
     <Clock />
   </div>
   <div class="bg-white/10 px-1 py-1">
-    <Temperature temperature={$externalTemperatureStore} />
+    <Temperature temperature={$externalTemperature} />
   </div>
 </div>
 

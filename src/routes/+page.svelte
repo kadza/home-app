@@ -1,42 +1,90 @@
-<script lang {ts}>
+<script lang="ts">
   import Room from '$lib/room.svelte'
   import {
-    bath0HeatingStore,
-    bath0LightStore,
-    bath0MirrorLightStore,
-    bath0SetTemperatureStore,
-    bath0TemperatureStore,
-    boilerLightStore,
-    boilerTemperatureStore,
-    boilerWallLightStore,
-    diningLightStore,
-    entranceHeatingStore,
-    entranceLightStore,
-    entranceSetTemperatureStore,
-    entranceTemperatureStore,
-    garageHeatingStore,
-    garageLight0Store,
-    garageLight1Store,
-    garageSetTemperatureStore,
-    garageTemperatureStore,
-    guestHeatingStore,
-    guestLightStore,
-    guestSetTemperatureStore,
-    guestTemperatureStore,
-    hall0LightStore,
-    kitchenLightStore,
-    livingEntranceLightStore,
-    livingGardenLightStore,
-    livingHeatingStore,
-    livingLightStore,
-    livingSetTemperatureStore,
-    livingTemperatureStore,
-    stairsLightStore,
-    storeLightStore,
-    storeTemperatureStore
-  } from '../house-stores-repository'
-  import { toggleBooleanDeviceState } from '$lib/device-state'
+    toggleBooleanDeviceState,
+  } from '$lib/device-state'
   import { init } from '../home-client'
+  import {
+    getBooleanDeviceStore,
+    getDeviceMetadata,
+    getNumberDeviceStore
+  } from '../house-stores-repository'
+  import { get, writable } from 'svelte/store'
+
+  function getTemperaturePropsByDevice(device: string) {
+    return writable({
+      temperature: getNumberDeviceStore(`${device}Temperature`),
+      setTemperature: getNumberDeviceStore(`${device}SetTemperature`),
+      heating: getBooleanDeviceStore(`${device}Heating`),
+      heatingMetadata: getDeviceMetadata(`${device}Heating`)
+    })
+  }
+
+  type RoomProps = {
+    roomName: string
+    rowStart: number
+    columnStart: number
+    rowSpan: number
+    columnSpan: number
+    lights?: string[]
+  }
+
+  function createRoom({ roomName, rowStart, columnStart, rowSpan, columnSpan, lights = [] }: RoomProps) {
+    const roomLights = lights.map((light) => ({
+      state: getBooleanDeviceStore(`${roomName}${light}`),
+      onClick: () => {
+        const lightStore = getBooleanDeviceStore(`${roomName}${light}`)
+        const currentValue = get(lightStore)
+        lightStore.set(toggleBooleanDeviceState(currentValue))
+      }
+    }))
+
+    const temperature = getNumberDeviceStore(`${roomName}Temperature`)
+    const setTemperature = getNumberDeviceStore(`${roomName}SetTemperature`)
+    const heating = getBooleanDeviceStore(`${roomName}Heating`)
+    const heatingMetadata = getDeviceMetadata(`${roomName}Heating`)
+
+    return {
+      id: roomName.toLocaleLowerCase(),
+      name: roomName,
+      rowStart,
+      columnStart,
+      rowSpan,
+      columnSpan,
+      lights: roomLights,
+      temperature,
+      setTemperature,
+      heating,
+      heatingMetadata
+    }
+  }
+
+  const bath0HeatingStore = getBooleanDeviceStore('bath0Heating')
+  const bath0LightStore = getBooleanDeviceStore('bath0Light')
+  const bath0MirrorLightStore = getBooleanDeviceStore('bath0MirrorLight')
+  const bath0SetTemperatureStore = getNumberDeviceStore('bath0SetTemperature')
+  const bath0TemperatureStore = getNumberDeviceStore('bath0Temperature')
+  const boilerLightStore = getBooleanDeviceStore('boilerLight')
+  const boilerTemperatureStore = getNumberDeviceStore('boilerTemperature')
+  const boilerWallLightStore = getBooleanDeviceStore('boilerWallLight')
+  const diningLightStore = getBooleanDeviceStore('diningLight')
+  const entranceHeatingStore = getBooleanDeviceStore('entranceHeating')
+  const entranceLightStore = getBooleanDeviceStore('entranceLight')
+  const entranceSetTemperatureStore = getNumberDeviceStore('entranceSetTemperature')
+  const entranceTemperatureStore = getNumberDeviceStore('entranceTemperature')
+  const garageHeatingStore = getBooleanDeviceStore('garageHeating')
+  const garageLight0Store = getBooleanDeviceStore('garageLight0')
+  const garageLight1Store = getBooleanDeviceStore('garageLight1')
+  const garageSetTemperatureStore = getNumberDeviceStore('garageSetTemperature')
+  const garageTemperatureStore = getNumberDeviceStore('garageTemperature')
+  const hall0LightStore = getBooleanDeviceStore('hall0Light')
+  const kitchenLightStore = getBooleanDeviceStore('kitchenLight')
+  const livingEntranceLightStore = getBooleanDeviceStore('livingEntranceLight')
+  const livingGardenLightStore = getBooleanDeviceStore('livingGardenLight')
+  const livingLightStore = getBooleanDeviceStore('livingLight')
+  const stairsLightStore = getBooleanDeviceStore('stairsLight')
+  const storeLightStore = getBooleanDeviceStore('storeLight')
+  const storeTemperatureStore = getNumberDeviceStore('storeTemperature')
 
   init()
 </script>
@@ -52,7 +100,7 @@
       columnSpan={6}
       lights={[
         {
-          state: $livingGardenLightStore,
+          state: livingGardenLightStore,
           onClick: () => {
             $livingGardenLightStore = toggleBooleanDeviceState($livingGardenLightStore)
           }
@@ -68,27 +116,25 @@
       columnSpan={8}
       lights={[
         {
-          state: $livingLightStore,
+          state: livingLightStore,
           onClick: () => {
             $livingLightStore = toggleBooleanDeviceState($livingLightStore)
           }
         },
         {
-          state: $livingGardenLightStore,
+          state: livingGardenLightStore,
           onClick: () => {
             $livingGardenLightStore = toggleBooleanDeviceState($livingGardenLightStore)
           }
         },
         {
-          state: $livingEntranceLightStore,
+          state: livingEntranceLightStore,
           onClick: () => {
             $livingEntranceLightStore = toggleBooleanDeviceState($livingEntranceLightStore)
           }
         }
       ]}
-      heating={$livingHeatingStore}
-      temperature={$livingTemperatureStore}
-      setTemperature={$livingSetTemperatureStore}
+      {...getTemperaturePropsByDevice('living')}
     />
     <Room
       id="dining"
@@ -99,7 +145,7 @@
       columnSpan={8}
       lights={[
         {
-          state: $diningLightStore,
+          state: diningLightStore,
           onClick: () => {
             $diningLightStore = toggleBooleanDeviceState($diningLightStore)
           }
@@ -107,23 +153,14 @@
       ]}
     />
     <Room
-      id="guest"
-      name="Guest"
-      rowStart={2}
-      columnStart={1}
-      rowSpan={5}
-      columnSpan={4}
-      lights={[
-        {
-          state: $guestLightStore,
-          onClick: () => {
-            $guestLightStore = toggleBooleanDeviceState($guestLightStore)
-          }
-        }
-      ]}
-      heating={$guestHeatingStore}
-      temperature={$guestTemperatureStore}
-      setTemperature={$guestSetTemperatureStore}
+      {...createRoom({
+        roomName: 'guest',
+        rowStart: 2,
+        columnStart: 1,
+        rowSpan: 5,
+        columnSpan: 4,
+        lights: ['Light']
+      })}
     />
     <Room
       id="bath-0"
@@ -134,21 +171,21 @@
       columnSpan={3}
       lights={[
         {
-          state: $bath0LightStore,
+          state: bath0LightStore,
           onClick: () => {
             $bath0LightStore = toggleBooleanDeviceState($bath0LightStore)
           }
         },
         {
-          state: $bath0MirrorLightStore,
+          state: bath0MirrorLightStore,
           onClick: () => {
             $bath0MirrorLightStore = toggleBooleanDeviceState($bath0MirrorLightStore)
           }
         }
       ]}
-      heating={$bath0HeatingStore}
-      temperature={$bath0TemperatureStore}
-      setTemperature={$bath0SetTemperatureStore}
+      heating={bath0HeatingStore}
+      temperature={bath0TemperatureStore}
+      setTemperature={bath0SetTemperatureStore}
     />
     <Room
       id="stairs-0"
@@ -159,7 +196,7 @@
       columnSpan={2}
       lights={[
         {
-          state: $stairsLightStore,
+          state: stairsLightStore,
           onClick: () => {
             $stairsLightStore = toggleBooleanDeviceState($stairsLightStore)
           }
@@ -175,7 +212,7 @@
       columnSpan={3}
       lights={[
         {
-          state: $hall0LightStore,
+          state: hall0LightStore,
           onClick: () => {
             $hall0LightStore = toggleBooleanDeviceState($hall0LightStore)
           }
@@ -191,19 +228,19 @@
       columnSpan={5}
       lights={[
         {
-          state: $boilerLightStore,
+          state: boilerLightStore,
           onClick: () => {
             $boilerLightStore = toggleBooleanDeviceState($boilerLightStore)
           }
         },
         {
-          state: $boilerWallLightStore,
+          state: boilerWallLightStore,
           onClick: () => {
             $boilerWallLightStore = toggleBooleanDeviceState($boilerWallLightStore)
           }
         }
       ]}
-      temperature={$boilerTemperatureStore}
+      temperature={boilerTemperatureStore}
     />
     <Room
       id="store"
@@ -214,13 +251,13 @@
       columnSpan={4}
       lights={[
         {
-          state: $storeLightStore,
+          state: storeLightStore,
           onClick: () => {
             $storeLightStore = toggleBooleanDeviceState($storeLightStore)
           }
         }
       ]}
-      temperature={$storeTemperatureStore}
+      temperature={storeTemperatureStore}
     />
     <Room
       id="garage"
@@ -231,21 +268,21 @@
       columnSpan={9}
       lights={[
         {
-          state: $garageLight0Store,
+          state: garageLight0Store,
           onClick: () => {
             $garageLight0Store = toggleBooleanDeviceState($garageLight0Store)
           }
         },
         {
-          state: $garageLight1Store,
+          state: garageLight1Store,
           onClick: () => {
             $garageLight1Store = toggleBooleanDeviceState($garageLight1Store)
           }
         }
       ]}
-      temperature={$garageTemperatureStore}
-      heating={$garageHeatingStore}
-      setTemperature={$garageSetTemperatureStore}
+      temperature={garageTemperatureStore}
+      heating={garageHeatingStore}
+      setTemperature={garageSetTemperatureStore}
     />
     <Room
       id="entrance"
@@ -256,15 +293,15 @@
       columnSpan={3}
       lights={[
         {
-          state: $entranceLightStore,
+          state: entranceLightStore,
           onClick: () => {
             $entranceLightStore = toggleBooleanDeviceState($entranceLightStore)
           }
         }
       ]}
-      heating={$entranceHeatingStore}
-      temperature={$entranceTemperatureStore}
-      setTemperature={$entranceSetTemperatureStore}
+      heating={entranceHeatingStore}
+      temperature={entranceTemperatureStore}
+      setTemperature={entranceSetTemperatureStore}
     />
     <Room
       id="kitchen"
@@ -275,7 +312,7 @@
       columnSpan={5}
       lights={[
         {
-          state: $kitchenLightStore,
+          state: kitchenLightStore,
           onClick: () => {
             $kitchenLightStore = toggleBooleanDeviceState($kitchenLightStore)
           }
