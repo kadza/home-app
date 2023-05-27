@@ -7,7 +7,7 @@ import {
   type BooleanDeviceState,
   type NumberDeviceState
 } from '$lib/device-state'
-import { storesConfiguration } from './house-stores-repository'
+import { configuration as storesConfiguration } from './house-stores-repository'
 
 const rawMessageHandlers = new Map<string, (topic: string, message: string) => void>()
 

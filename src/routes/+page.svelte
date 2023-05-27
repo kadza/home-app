@@ -2,135 +2,120 @@
   import Room from '$lib/room.svelte'
   import { init } from '../home-client'
 
+  const displayConfigs = [
+    {
+      id: 'living',
+      displayName: 'Living',
+      rowStart: 2,
+      columnStart: 10,
+      rowSpan: 5,
+      columnSpan: 8
+    },
+    {
+      id: 'livingGarden',
+      displayName: 'Garden',
+      rowStart: 1,
+      columnStart: 11,
+      rowSpan: 1,
+      columnSpan: 6
+    },
+    {
+      id: 'dining',
+      displayName: 'Dining',
+      rowStart: 7,
+      columnStart: 10,
+      rowSpan: 3,
+      columnSpan: 8
+    },
+    {
+      id: 'guest',
+      displayName: 'Guest',
+      rowStart: 2,
+      columnStart: 1,
+      rowSpan: 5,
+      columnSpan: 4
+    },
+    {
+      id: 'kitchen',
+      displayName: 'Kitchen',
+      rowStart: 10,
+      columnStart: 13,
+      rowSpan: 4,
+      columnSpan: 5
+    },
+    {
+      id: 'bath0',
+      displayName: 'Bath',
+      rowStart: 2,
+      columnStart: 5,
+      rowSpan: 4,
+      columnSpan: 3
+    },
+    {
+      id: 'stairs',
+      displayName: 'Stairs',
+      rowStart: 2,
+      columnStart: 8,
+      rowSpan: 5,
+      columnSpan: 2
+    },
+    {
+      id: 'hall0',
+      displayName: 'Hall',
+      rowStart: 6,
+      columnStart: 5,
+      rowSpan: 1,
+      columnSpan: 3
+    },
+    {
+      id: 'entrance',
+      displayName: 'Entrance',
+      rowStart: 10,
+      columnStart: 10,
+      rowSpan: 4,
+      columnSpan: 3
+    },
+    {
+      id: 'store',
+      displayName: 'Store',
+      rowStart: 7,
+      columnStart: 6,
+      rowSpan: 3,
+      columnSpan: 4
+    },
+    { 
+      id: 'boiler',
+      displayName: 'Boiler',
+      rowStart: 7,
+      columnStart: 1,
+      rowSpan: 3,
+      columnSpan: 5
+    },
+    {
+      id: 'garage',
+      displayName: 'Garage',
+      rowStart: 10,
+      columnStart: 1,
+      rowSpan: 9,
+      columnSpan: 9
+    }
+  ]
+
   init()
 </script>
 
 <div class="flex flex-col items-center xl:flex-row xl:space-x-4 xl:justify-center">
   <div class="grid grid-cols-[repeat(17,2.5rem)] grid-rows-[repeat(19,2.5rem)] gap-1">
-    <Room
-      id="livingGarden"
-      displayName="Garden"
-      rowStart={1}
-      columnStart={11}
-      rowSpan={1}
-      columnSpan={6}
-      lightNames={["Light"]}
-    />
-    <Room
-      id="living"
-      displayName="Living"
-      rowStart={2}
-      columnStart={10}
-      rowSpan={5}
-      columnSpan={8}
-      lightNames={["Light", "EntranceLight"]}
-      isTemperature={true}
-      isSetTemperature={true}
-      isHeating={true}
+    {#each displayConfigs as { id, displayName, rowStart, columnStart, rowSpan, columnSpan }}
+      <Room
+        {id}
+        {displayName}
+        {rowStart}
+        {columnStart}
+        {rowSpan}
+        {columnSpan}
       />
-    <Room
-      id="dining"
-      displayName="Dining"
-      rowStart={7}
-      columnStart={10}
-      rowSpan={3}
-      columnSpan={8}
-      lightNames={["Light"]}
-    />
-    <Room
-      id="guest"
-      displayName="Guest"
-      rowStart={2}
-      columnStart={1}
-      rowSpan={5}
-      columnSpan={4}
-      lightNames={["Light"]}
-      isTemperature={true}
-      isSetTemperature={true}
-      isHeating={true}
-    />
-    <Room
-      id="bath0"
-      displayName="Bath"
-      rowStart={2}
-      columnStart={5}
-      rowSpan={4}
-      columnSpan={3}
-      lightNames={["Light", "MirrorLight"]}
-      isTemperature={true}
-      isHeating={true}
-    />
-    <Room
-      id="stairs"
-      displayName="Stairs"
-      rowStart={2}
-      columnStart={8}
-      rowSpan={5}
-      columnSpan={2}
-      lightNames={["Light"]}
-    />
-    <Room
-      id="hall0"
-      displayName="Hall"
-      rowStart={6}
-      columnStart={5}
-      rowSpan={1}
-      columnSpan={3}
-      lightNames={["Light"]}
-    />
-    <Room
-      id="boiler"
-      displayName="Boiler"
-      rowStart={7}
-      columnStart={1}
-      rowSpan={3}
-      columnSpan={5}
-      lightNames={["Light", "WallLight"]}
-      isTemperature={true}
-    />
-    <Room
-      id="store"
-      displayName="Store"
-      rowStart={7}
-      columnStart={6}
-      rowSpan={3}
-      columnSpan={4}
-      lightNames={["Light"]}
-      isTemperature={true}
-    />
-    <Room
-      id="garage"
-      displayName="Garage"
-      rowStart={10}
-      columnStart={1}
-      rowSpan={9}
-      columnSpan={9}
-      lightNames={["Light0", "Light1"]}
-      isTemperature={true}
-      isSetTemperature={true}
-      isHeating={true}
-    />
-    <Room
-      id="entrance"
-      displayName="Entrance"
-      rowStart={10}
-      columnStart={10}
-      rowSpan={4}
-      columnSpan={3}
-      lightNames={["Light"]}
-      isTemperature={true}
-      isSetTemperature={true}
-      isHeating={true}
-    />
-    <Room
-      id="kitchen"
-      displayName="Kitchen"
-      rowStart={10}
-      columnStart={13}
-      rowSpan={4}
-      columnSpan={5}
-      lightNames={["Light"]}
-    />
+    {/each}
   </div>
   <!--div class="grid grid-cols-[repeat(17,2.25rem)] grid-rows-[repeat(19,2.25rem)] gap-1">
     <Room

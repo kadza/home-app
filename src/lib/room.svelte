@@ -5,9 +5,13 @@
   import BlindsButton from './buttons/blinds-button.svelte'
   import Heating from './heating.svelte'
   import StoreWrapperLightButton from './store-wrapper-light-button.svelte'
-  import { getBooleanDeviceStore, getDeviceMetadata, getNumberDeviceStore } from '../house-stores-repository'
-  import { get } from 'svelte/store'
-  import { toggleBooleanDeviceState } from './device-state'
+  import { get, type Writable } from 'svelte/store'
+  import {
+    toggleBooleanDeviceState,
+    type BooleanDeviceState,
+    type NumberDeviceState
+  } from './device-state'
+    import { configuration } from '../house-stores-repository'
 
   export let id: string = ''
   export let displayName: string = ''
@@ -15,28 +19,37 @@
   export let rowStart: number = 0
   export let columnSpan: number = 0
   export let rowSpan: number = 0
-  export let isTemperature: boolean = false
-  export let isSetTemperature: boolean = false
-  export let isHeating: boolean = false
-  export let lightNames: string[] = []
 
   function getStores() {
-    const lightStores = lightNames.map((light) => ({
-      state: getBooleanDeviceStore(`${id}${light}`),
+    const deviceConfigs = configuration.filter((config) => config.roomId === id)
+    const heatingConfig = deviceConfigs.find((config) => config.deviceType === 'heating')
+    const heating = heatingConfig?.store as Writable<BooleanDeviceState>
+    const heatingMetadata = heatingConfig
+      ? {
+          deviceId: heatingConfig.deviceId,
+          readTopic: heatingConfig.readTopic,
+          writeTopic: heatingConfig.writeTopic
+        }
+      : undefined
+    const blindsSate = undefined
+    const isPresent = undefined
+    const chartUrl = undefined
+    const temperatureConfig = deviceConfigs.find((config) => config.deviceType === 'temperature')
+    const temperature = temperatureConfig?.store as Writable<NumberDeviceState>
+    const setTemperaturConfig = deviceConfigs.find(
+      (config) => config.deviceType === 'setTemperature'
+    )
+    const setTemperature = setTemperaturConfig?.store as Writable<NumberDeviceState>
+    const lightStoreConfigs = deviceConfigs.filter((config) => config.deviceType === 'light')
+
+    const lightStores = lightStoreConfigs.map((light) => ({
+      state: light.store as Writable<BooleanDeviceState>,
       onClick: () => {
-        const lightStore = getBooleanDeviceStore(`${id}${light}`)
+        const lightStore = light.store as Writable<BooleanDeviceState>
         const currentValue = get(lightStore)
         lightStore.set(toggleBooleanDeviceState(currentValue))
       }
     }))
-
-    const blindsSate = undefined
-    const heating = isHeating ? getBooleanDeviceStore(`${id}Heating`) : undefined
-    const heatingMetadata = isHeating ? getDeviceMetadata(`${id}Heating`) : undefined
-    const temperature = isTemperature ? getNumberDeviceStore(`${id}Temperature`) : undefined
-    const setTemperature = isSetTemperature ? getNumberDeviceStore(`${id}SetTemperature`) : undefined
-    const isPresent = undefined
-    const chartUrl = undefined
 
     return {
       lights: lightStores,
@@ -73,7 +86,7 @@
     {/if}
     <div class="flex gap-1 flex-wrap justify-center">
       {#each lights as { state, onClick }}
-        <StoreWrapperLightButton state={state} onClick={onClick} />
+        <StoreWrapperLightButton {state} {onClick} />
       {/each}
       <!-- https://github.com/sveltejs/language-tools/issues/1341#issuecomment-1025469467 -->
       {#if blindsSate && $blindsSate}

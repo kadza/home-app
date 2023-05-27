@@ -15,169 +15,368 @@ export const getNumberDeviceStore = (deviceId: string) => {
   return device.store as Writable<NumberDeviceState>
 }
 
-export const getBooleanDeviceStore = (deviceId: string) => {
-  const device = storesConfiguration.find((device) => device.deviceId === deviceId)
-  if (!device) {
-    throw new Error(`Device ${deviceId} not found`)
-  }
-
-  if (device.type !== 'boolean') {
-    throw new Error(`Device ${deviceId} is not a boolean device`)
-  }
-
-  return device.store as Writable<BooleanDeviceState>
-}
-
-export const getDeviceMetadata = (deviceId: string) => {
-  const device = storesConfiguration.find((device) => device.deviceId === deviceId)
-
-  if (!device) {
-    throw new Error(`Device ${deviceId} not found`)
-  }
-
-  return {
-    deviceId: device.deviceId,
-    readTopic: device.readTopic,
-    writeTopic: device.writeTopic
-  }
-}
-
-export const storesConfiguration = [
+export const configuration: ConfigurationEntry[] = [
   {
+    roomId: 'guest',
     deviceId: 'guestLight',
+    displayName: 'Guest light',
     store: writable<BooleanDeviceState>('not-initialized'),
     rawStore: writable<string>(),
     readTopic: env.PUBLIC_GUEST_LIGHT_FROM,
     writeTopic: env.PUBLIC_GUEST_LIGHT_TO,
-    type: 'boolean'
+    deviceType: 'light',
+    type: 'boolean',
   },
   {
+    roomId: 'guest',
     deviceId: 'guestHeating',
-    store: writable<BooleanDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
+    displayName: 'Guest heating',
     readTopic: env.PUBLIC_GUEST_HEAT_VALVE,
-    type: 'boolean'
-  },
-  {
-    deviceId: 'diningLight',
     store: writable<BooleanDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
-    readTopic: env.PUBLIC_DINING_LIGHT_FROM,
-    writeTopic: env.PUBLIC_DINING_LIGHT_TO,
-    type: 'boolean'
+    rawStore: writable<string>(), 
+    deviceType: 'heating',
+    type: 'boolean',
   },
   {
+    roomId: 'guest',
     deviceId: 'guestTemperature',
-    store: writable<NumberDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
+    displayName: 'Guest temperature',
     readTopic: env.PUBLIC_GUEST_TEMP,
-    type: 'number'
-  },
-  {
-    deviceId: 'guestSetTemperature',
     store: writable<NumberDeviceState>('not-initialized'),
     rawStore: writable<string>(),
-    readTopic: env.PUBLIC_GUEST_SET_TEMP,
-    type: 'number'
+    deviceType: 'temperature',
+    type: 'number',
   },
   {
+    roomId: 'guest',
+    deviceId: 'guestSetTemperature',
+    displayName: 'Guest set temperature',
+    readTopic: env.PUBLIC_GUEST_SET_TEMP,
+    store: writable<NumberDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'setTemperature',
+    type: 'number',
+  },
+  {
+    roomId: 'living',
     deviceId: 'livingLight',
+    displayName: 'Living light',
     store: writable<BooleanDeviceState>('not-initialized'),
     rawStore: writable<string>(),
     readTopic: env.PUBLIC_LIVING_LIGHT_FROM,
     writeTopic: env.PUBLIC_LIVING_LIGHT_TO,
-    type: 'boolean'
+    deviceType: 'light',
+    type: 'boolean',
   },
   {
+    roomId: 'living',
     deviceId: 'livingHeating',
+    displayName: 'Living heating',
+    readTopic: env.PUBLIC_LIVING_HEAT_VALVE,
     store: writable<BooleanDeviceState>('not-initialized'),
     rawStore: writable<string>(),
-    readTopic: env.PUBLIC_LIVING_HEAT_VALVE,
-    type: 'boolean'
+    deviceType: 'heating',
+    type: 'boolean',
   },
   {
+    roomId: 'living',
     deviceId: 'livingTemperature',
-    store: writable<NumberDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
+    displayName: 'Living temperature',
     readTopic: env.PUBLIC_LIVING_TEMP,
-    type: 'number'
-  },
-  {
-    deviceId: 'livingSetTemperature',
     store: writable<NumberDeviceState>('not-initialized'),
     rawStore: writable<string>(),
-    readTopic: env.PUBLIC_LIVING_SET_TEMP,
-    type: 'number'
+    deviceType: 'temperature',
+    type: 'number',
   },
   {
+    roomId: 'living',
+    deviceId: 'livingSetTemperature',
+    displayName: 'Living set temperature',
+    readTopic: env.PUBLIC_LIVING_SET_TEMP,
+    store: writable<NumberDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'setTemperature',
+    type: 'number',
+  },
+  {
+    roomId: 'living',
     deviceId: 'livingEntranceLight',
+    displayName: 'Living entrance light',
     store: writable<BooleanDeviceState>('not-initialized'),
     rawStore: writable<string>(),
     readTopic: env.PUBLIC_LIVING_ENTRANCE_LIGHT_FROM,
     writeTopic: env.PUBLIC_LIVING_ENTRANCE_LIGHT_TO,
-    type: 'boolean'
+    deviceType: 'light',
+    type: 'boolean',
   },
   {
+    roomId: 'dining',
+    deviceId: 'diningLight',
+    displayName: 'Dining light',
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    readTopic: env.PUBLIC_DINING_LIGHT_FROM,
+    writeTopic: env.PUBLIC_DINING_LIGHT_TO,
+    deviceType: 'light',
+    type: 'boolean',
+  },
+  {
+    roomId: 'livingGarden',
     deviceId: 'livingGardenLight',
+    displayName: 'Living garden light',
     store: writable<BooleanDeviceState>('not-initialized'),
     rawStore: writable<string>(),
     readTopic: env.PUBLIC_LIVING_GARDEN_LIGHT_FROM,
     writeTopic: env.PUBLIC_LIVING_GARDEN_LIGHT_TO,
-    type: 'boolean'
+    deviceType: 'light',
+    type: 'boolean',
   },
   {
+    roomId: 'kitchen',
+    deviceId: 'kitchenLight',
+    displayName: 'Kitchen light',
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    readTopic: env.PUBLIC_KITCHEN_LIGHT_FROM,
+    writeTopic: env.PUBLIC_KITCHEN_LIGHT_TO,
+    deviceType: 'light',
+    type: 'boolean',
+  },
+  {
+    roomId: 'store',
+    deviceId: 'storeLight',
+    displayName: 'Store light',
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    readTopic: env.PUBLIC_STORE_LIGHT_FROM,
+    writeTopic: env.PUBLIC_STORE_LIGHT_TO,
+    deviceType: 'light',
+    type: 'boolean',
+  },
+  {
+    roomId: 'store',
+    deviceId: 'storeTemperature',
+    displayName: 'Store temperature',
+    readTopic: env.PUBLIC_STORE_TEMP,
+    store: writable<NumberDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'temperature',
+    type: 'number',
+  },
+  {
+    roomId: 'entrance',
+    deviceId: 'entranceLight',
+    displayName: 'Entrance light',
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    readTopic: env.PUBLIC_ENTRANCE_LIGHT_FROM,
+    writeTopic: env.PUBLIC_ENTRANCE_LIGHT_TO,
+    deviceType: 'light',
+    type: 'boolean',
+  },
+  {
+    roomId: 'entrance',
+    deviceId: 'entranceHeating',
+    displayName: 'Entrance heating',
+    readTopic: env.PUBLIC_ENTRANCE_HEAT_VALVE,
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'heating',
+    type: 'boolean',
+  },
+  {
+    roomId: 'entrance',
+    deviceId: 'entranceTemperature',
+    displayName: 'Entrance temperature',
+    readTopic: env.PUBLIC_ENTRANCE_TEMP,
+    store: writable<NumberDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'temperature',
+    type: 'number',
+  },
+  {
+    roomId: 'entrance',
+    deviceId: 'entranceSetTemperature',
+    displayName: 'Entrance set temperature',
+    readTopic: env.PUBLIC_ENTRANCE_SET_TEMP,
+    store: writable<NumberDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'setTemperature',
+    type: 'number',
+  },
+  {
+    roomId: 'bath0',
     deviceId: 'bath0Light',
+    displayName: 'Bath0 light',
     store: writable<BooleanDeviceState>('not-initialized'),
     rawStore: writable<string>(),
     readTopic: env.PUBLIC_BATH_0_LIGHT_FROM,
     writeTopic: env.PUBLIC_BATH_0_LIGHT_TO,
-    type: 'boolean'
+    deviceType: 'light',
+    type: 'boolean',
   },
   {
+    roomId: 'bath0',
     deviceId: 'bath0MirrorLight',
+    displayName: 'Bath0 mirror light',
     store: writable<BooleanDeviceState>('not-initialized'),
     rawStore: writable<string>(),
     readTopic: env.PUBLIC_BATH_0_MIRROR_LIGHT_FROM,
     writeTopic: env.PUBLIC_BATH_0_MIRROR_LIGHT_TO,
-    type: 'boolean'
+    deviceType: 'light',
+    type: 'boolean',
   },
   {
-    deviceId: 'bath0Heating',
-    store: writable<BooleanDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
-    readTopic: env.PUBLIC_BATH_0_HEAT_VALVE,
-    type: 'boolean'
-  },
-  {
+    roomId: 'bath0',
     deviceId: 'bath0Temperature',
+    displayName: 'Bath0 temperature',
+    readTopic: env.PUBLIC_BATH_0_TEMP,
     store: writable<NumberDeviceState>('error'),
     rawStore: writable<string>(),
-    readTopic: env.PUBLIC_BATH_0_TEMP,
-    type: 'number'
+    deviceType: 'temperature',
+    type: 'number',
   },
   {
+    roomId: 'bath0',
     deviceId: 'bath0SetTemperature',
+    displayName: 'Bath0 set temperature',
+    readTopic: env.PUBLIC_BATH_0_SET_TEMP,
     store: writable<NumberDeviceState>('not-initialized'),
     rawStore: writable<string>(),
-    readTopic: env.PUBLIC_BATH_0_SET_TEMP,
-    type: 'number'
+    deviceType: 'setTemperature',
+    type: 'number',
   },
   {
+    roomId: 'bath0',
+    deviceId: 'bath0Heating',
+    displayName: 'Bath0 heating',
+    readTopic: env.PUBLIC_BATH_0_HEAT_VALVE,
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'heating',
+    type: 'boolean',
+  },
+  {
+    roomId: 'boiler',
+    deviceId: 'boilerTemperature',
+    displayName: 'Boiler temperature',
+    readTopic: env.PUBLIC_BOILER_TEMP,
+    store: writable<NumberDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'temperature',
+    type: 'number',
+  },
+  {
+    roomId: 'boiler',
+    deviceId: 'boilerLight',
+    displayName: 'Boiler light',
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    readTopic: env.PUBLIC_BOILER_LIGHT_FROM,
+    writeTopic: env.PUBLIC_BOILER_LIGHT_TO,
+    deviceType: 'light',
+    type: 'boolean',
+  },
+  {
+    roomId: 'boiler',
+    deviceId: 'boilerWallLight',
+    displayName: 'Boiler wall light',
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    readTopic: env.PUBLIC_BOILER_WALL_LIGHT_FROM,
+    writeTopic: env.PUBLIC_BOILER_WALL_LIGHT_TO,
+    deviceType: 'light',
+    type: 'boolean',
+  },
+  {
+    roomId: 'hall0',
     deviceId: 'hall0Light',
+    displayName: 'Hall0 light',
     store: writable<BooleanDeviceState>('not-initialized'),
     rawStore: writable<string>(),
     readTopic: env.PUBLIC_HALL_0_LIGHT_FROM,
     writeTopic: env.PUBLIC_HALL_0_LIGHT_TO,
-    type: 'boolean'
+    deviceType: 'light',
+    type: 'boolean',
   },
   {
+    roomId: 'stairs',
     deviceId: 'stairsLight',
+    displayName: 'Stairs light',
     store: writable<BooleanDeviceState>('not-initialized'),
     rawStore: writable<string>(),
     readTopic: env.PUBLIC_STAIRS_LIGHT_FROM,
     writeTopic: env.PUBLIC_STAIRS_LIGHT_TO,
-    type: 'boolean'
+    deviceType: 'light',
+    type: 'boolean',
   },
+  {
+    roomId: 'garage',
+    deviceId: 'garageLight0',
+    displayName: 'Garage light 0',
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    readTopic: env.PUBLIC_GARAGE_LIGHT_0_FROM,
+    writeTopic: env.PUBLIC_GARAGE_LIGHT_0_TO,
+    deviceType: 'light',
+    type: 'boolean',
+  },
+  {
+    roomId: 'garage',
+    deviceId: 'garageLight1',
+    displayName: 'Garage light 1',
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    readTopic: env.PUBLIC_GARAGE_LIGHT_1_FROM,
+    writeTopic: env.PUBLIC_GARAGE_LIGHT_1_TO,
+    deviceType: 'light',
+    type: 'boolean',
+  },
+  {
+    roomId: 'garage',
+    deviceId: 'garageTemperature',
+    displayName: 'Garage temperature',
+    readTopic: env.PUBLIC_GARAGE_TEMP,
+    store: writable<NumberDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'temperature',
+    type: 'number',
+  },
+  {
+    roomId: 'garage',
+    deviceId: 'garageSetTemperature',
+    displayName: 'Garage set temperature',
+    readTopic: env.PUBLIC_GARAGE_SET_TEMP,
+    store: writable<NumberDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'setTemperature',
+    type: 'number',
+  },
+  {
+    roomId: 'garage',
+    deviceId: 'garageHeating',
+    displayName: 'Garage heating',
+    readTopic: env.PUBLIC_GARAGE_HEAT_VALVE,
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'heating',
+    type: 'boolean',
+  },
+]
+
+export type ConfigurationEntry = {
+  roomId: string,
+  deviceId: string,
+  displayName: string,
+  readTopic: string,
+  writeTopic?: string,
+  store: Writable<BooleanDeviceState> | Writable<NumberDeviceState>,
+  rawStore: Writable<string>,
+  deviceType: 'light' | 'heating' | 'temperature' | 'setTemperature'
+  type: 'boolean' | 'number'
+}
+
+export const storesConfiguration = [
   {
     deviceId: 'externalTemperature',
     store: writable<NumberDeviceState>('not-initialized'),
@@ -185,123 +384,4 @@ export const storesConfiguration = [
     readTopic: env.PUBLIC_EXTERNAL_TEMP,
     type: 'number'
   },
-  {
-    deviceId: 'entranceLight',
-    store: writable<BooleanDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
-    readTopic: env.PUBLIC_ENTRANCE_LIGHT_FROM,
-    writeTopic: env.PUBLIC_ENTRANCE_LIGHT_TO,
-    type: 'boolean'
-  },
-  {
-    deviceId: 'entranceHeating',
-    store: writable<BooleanDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
-    readTopic: env.PUBLIC_ENTRANCE_HEAT_VALVE,
-    type: 'boolean'
-  },
-  {
-    deviceId: 'entranceTemperature',
-    store: writable<NumberDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
-    readTopic: env.PUBLIC_ENTRANCE_TEMP,
-    type: 'number'
-  },
-  {
-    deviceId: 'entranceSetTemperature',
-    store: writable<NumberDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
-    readTopic: env.PUBLIC_ENTRANCE_SET_TEMP,
-    type: 'number'
-  },
-  {
-    deviceId: 'boilerLight',
-    store: writable<BooleanDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
-    readTopic: env.PUBLIC_BOILER_LIGHT_FROM,
-    writeTopic: env.PUBLIC_BOILER_LIGHT_TO,
-    type: 'boolean'
-  },
-  {
-    deviceId: 'boilerWallLight',
-    store: writable<BooleanDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
-    readTopic: env.PUBLIC_BOILER_WALL_LIGHT_FROM,
-    writeTopic: env.PUBLIC_BOILER_WALL_LIGHT_TO,
-    type: 'boolean'
-  },
-  {
-    deviceId: 'boilerTemperature',
-    store: writable<NumberDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
-    readTopic: env.PUBLIC_BOILER_TEMP,
-    type: 'number'
-  },
-  {
-    deviceId: 'storeLight',
-    store: writable<BooleanDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
-    readTopic: env.PUBLIC_STORE_LIGHT_FROM,
-    writeTopic: env.PUBLIC_STORE_LIGHT_TO,
-    type: 'boolean'
-  },
-  {
-    deviceId: 'storeTemperature',
-    store: writable<NumberDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
-    readTopic: env.PUBLIC_STORE_TEMP,
-    type: 'number'
-  },
-  {
-    deviceId: 'garageLight0',
-    store: writable<BooleanDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
-    readTopic: env.PUBLIC_GARAGE_LIGHT_0_FROM,
-    writeTopic: env.PUBLIC_GARAGE_LIGHT_0_TO,
-    type: 'boolean'
-  },
-  {
-    deviceId: 'garageLight1',
-    store: writable<BooleanDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
-    readTopic: env.PUBLIC_GARAGE_LIGHT_1_FROM,
-    writeTopic: env.PUBLIC_GARAGE_LIGHT_1_TO,
-    type: 'boolean'
-  },
-  {
-    deviceId: 'garageTemperature',
-    store: writable<NumberDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
-    readTopic: env.PUBLIC_GARAGE_TEMP,
-    type: 'number'
-  },
-  {
-    deviceId: 'garageSetTemperature',
-    store: writable<NumberDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
-    readTopic: env.PUBLIC_GARAGE_SET_TEMP,
-    type: 'number'
-  },
-  {
-    deviceId: 'garageHeating',
-    store: writable<BooleanDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
-    readTopic: env.PUBLIC_GARAGE_HEAT_VALVE,
-    type: 'boolean'
-  },
-  {
-    deviceId: 'garageDoor',
-    store: writable<BooleanDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
-    readTopic: env.PUBLIC_GARAGE_DOOR_FROM,
-    type: 'boolean'
-  },
-  {
-    deviceId: 'kitchenLight',
-    store: writable<BooleanDeviceState>('not-initialized'),
-    rawStore: writable<string>(),
-    readTopic: env.PUBLIC_KITCHEN_LIGHT_FROM,
-    writeTopic: env.PUBLIC_KITCHEN_LIGHT_TO,
-    type: 'boolean'
-  }
 ]
