@@ -19,7 +19,7 @@
     <Clock />
   </div>
   <div class="bg-white/10 px-1 py-1">
-    <Temperature temperature={$externalTemperature} />
+    <Temperature state={$externalTemperature} />
   </div>
 </div>
 
