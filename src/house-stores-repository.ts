@@ -1,21 +1,8 @@
 import { env } from '$env/dynamic/public'
-import type { BooleanDeviceState, NumberDeviceState } from './lib/device-state'
+import type { BooleanDeviceState, DeviceMetadata, NumberDeviceState } from './lib/device-state'
 import { writable, type Writable } from 'svelte/store'
 
-export const getNumberDeviceStore = (deviceId: string) => {
-  const device = storesConfiguration.find((device) => device.deviceId === deviceId)
-  if (!device) {
-    throw new Error(`Device ${deviceId} not found`)
-  }
-
-  if (device.type !== 'number') {
-    throw new Error(`Device ${deviceId} is not a number device`)
-  }
-
-  return device.store as Writable<NumberDeviceState>
-}
-
-export const configuration: ConfigurationEntry[] = [
+export const configuration = [
   {
     roomId: 'guest',
     deviceId: 'guestLight',
@@ -362,26 +349,56 @@ export const configuration: ConfigurationEntry[] = [
     deviceType: 'heating',
     type: 'boolean',
   },
-]
-
-export type ConfigurationEntry = {
-  roomId: string,
-  deviceId: string,
-  displayName: string,
-  readTopic: string,
-  writeTopic?: string,
-  store: Writable<BooleanDeviceState> | Writable<NumberDeviceState>,
-  rawStore: Writable<string>,
-  deviceType: 'light' | 'heating' | 'temperature' | 'setTemperature'
-  type: 'boolean' | 'number'
-}
-
-export const storesConfiguration = [
   {
+    roomId: 'external',
     deviceId: 'externalTemperature',
+    displayName: 'External temperature',
+    readTopic: env.PUBLIC_EXTERNAL_TEMP,
     store: writable<NumberDeviceState>('not-initialized'),
     rawStore: writable<string>(),
-    readTopic: env.PUBLIC_EXTERNAL_TEMP,
-    type: 'number'
+    deviceType: 'temperature',
+    type: 'number',
   },
 ]
+
+export type DeviceType = 'temperature' | 'setTemperature' | 'heating' | 'light'
+export type DeviceWritable<T> = T extends 'heating' | 'light' ? Writable<BooleanDeviceState> : T extends 'temperature' | 'setTemperature' ? Writable<NumberDeviceState> : never
+
+
+export function findDeviceStore<T extends DeviceType>(
+  roomId: string,
+  deviceType: T
+): DeviceWritable<T> | undefined {
+  const deviceConfig = configuration.find((config) => config.roomId === roomId && config.deviceType === deviceType)
+
+  if (!deviceConfig) {
+    return undefined
+  }
+
+  if(deviceType === 'light' || deviceType === 'heating') {
+    return deviceConfig.store as unknown as DeviceWritable<T>
+  }
+
+  if (deviceType === 'setTemperature' || deviceType === 'temperature') {
+    return deviceConfig.store as unknown as DeviceWritable<T>
+  }
+
+  return undefined
+}
+
+export function findDeviceMetadata(
+  roomId: string,
+  deviceType: DeviceType
+): DeviceMetadata | undefined {
+  const deviceConfig = configuration.find((config) => config.roomId === roomId && config.deviceType === deviceType)
+
+  if (!deviceConfig) {
+    return undefined
+  }
+
+  return {
+    deviceId: deviceConfig.deviceId,
+    readTopic: deviceConfig.readTopic,
+    writeTopic: deviceConfig.writeTopic,
+  }
+}

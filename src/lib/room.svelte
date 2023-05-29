@@ -9,9 +9,8 @@
   import {
     toggleBooleanDeviceState,
     type BooleanDeviceState,
-    type NumberDeviceState
   } from './device-state'
-    import { configuration } from '../house-stores-repository'
+    import { configuration, findDeviceMetadata, findDeviceStore } from '../house-stores-repository'
 
   export let id: string = ''
   export let displayName: string = ''
@@ -22,24 +21,13 @@
 
   function getStores() {
     const deviceConfigs = configuration.filter((config) => config.roomId === id)
-    const heatingConfig = deviceConfigs.find((config) => config.deviceType === 'heating')
-    const heating = heatingConfig?.store as Writable<BooleanDeviceState>
-    const heatingMetadata = heatingConfig
-      ? {
-          deviceId: heatingConfig.deviceId,
-          readTopic: heatingConfig.readTopic,
-          writeTopic: heatingConfig.writeTopic
-        }
-      : undefined
+    const heating = findDeviceStore(id, 'heating')
+    const heatingMetadata = findDeviceMetadata(id, 'heating')
     const blindsSate = undefined
     const isPresent = undefined
     const chartUrl = undefined
-    const temperatureConfig = deviceConfigs.find((config) => config.deviceType === 'temperature')
-    const temperature = temperatureConfig?.store as Writable<NumberDeviceState>
-    const setTemperaturConfig = deviceConfigs.find(
-      (config) => config.deviceType === 'setTemperature'
-    )
-    const setTemperature = setTemperaturConfig?.store as Writable<NumberDeviceState>
+    const temperature = findDeviceStore(id, 'temperature')
+    const setTemperature = findDeviceStore(id, 'setTemperature')
     const lightStoreConfigs = deviceConfigs.filter((config) => config.deviceType === 'light')
 
     const lightStores = lightStoreConfigs.map((light) => ({
