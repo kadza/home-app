@@ -1,9 +1,11 @@
 <script lang="ts">
+    import { findDeviceStore } from '../house-stores-repository'
   import '../app.css'
   import Clock from '../lib/clock.svelte'
   import Temperature from '../lib/temperature.svelte'
-  import { externalTemperatureStore } from '../house-stores-repository'
-</script>
+
+  const externalTemperature = findDeviceStore('external', 'temperature')
+  </script>
 
 <style>
   :global(body) {
@@ -16,9 +18,11 @@
   <div class="bg-white/10 px-1 py-1">
     <Clock />
   </div>
+  {#if externalTemperature !== undefined && $externalTemperature !== undefined}
   <div class="bg-white/10 px-1 py-1">
-    <Temperature temperature={$externalTemperatureStore} />
+    <Temperature state={$externalTemperature} />
   </div>
+  {/if}
 </div>
 
 <slot />

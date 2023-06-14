@@ -1,3 +1,24 @@
+export type DeviceMetadata = {
+  deviceId: string
+  readTopic: string | undefined
+  writeTopic: string | undefined
+}
+
+export function camelCaseToWords(str: string) {
+  return str
+    .replace(/([A-Z0-9])/g, ' $1')
+    .trim()
+    .toLocaleLowerCase()
+}
+
+export function getMetadataText(metadata: DeviceMetadata | undefined) {
+  return metadata
+    ? `Device: ${camelCaseToWords(metadata.deviceId)} \nRead topic: ${
+        metadata.readTopic ? metadata.readTopic : 'n/a'
+      }`
+    : ''
+}
+
 export type BooleanDeviceState = boolean | 'disabled' | 'error' | 'not-initialized'
 
 export function toggleBooleanDeviceState(state: BooleanDeviceState): BooleanDeviceState {
