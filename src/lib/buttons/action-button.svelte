@@ -1,8 +1,9 @@
 <script lang="ts">
-  import type { BooleanDeviceState } from '../device-state'
+  import { getMetadataText, type BooleanDeviceState, type DeviceMetadata } from '../device-state'
 
   export let onClick = () => {}
   export let state: BooleanDeviceState
+  export let metadata: DeviceMetadata | undefined = undefined
 </script>
 
 <button
@@ -12,6 +13,7 @@
   class:bg-gray-700={state === 'disabled'}
   class:bg-gray-400={state === 'not-initialized'}
   on:click={onClick}
+  title={getMetadataText(metadata)}
 >
   {#if state === true}
     <slot name="active" />

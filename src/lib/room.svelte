@@ -27,11 +27,14 @@
     const isPresent = undefined
     const chartUrl = undefined
     const temperature = findDeviceStore(id, 'temperature')
+    const temperatureMetadata = findDeviceMetadata(id, 'temperature')
     const setTemperature = findDeviceStore(id, 'setTemperature')
+    const setTemperatureMetadata = findDeviceMetadata(id, 'setTemperature')
     const lightStoreConfigs = deviceConfigs.filter((config) => config.deviceType === 'light')
 
     const lightStores = lightStoreConfigs.map((light) => ({
       state: light.store as Writable<BooleanDeviceState>,
+      metadata: findDeviceMetadata(light.roomId, 'light', light.deviceId),
       onClick: () => {
         const lightStore = light.store as Writable<BooleanDeviceState>
         const currentValue = get(lightStore)
@@ -45,7 +48,9 @@
       heating,
       heatingMetadata,
       temperature,
+      temperatureMetadata,
       setTemperature,
+      setTemperatureMetadata,
       isPresent,
       chartUrl
     }
@@ -57,7 +62,9 @@
     heating,
     heatingMetadata,
     temperature,
+    temperatureMetadata,
     setTemperature,
+    setTemperatureMetadata,
     isPresent,
     chartUrl
   } = getStores()
@@ -73,8 +80,8 @@
       <span class="text-xs p-1 w-full">{displayName}</span>
     {/if}
     <div class="flex gap-1 flex-wrap justify-center">
-      {#each lights as { state, onClick }}
-        <StoreWrapperLightButton {state} {onClick} />
+      {#each lights as { state, onClick, metadata }}
+        <StoreWrapperLightButton {state} {onClick} {metadata} />
       {/each}
       <!-- https://github.com/sveltejs/language-tools/issues/1341#issuecomment-1025469467 -->
       {#if blindsSate && $blindsSate}
@@ -101,7 +108,7 @@
           {/if}
         </div>
         {#if temperature !== undefined && $temperature !== undefined}
-          <Temperature state={$temperature} setState={$setTemperature} />
+          <Temperature state={$temperature} setState={$setTemperature} stateMetadata={temperatureMetadata} setStateMetadata={setTemperatureMetadata}/>
         {/if}
       </div>
     {/if}

@@ -11,6 +11,14 @@ export function camelCaseToWords(str: string) {
     .toLocaleLowerCase()
 }
 
+export function getMetadataText(metadata: DeviceMetadata | undefined) {
+  return metadata
+    ? `Device: ${camelCaseToWords(metadata.deviceId)} \nRead topic: ${
+        metadata.readTopic ? metadata.readTopic : 'n/a'
+      }`
+    : ''
+}
+
 export type BooleanDeviceState = boolean | 'disabled' | 'error' | 'not-initialized'
 
 export function toggleBooleanDeviceState(state: BooleanDeviceState): BooleanDeviceState {

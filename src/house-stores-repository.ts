@@ -388,9 +388,12 @@ export function findDeviceStore<T extends DeviceType>(
 
 export function findDeviceMetadata(
   roomId: string,
-  deviceType: DeviceType
+  deviceType: DeviceType,
+  deviceId?: string
 ): DeviceMetadata | undefined {
-  const deviceConfig = configuration.find((config) => config.roomId === roomId && config.deviceType === deviceType)
+  const deviceConfig =  deviceId 
+    ? configuration.find((config) => config.roomId === roomId && config.deviceType === deviceType && config.deviceId === deviceId) 
+    : configuration.find((config) => config.roomId === roomId && config.deviceType === deviceType)
 
   if (!deviceConfig) {
     return undefined

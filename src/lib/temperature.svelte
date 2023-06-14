@@ -1,22 +1,28 @@
 <script lang="ts">
   import Thermometer from 'svelte-material-icons/Thermometer.svelte'
-  import { hasNumberDeviceStateValue, type NumberDeviceState } from './device-state'
+  import { hasNumberDeviceStateValue, type DeviceMetadata, type NumberDeviceState, getMetadataText } from './device-state'
 
   export let state: NumberDeviceState
   export let setState: NumberDeviceState | undefined = undefined
+  export let stateMetadata: DeviceMetadata | undefined = undefined
+  export let setStateMetadata: DeviceMetadata | undefined = undefined
 </script>
 
 <div
-  class="flex items-center"
+  class="flex items-center cursor-default"
   class:text-red-500={state === 'error' || setState === 'error'}
   class:text-gray-700={state === 'disabled' || setState === 'disabled'}
   class:text-gray-400={state === 'not-initialized' || setState === 'not-initialized'}
 >
   <Thermometer />
   {#if hasNumberDeviceStateValue(state)}
-    <span class="text-xs">{state} °C</span>
-  {/if}
+    <span title={getMetadataText(stateMetadata)} class="text-xs mouse-arrow">{state} °C</span>
+  {:else if state==='error'}
+    <span title={getMetadataText(stateMetadata)} class="text-xs text-red-500">err</span>
+  {/if} 
   {#if setState && hasNumberDeviceStateValue(setState)}
-    <span class="text-xs text-gray-400">&nbsp;/ {setState} °C</span>
-  {/if}
+    <span title={getMetadataText(setStateMetadata)} class="text-xs text-gray-400">&nbsp;/ {setState} °C</span>
+  {:else if setState==='error'}
+    <span title={getMetadataText(setStateMetadata)} class="text-xs text-red-500">err</span>
+  {/if} 
 </div>

@@ -7,11 +7,12 @@
 <script lang="ts">
     import LightButton from './buttons/light-button.svelte'
     import type { Writable } from 'svelte/store'
-    import type { BooleanDeviceState } from './device-state'
+    import type { BooleanDeviceState, DeviceMetadata } from './device-state'
     
     export let state: Writable<BooleanDeviceState>
+    export let metadata: DeviceMetadata | undefined = undefined
     export let onClick: () => void
 </script>
 
 
-<LightButton state={$state} onClick={onClick} />
+<LightButton state={$state} {onClick} {metadata}/>

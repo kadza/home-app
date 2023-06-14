@@ -1,18 +1,14 @@
 <script lang="ts">
   import Radiator from 'svelte-material-icons/Radiator.svelte'
   import RadiatorOff from 'svelte-material-icons/RadiatorOff.svelte'
-  import { camelCaseToWords, type BooleanDeviceState, type DeviceMetadata } from './device-state'
+  import { type BooleanDeviceState, type DeviceMetadata, getMetadataText } from './device-state'
 
   export let state: BooleanDeviceState
   export let metadata: DeviceMetadata | undefined = undefined
 </script>
 
 <span
-  title={metadata
-    ? `Device: ${camelCaseToWords(metadata.deviceId)} \nRead topic: ${
-        metadata.readTopic ? metadata.readTopic : 'n/a'
-      }`
-    : ''}
+  title={getMetadataText(metadata)}
 >
   {#if state === true}
     <Radiator class="text-gray-100" />
