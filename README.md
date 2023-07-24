@@ -36,6 +36,8 @@ Mosquitto MQTT broker configuration location /etc/mosquitto/mosquitto.conf
 
 - global code formatter
 - add blinds control
-- add tooltips with device names and topics
 - add electric sockets
 - blinds %
+- add person present
+- sockets
+- garage, entrance door
