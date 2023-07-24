@@ -16,12 +16,12 @@
 >
   <Thermometer />
   {#if hasNumberDeviceStateValue(state)}
-    <span title={getMetadataText(stateMetadata)} class="text-xs mouse-arrow">{state} °C</span>
+    <span title={getMetadataText(stateMetadata)} class="text-xs mouse-arrow">{state}</span>
   {:else if state==='error'}
     <span title={getMetadataText(stateMetadata)} class="text-xs text-red-500">err</span>
   {/if} 
   {#if setState && hasNumberDeviceStateValue(setState)}
-    <span title={getMetadataText(setStateMetadata)} class="text-xs text-gray-400">&nbsp;/ {setState} °C</span>
+    <span title={getMetadataText(setStateMetadata)} class="text-xs text-gray-400">&nbsp;/ {setState}</span>
   {:else if setState==='error'}
     <span title={getMetadataText(setStateMetadata)} class="text-xs text-red-500">err</span>
   {/if} 
