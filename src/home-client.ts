@@ -101,7 +101,10 @@ export const init = () => {
 
     storesConfiguration.forEach((config) => {
       if (config.readTopic && config.readTopic !== '') {
-        readMessageOnRawStoreChange(config.store, config.rawStore, config.readTopic, config.type)
+        const readStore = config.store ? config.store : config.readStore
+        const rawReadStore = config.rawStore ? config.rawStore : config.rawReadStore
+        
+        readMessageOnRawStoreChange(readStore, rawReadStore, config.readTopic, config.type)
       }
     })
 
@@ -127,15 +130,19 @@ export const init = () => {
     })
 
     storesConfiguration.forEach((config) => {
-      if (config.writeTopic)
+      if (config.writeTopic) {
+        const writeStore = config.store ? config.store : config.writeStore
+        const rawWriteStore = config.rawStore ? config.rawStore : config.rawWriteStore
+
         publishMessageOnStoreChange(
           config.deviceId,
-          config.store,
-          config.rawStore,
+          writeStore,
+          rawWriteStore,
           config.writeTopic,
           config.type,
           client
         )
+      }
     })
   }
 }

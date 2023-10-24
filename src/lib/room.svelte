@@ -1,14 +1,16 @@
 <script lang="ts">
   import Temperature from './temperature.svelte'
-  import HumanMale from 'svelte-material-icons/HumanMale.svelte'
+  import HumanMale from 'svelte-material-icons/Human.svelte'
   import ChartLine from 'svelte-material-icons/ChartLine.svelte'
-  import BlindsButton from './buttons/blinds-button.svelte'
   import Heating from './heating.svelte'
   import StoreWrapperLightButton from './store-wrapper-light-button.svelte'
+  import StoreWrapperBlindButton from './store-wrapper-blind-button.svelte'
   import { get, type Writable } from 'svelte/store'
   import {
     toggleBooleanDeviceState,
     type BooleanDeviceState,
+    type NumberDeviceState,
+    hasNumberDeviceStateValue,
   } from './device-state'
     import { configuration, findDeviceMetadata, findDeviceStore } from '../house-stores-repository'
 
@@ -23,8 +25,7 @@
     const deviceConfigs = configuration.filter((config) => config.roomId === id)
     const heating = findDeviceStore(id, 'heating')
     const heatingMetadata = findDeviceMetadata(id, 'heating')
-    const blindsSate = undefined
-    const isPresent = undefined
+    const isPresent = findDeviceStore(id, 'presence')
     const chartUrl = undefined
     const temperature = findDeviceStore(id, 'temperature')
     const temperatureMetadata = findDeviceMetadata(id, 'temperature')
@@ -42,9 +43,39 @@
       }
     }))
 
+
+    // const blindStoreConfigs = deviceConfigs.filter((config) => config.deviceType === 'blind')
+
+    // const blindStores = blindStoreConfigs.map((blind) => ({
+    //   state: blind.readStore as Writable<NumberDeviceState>,
+    //   metadata: findDeviceMetadata(blind.roomId, 'blind', blind.deviceId),
+    //   onClick: () => {
+    //     const blindReadStore = blind.readStore as Writable<NumberDeviceState>
+    //     const blindWriteStore = blind.writeStore as Writable<NumberDeviceState>
+    //     const blindState = get(blindReadStore)
+    //     const blindCommandState = get(blindWriteStore)
+
+    //     let newValue = 0
+
+    //     if (blindCommandState === 1 || blindCommandState === 2) {
+    //       newValue = 0
+    //     } 
+
+    //     if (blindCommandState === 0) {
+    //       if (hasNumberDeviceStateValue(blindState) && blindState > 0) {
+    //         newValue = 2
+    //       } else {
+    //         newValue = 2
+    //       }
+    //     }
+
+    //     blindWriteStore.set(newValue)
+    //   }
+    // }))
+
     return {
       lights: lightStores,
-      blindsSate,
+      blinds: [],
       heating,
       heatingMetadata,
       temperature,
@@ -58,7 +89,7 @@
 
   const {
     lights,
-    blindsSate,
+    blinds,
     heating,
     heatingMetadata,
     temperature,
@@ -84,13 +115,14 @@
         <StoreWrapperLightButton {state} {onClick} {metadata} />
       {/each}
       <!-- https://github.com/sveltejs/language-tools/issues/1341#issuecomment-1025469467 -->
-      {#if blindsSate && $blindsSate}
-        <BlindsButton state={$blindsSate} />
-      {/if}
+      {#each blinds as { state, onClick, metadata }}
+        <StoreWrapperBlindButton {state} {onClick} {metadata} />
+      {/each}
     </div>
     {#if rowSpan > 2 && columnSpan > 1}
       <div class="flex justify-between w-full">
         <div class="flex">
+           <!-- https://github.com/sveltejs/language-tools/issues/1341#issuecomment-1025469467 -->
           {#if heating !== undefined && $heating !== undefined}
             <Heating state={$heating} metadata={heatingMetadata} />
           {/if}

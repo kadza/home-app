@@ -45,6 +45,29 @@ export const configuration = [
     type: 'number',
   },
   {
+    roomId: 'guest',
+    deviceId: 'guestPresence',
+    displayName: 'Guest presence',
+    readTopic: env.PUBLIC_GUEST_PRESENCE,
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'presence',
+    type: 'boolean',
+  },
+  {
+    roomId: 'guest',
+    deviceId: 'guestBlind',
+    displayName: 'Guest blind',
+    stateStore: writable<NumberDeviceState>('not-initialized'),
+    commandStore: writable<NumberDeviceState>('not-initialized'),
+    rawStateStore: writable<string>(),
+    rawCommandStore: writable<string>(),
+    readTopic: env.PUBLIC_GUEST_BLIND_FROM,
+    writeTopic: env.PUBLIC_GUEST_BLIND_TO,
+    deviceType: 'blind',
+    type: 'number',
+  },
+  {
     roomId: 'living',
     deviceId: 'livingLight',
     displayName: 'Living light',
@@ -97,6 +120,38 @@ export const configuration = [
     type: 'boolean',
   },
   {
+    roomId: 'living',
+    deviceId: 'livingPrsence',
+    displayName: 'Living presence',
+    readTopic: env.PUBLIC_LIVING_PRESENCE,
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'presence',
+    type: 'boolean',
+  },
+  {
+    roomId: 'living',
+    deviceId: 'livingBlind1',
+    displayName: 'Living blind right',
+    store: writable<NumberDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    readTopic: env.PUBLIC_LIVING_BLIND_1_FROM,
+    writeTopic: env.PUBLIC_LIVING_BLIND_1_TO,
+    deviceType: 'blind',
+    type: 'number',
+  },
+  {
+    roomId: 'living',
+    deviceId: 'livingBlind2',
+    displayName: 'Living blind left',
+    store: writable<NumberDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    readTopic: env.PUBLIC_LIVING_BLIND_2_FROM,
+    writeTopic: env.PUBLIC_LIVING_BLIND_2_TO,
+    deviceType: 'blind',
+    type: 'number',
+  },
+  {
     roomId: 'dining',
     deviceId: 'diningLight',
     displayName: 'Dining light',
@@ -106,6 +161,27 @@ export const configuration = [
     writeTopic: env.PUBLIC_DINING_LIGHT_TO,
     deviceType: 'light',
     type: 'boolean',
+  },
+  {
+    roomId: 'dining',
+    deviceId: 'diningPresence',
+    displayName: 'Dining presence',
+    readTopic: env.PUBLIC_DINING_PRESENCE,
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'presence',
+    type: 'boolean',
+  }, 
+  {
+    roomId: 'dining',
+    deviceId: 'diningBlind',
+    displayName: 'Dining blind',
+    store: writable<NumberDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    readTopic: env.PUBLIC_DINING_BLIND_FROM,
+    writeTopic: env.PUBLIC_DINING_BLIND_TO,
+    deviceType: 'blind',
+    type: 'number',
   },
   {
     roomId: 'livingGarden',
@@ -130,6 +206,17 @@ export const configuration = [
     type: 'boolean',
   },
   {
+    roomId: 'kitchen',
+    deviceId: 'kitchenBlind',
+    displayName: 'Kitchen blind',
+    store: writable<NumberDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    readTopic: env.PUBLIC_KITCHEN_BLIND_FROM,
+    writeTopic: env.PUBLIC_KITCHEN_BLIND_TO,
+    deviceType: 'blind',
+    type: 'number',
+  },
+  {
     roomId: 'store',
     deviceId: 'storeLight',
     displayName: 'Store light',
@@ -149,6 +236,16 @@ export const configuration = [
     rawStore: writable<string>(),
     deviceType: 'temperature',
     type: 'number',
+  },
+  {
+    roomId: 'store',
+    deviceId: 'storePresence',
+    displayName: 'Store presence',
+    readTopic: env.PUBLIC_STORE_PRESENCE,
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'presence',
+    type: 'boolean',
   },
   {
     roomId: 'entrance',
@@ -190,6 +287,16 @@ export const configuration = [
     rawStore: writable<string>(),
     deviceType: 'setTemperature',
     type: 'number',
+  },
+  {
+    roomId: 'entrance',
+    deviceId: 'entrancePresence',
+    displayName: 'Entrance presence',
+    readTopic: env.PUBLIC_ENTRANCE_PRESENCE,
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'presence',
+    type: 'boolean',
   },
   {
     roomId: 'bath0',
@@ -244,6 +351,27 @@ export const configuration = [
     type: 'boolean',
   },
   {
+    roomId: 'bath0',
+    deviceId: 'bath0Blind',
+    displayName: 'Bath0 blind',
+    store: writable<NumberDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    readTopic: env.PUBLIC_BATH_0_BLIND_FROM,
+    writeTopic: env.PUBLIC_BATH_0_BLIND_TO,
+    deviceType: 'blind',
+    type: 'number',
+  },
+  {
+    roomId: 'bath0',
+    deviceId: 'bath0Presence',
+    displayName: 'Bath0 presence',
+    readTopic: env.PUBLIC_BATH_0_PRESENCE,
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'presence',
+    type: 'boolean',
+  },
+  {
     roomId: 'boiler',
     deviceId: 'boilerTemperature',
     displayName: 'Boiler temperature',
@@ -273,6 +401,16 @@ export const configuration = [
     readTopic: env.PUBLIC_BOILER_WALL_LIGHT_FROM,
     writeTopic: env.PUBLIC_BOILER_WALL_LIGHT_TO,
     deviceType: 'light',
+    type: 'boolean',
+  },
+  {
+    roomId: 'boiler',
+    deviceId: 'boilerPresence',
+    displayName: 'Boiler presence',
+    readTopic: env.PUBLIC_BOILER_PRESENCE,
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'presence',
     type: 'boolean',
   },
   {
@@ -350,6 +488,16 @@ export const configuration = [
     type: 'boolean',
   },
   {
+    roomId: 'garage',
+    deviceId: 'garagePresence',
+    displayName: 'Garage presence',
+    readTopic: env.PUBLIC_GARAGE_PRESENCE,
+    store: writable<BooleanDeviceState>('not-initialized'),
+    rawStore: writable<string>(),
+    deviceType: 'presence',
+    type: 'boolean',
+  },
+  {
     roomId: 'external',
     deviceId: 'externalTemperature',
     displayName: 'External temperature',
@@ -361,7 +509,7 @@ export const configuration = [
   },
 ]
 
-export type DeviceType = 'temperature' | 'setTemperature' | 'heating' | 'light'
+export type DeviceType = 'temperature' | 'setTemperature' | 'heating' | 'light' | 'blind' | 'presence'
 export type DeviceWritable<T> = T extends 'heating' | 'light' ? Writable<BooleanDeviceState> : T extends 'temperature' | 'setTemperature' ? Writable<NumberDeviceState> : never
 
 
@@ -375,7 +523,7 @@ export function findDeviceStore<T extends DeviceType>(
     return undefined
   }
 
-  if(deviceType === 'light' || deviceType === 'heating') {
+  if(deviceType === 'light' || deviceType === 'heating' || deviceType === 'presence' || deviceType === 'blind') {
     return deviceConfig.store as unknown as DeviceWritable<T>
   }
 
